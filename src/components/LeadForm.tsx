@@ -31,9 +31,26 @@ export default function LeadForm() {
     e.preventDefault()
     if (!step2ok) return
     setLoading(true)
-    await new Promise(r => setTimeout(r, 900)) // Simulate API
-    setLoading(false)
-    setDone(true)
+
+    try {
+      // Envoi direct vers ton webhook GoHighLevel
+      await fetch('https://services.leadconnectorhq.com/hooks/RF7MiujmGNkEq3tjMbyC/webhook-trigger/513b01f5-3f31-47fb-a8ca-6b96f51a1ba7', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      })
+      
+      setDone(true)
+    } catch (error) {
+      console.error("Erreur lors de l'envoi à GHL:", error)
+      // On affiche quand même le succès à l'utilisateur pour ne pas le bloquer, 
+      // ou tu peux ajouter une alerte erreur ici.
+      setDone(true)
+    } finally {
+      setLoading(false)
+    }
   }
 
   if (done) return (
