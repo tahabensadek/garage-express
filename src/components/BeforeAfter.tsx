@@ -20,6 +20,7 @@ function SliderCard({ pair, beforeText, afterText, onReady }: {
 }) {
   const [pos, setPos] = useState(50)
   const dragging = useRef(false)
+  const touchStart = useRef<{ x: number; y: number } | null>(null)
   const containerRef = useRef<HTMLDivElement>(null)
 
   const getPos = useCallback((clientX: number) => {
@@ -30,8 +31,18 @@ function SliderCard({ pair, beforeText, afterText, onReady }: {
   }, [])
 
   const onMouseMove = useCallback((e: MouseEvent) => { if (dragging.current) getPos(e.clientX) }, [getPos])
-  const onTouchMove = useCallback((e: TouchEvent) => { e.preventDefault(); getPos(e.touches[0].clientX) }, [getPos])
-  const stopDrag = useCallback(() => { dragging.current = false }, [])
+  const onTouchMove = useCallback((e: TouchEvent) => {
+    if (!dragging.current || !touchStart.current) return
+    const dx = Math.abs(e.touches[0].clientX - touchStart.current.x)
+    const dy = Math.abs(e.touches[0].clientY - touchStart.current.y)
+    if (dx > dy) {
+      e.preventDefault()
+      getPos(e.touches[0].clientX)
+    } else {
+      dragging.current = false
+    }
+  }, [getPos])
+  const stopDrag = useCallback(() => { dragging.current = false; touchStart.current = null }, [])
 
   useEffect(() => {
     window.addEventListener('mousemove', onMouseMove)
@@ -54,7 +65,7 @@ function SliderCard({ pair, beforeText, afterText, onReady }: {
       ref={containerRef}
       className="relative w-full aspect-[16/10] rounded-2xl overflow-hidden cursor-col-resize select-none"
       onMouseDown={() => { dragging.current = true }}
-      onTouchStart={() => { dragging.current = true }}
+      onTouchStart={(e) => { dragging.current = true; touchStart.current = { x: e.touches[0].clientX, y: e.touches[0].clientY } }}
     >
       {/* After image (base) */}
       <Image src={pair.a} alt="Après" fill className="object-cover" onLoad={onReady} />
