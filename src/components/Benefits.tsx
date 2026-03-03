@@ -65,24 +65,17 @@ export default function Benefits() {
             <table className="w-full text-sm">
               <thead>
                 <tr className="border-b border-white/10">
-                  <th className="text-left text-white/40 font-medium py-3 pr-6">Caractéristique</th>
+                  <th className="text-left text-white/40 font-medium py-3 pr-6">{get('benefits.comparisonFeature')}</th>
                   <th className="text-center text-white/40 font-medium py-3 px-4">{get('benefits.comparisonEpoxy')}</th>
                   <th className="text-center text-primary font-bold py-3 px-4">{get('benefits.comparisonPoly')}</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-white/5">
-                {[
-                  ['Temps de cure', '24–72h', '2–4h'],
-                  ['Résistance UV (jaunissement)', '✗ Jaunit', '✓ Stable'],
-                  ['Résistance aux chocs', 'Moyenne', 'Supérieure'],
-                  ['Flexibilité (gel/dégel)', 'Rigide', '✓ Flexible'],
-                  ['Durée de vie', '5–10 ans', '15–20 ans'],
-                  ['Installation 1 jour', '✗ Impossible', '✓ Standard'],
-                ].map(([feat, epoxy, poly], i) => (
+                {([1,2,3,4,5,6] as const).map((n, i) => (
                   <tr key={i}>
-                    <td className="text-white/70 py-3 pr-6">{feat}</td>
-                    <td className="text-center text-white/30 py-3 px-4">{epoxy}</td>
-                    <td className="text-center text-primary font-semibold py-3 px-4">{poly}</td>
+                    <td className="text-white/70 py-3 pr-6">{get(`benefits.comparisonRow${n}`)}</td>
+                    <td className="text-center text-white/30 py-3 px-4">{get(`benefits.comparisonEpoxy${n}`)}</td>
+                    <td className="text-center text-primary font-semibold py-3 px-4">{get(`benefits.comparisonPoly${n}`)}</td>
                   </tr>
                 ))}
               </tbody>

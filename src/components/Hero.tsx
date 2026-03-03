@@ -64,7 +64,7 @@ export default function Hero() {
             </div>
             <div className="flex items-center">
               <span className="text-white/40 text-xs leading-tight">
-                {get('hero.taxIncluded')}<br/>{get('hero.fixedPrice')}
+                {get('hero.fixedPrice')}
               </span>
             </div>
           </div>

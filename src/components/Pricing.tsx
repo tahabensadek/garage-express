@@ -14,20 +14,8 @@ export default function Pricing() {
       price: get('pricing.simplePrice'),
       size: '≤ 300 pi²',
       popular: false,
-      includes: [
-        'Surface jusqu\'à 300 pi²',
-        'Préparation & meulage professionnel du béton',
-        'Réparation des fissures mineures incluse',
-        'Couche primaire polyaspartique haute adhérence',
-        'Flocons décoratifs (au choix parmi 8 couleurs)',
-        'Top coat polyaspartique double couche',
-        'Fini antidérapant certifié',
-        'Résistant sel, huile, calcium, UV',
-        'Nettoyage complet post-installation',
-        'Garantie 15 ans — matériaux & main-d\'oeuvre',
-        'Prêt à utiliser en 24h',
-      ],
-      excludes: ['Fissures structurelles majeures (supplément)', 'Surface > 300 pi²'],
+      includes: Array.from({ length: 11 }, (_, i) => get(`pricing.simpleIncludes${i + 1}`)),
+      excludes: [get('pricing.simpleExcludes1'), get('pricing.simpleExcludes2')],
       cta: get('pricing.cta'),
     },
     {
@@ -37,24 +25,17 @@ export default function Pricing() {
       size: '> 300 pi²',
       popular: true,
       badge: get('pricing.popularBadge'),
-      includes: [
-        'Surface illimitée au-delà de 300 pi²',
-        'Préparation & meulage professionnel du béton',
-        'Réparation des fissures mineures incluse',
-        'Couche primaire polyaspartique PREMIUM haute adhérence',
-        'Flocons décoratifs PREMIUM (au choix parmi 12 couleurs)',
-        'Top coat polyaspartique renforcé triple couche',
-        'Fini antidérapant certifié',
-        'Résistant sel, huile, calcium, UV, produits chimiques',
-        'Nettoyage complet post-installation',
-        'Garantie 15 ans — matériaux & main-d\'oeuvre',
-        'Prêt à utiliser en 24h',
-        'Meilleur rapport pi²/dollar',
-      ],
-      excludes: ['Fissures structurelles majeures (supplément)'],
+      includes: Array.from({ length: 12 }, (_, i) => get(`pricing.doubleIncludes${i + 1}`)),
+      excludes: [get('pricing.doubleExcludes1')],
       cta: get('pricing.cta'),
     },
   ]
+
+  const addons = [1, 2, 3, 4].map(n => ({
+    name: get(`pricing.addon${n}Name`),
+    price: get(`pricing.addon${n}Price`),
+    note: get(`pricing.addon${n}Note`),
+  }))
 
   useEffect(() => {
     const obs = new IntersectionObserver((entries) => {
@@ -102,13 +83,12 @@ export default function Pricing() {
                     </div>
                     <div className="bg-gray-50 border border-gray-100 text-gray-600 text-xs font-bold px-3 py-1.5 rounded-lg whitespace-nowrap">{plan.size}</div>
                   </div>
-                  
+
                   <div className="flex items-baseline gap-1 mt-4">
                     <span className="font-display text-6xl font-black text-dark leading-none">{plan.price}</span>
                     <span className="font-display text-3xl font-black text-gray-400">,99$</span>
                   </div>
                   <div className="mt-2 flex gap-3 flex-wrap">
-                    <span className="text-xs text-gray-400 bg-gray-50 border border-gray-100 px-2.5 py-1 rounded-lg">{get('pricing.taxIncluded')}</span>
                     <span className="text-xs text-gray-400 bg-gray-50 border border-gray-100 px-2.5 py-1 rounded-lg">{get('pricing.fixedPrice')}</span>
                     <span className="text-xs text-gray-400 bg-gray-50 border border-gray-100 px-2.5 py-1 rounded-lg">{get('pricing.install1Day')}</span>
                   </div>
@@ -149,7 +129,7 @@ export default function Pricing() {
                   {plan.cta}
                   <ArrowRight className="w-5 h-5" />
                 </a>
-                <p className="text-center text-xs text-gray-400 mt-3">Réponse par téléphone dans les 24h</p>
+                <p className="text-center text-xs text-gray-400 mt-3">{get('pricing.responseNote')}</p>
               </div>
             </div>
           ))}
@@ -168,12 +148,7 @@ export default function Pricing() {
 
           {addonsOpen && (
             <div className="mt-2 bg-gray-50 border-2 border-gray-200 rounded-2xl p-6 space-y-4">
-              {[
-                { name: 'Réparation fissures structurelles majeures', price: '300–800$', note: 'Évaluation visuelle gratuite lors de la visite' },
-                { name: 'Couleur de flocons personnalisée (hors catalogue)', price: '+200$', note: '12 couleurs standard incluses sans frais' },
-                { name: 'Extension de surface > 600 pi²', price: 'Sur devis', note: 'Tarif dégressif — plus la surface est grande, moins le pi² coûte' },
-                { name: 'Traitement hydrofuge périmétrique', price: '+150$', note: 'Recommandé si infiltration passée aux murs' },
-              ].map((addon, i) => (
+              {addons.map((addon, i) => (
                 <div key={i} className="flex items-start justify-between gap-4 pb-4 border-b border-gray-200 last:border-0 last:pb-0">
                   <div>
                     <div className="font-semibold text-dark text-sm">{addon.name}</div>
@@ -183,7 +158,7 @@ export default function Pricing() {
                 </div>
               ))}
               <div className="bg-blue-50 border border-blue-100 rounded-xl p-4 text-sm text-blue-600 text-center">
-                💬 Toutes ces options sont discutées lors de la visite gratuite — aucune obligation d'achat.
+                💬 {get('pricing.addonsNote')}
               </div>
             </div>
           )}
