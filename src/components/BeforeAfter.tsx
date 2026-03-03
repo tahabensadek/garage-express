@@ -2,7 +2,7 @@
 import { useState, useRef, useCallback, useEffect } from 'react'
 import { useTranslations } from '@/hooks/useTranslations'
 import Image from 'next/image'
-import { ArrowLeftRight } from 'lucide-react'
+import { ArrowLeftRight, ChevronLeft, ChevronRight } from 'lucide-react'
 
 const pairs = [
   { b: '/images/before-1.png', a: '/images/after-1.png', city: 'Longueuil', type: 'Garage double' },
@@ -12,7 +12,12 @@ const pairs = [
   { b: '/images/before-5.png', a: '/images/after-5.png', city: 'La Prairie', type: 'Garage simple' },
 ]
 
-function SliderCard({ pair, beforeText, afterText }: { pair: typeof pairs[0], beforeText: string, afterText: string }) {
+function SliderCard({ pair, beforeText, afterText, onReady }: {
+  pair: typeof pairs[0]
+  beforeText: string
+  afterText: string
+  onReady?: () => void
+}) {
   const [pos, setPos] = useState(50)
   const dragging = useRef(false)
   const containerRef = useRef<HTMLDivElement>(null)
@@ -25,13 +30,13 @@ function SliderCard({ pair, beforeText, afterText }: { pair: typeof pairs[0], be
   }, [])
 
   const onMouseMove = useCallback((e: MouseEvent) => { if (dragging.current) getPos(e.clientX) }, [getPos])
-  const onTouchMove = useCallback((e: TouchEvent) => { getPos(e.touches[0].clientX) }, [getPos])
+  const onTouchMove = useCallback((e: TouchEvent) => { e.preventDefault(); getPos(e.touches[0].clientX) }, [getPos])
   const stopDrag = useCallback(() => { dragging.current = false }, [])
 
   useEffect(() => {
     window.addEventListener('mousemove', onMouseMove)
     window.addEventListener('mouseup', stopDrag)
-    window.addEventListener('touchmove', onTouchMove)
+    window.addEventListener('touchmove', onTouchMove, { passive: false })
     window.addEventListener('touchend', stopDrag)
     return () => {
       window.removeEventListener('mousemove', onMouseMove)
@@ -41,28 +46,48 @@ function SliderCard({ pair, beforeText, afterText }: { pair: typeof pairs[0], be
     }
   }, [onMouseMove, onTouchMove, stopDrag])
 
+  // Reset slider position when pair changes
+  useEffect(() => { setPos(50) }, [pair])
+
   return (
-    <div ref={containerRef} className="relative aspect-[4/3] rounded-2xl overflow-hidden cursor-col-resize select-none group"
+    <div
+      ref={containerRef}
+      className="relative w-full aspect-[16/10] rounded-2xl overflow-hidden cursor-col-resize select-none"
       onMouseDown={() => { dragging.current = true }}
-      onTouchStart={() => { dragging.current = true }}>
-      
-      <Image src={pair.a} alt="Après" fill className="object-cover" />
-      
+      onTouchStart={() => { dragging.current = true }}
+    >
+      {/* After image (base) */}
+      <Image src={pair.a} alt="Après" fill className="object-cover" onLoad={onReady} />
+
+      {/* Before image (clipped) */}
       <div className="absolute inset-0" style={{ clipPath: `inset(0 ${100 - pos}% 0 0)` }}>
         <Image src={pair.b} alt="Avant" fill className="object-cover" />
-        <div className="absolute top-3 left-3 bg-dark/80 backdrop-blur text-white text-xs font-bold px-3 py-1.5 rounded-lg uppercase tracking-wide">{beforeText}</div>
+        <div className="absolute top-4 left-4 bg-dark/80 backdrop-blur-sm text-white text-sm font-bold px-3 py-1.5 rounded-lg uppercase tracking-wide">
+          {beforeText}
+        </div>
       </div>
-      
+
+      {/* Divider line + handle */}
       <div className="absolute inset-y-0 w-0.5 bg-white shadow-xl pointer-events-none" style={{ left: `${pos}%` }}>
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-10 h-10 bg-white rounded-full shadow-2xl flex items-center justify-center">
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-11 h-11 bg-white rounded-full shadow-2xl flex items-center justify-center ring-2 ring-primary/20">
           <ArrowLeftRight className="w-5 h-5 text-dark" />
         </div>
       </div>
 
-      <div className="absolute top-3 right-3 bg-primary/90 backdrop-blur text-white text-xs font-bold px-3 py-1.5 rounded-lg uppercase tracking-wide">{afterText}</div>
-      
-      <div className="absolute bottom-3 left-3 bg-dark/80 backdrop-blur text-white text-xs px-3 py-1.5 rounded-lg">
+      {/* After label */}
+      <div className="absolute top-4 right-4 bg-primary/90 backdrop-blur-sm text-white text-sm font-bold px-3 py-1.5 rounded-lg uppercase tracking-wide">
+        {afterText}
+      </div>
+
+      {/* Location badge */}
+      <div className="absolute bottom-4 left-4 bg-dark/80 backdrop-blur-sm text-white text-sm px-3 py-1.5 rounded-lg">
         <span className="font-bold">{pair.city}</span> · {pair.type}
+      </div>
+
+      {/* Drag hint */}
+      <div className="absolute bottom-4 right-4 text-white/60 text-xs flex items-center gap-1 pointer-events-none">
+        <ArrowLeftRight className="w-3 h-3" />
+        <span>Glisser</span>
       </div>
     </div>
   )
@@ -70,6 +95,10 @@ function SliderCard({ pair, beforeText, afterText }: { pair: typeof pairs[0], be
 
 export default function BeforeAfter() {
   const { get } = useTranslations()
+  const [active, setActive] = useState(0)
+
+  const prev = () => setActive(i => (i - 1 + pairs.length) % pairs.length)
+  const next = () => setActive(i => (i + 1) % pairs.length)
 
   useEffect(() => {
     const obs = new IntersectionObserver((entries) => {
@@ -79,9 +108,21 @@ export default function BeforeAfter() {
     return () => obs.disconnect()
   }, [])
 
+  // Keyboard navigation
+  useEffect(() => {
+    const handler = (e: KeyboardEvent) => {
+      if (e.key === 'ArrowLeft') prev()
+      if (e.key === 'ArrowRight') next()
+    }
+    window.addEventListener('keydown', handler)
+    return () => window.removeEventListener('keydown', handler)
+  }, [])
+
   return (
     <section className="py-24 bg-gray-50">
-      <div className="max-w-7xl mx-auto px-4">
+      <div className="max-w-5xl mx-auto px-4">
+
+        {/* Header */}
         <div className="text-center mb-14 reveal">
           <div className="inline-block bg-primary/8 border border-primary/15 text-primary font-semibold text-sm uppercase tracking-widest px-4 py-2 rounded-full mb-5">
             {get('beforeAfter.badge')}
@@ -95,18 +136,73 @@ export default function BeforeAfter() {
           </p>
         </div>
 
-        <div className="reveal mb-5 max-w-4xl mx-auto">
-          <SliderCard pair={pairs[0]} beforeText={get('beforeAfter.before')} afterText={get('beforeAfter.after')} />
+        {/* Main slider */}
+        <div className="reveal relative">
+          <SliderCard
+            pair={pairs[active]}
+            beforeText={get('beforeAfter.before')}
+            afterText={get('beforeAfter.after')}
+          />
+
+          {/* Prev / Next arrows */}
+          <button
+            onClick={prev}
+            className="absolute left-3 top-1/2 -translate-y-1/2 w-10 h-10 bg-white/90 hover:bg-white rounded-full shadow-lg flex items-center justify-center transition-all hover:scale-110 z-10"
+            aria-label="Précédent"
+          >
+            <ChevronLeft className="w-5 h-5 text-dark" />
+          </button>
+          <button
+            onClick={next}
+            className="absolute right-3 top-1/2 -translate-y-1/2 w-10 h-10 bg-white/90 hover:bg-white rounded-full shadow-lg flex items-center justify-center transition-all hover:scale-110 z-10"
+            aria-label="Suivant"
+          >
+            <ChevronRight className="w-5 h-5 text-dark" />
+          </button>
         </div>
 
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 max-w-4xl mx-auto reveal">
-          {pairs.slice(1).map((pair, i) => (
-            <SliderCard key={i} pair={pair} beforeText={get('beforeAfter.before')} afterText={get('beforeAfter.after')} />
+        {/* Thumbnail navigation */}
+        <div className="mt-4 flex gap-3 justify-center reveal">
+          {pairs.map((pair, i) => (
+            <button
+              key={i}
+              onClick={() => setActive(i)}
+              className={`relative w-16 h-12 sm:w-20 sm:h-14 rounded-lg overflow-hidden transition-all duration-200 ${
+                i === active
+                  ? 'ring-2 ring-primary scale-105 shadow-md'
+                  : 'opacity-50 hover:opacity-80'
+              }`}
+              aria-label={`Voir ${pair.city}`}
+            >
+              <Image src={pair.a} alt={pair.city} fill className="object-cover" />
+              <div className="absolute inset-0 bg-dark/20" />
+              <span className="absolute bottom-1 left-0 right-0 text-center text-white text-[9px] font-semibold">
+                {pair.city}
+              </span>
+            </button>
           ))}
         </div>
 
-        <div className="text-center mt-10 reveal">
-          <a href="#soumission" className="relative overflow-hidden inline-flex items-center gap-2 bg-dark hover:bg-dark-700 text-white font-bold px-8 py-4 rounded-xl text-base transition-all btn-shimmer">
+        {/* Dot indicators */}
+        <div className="flex justify-center gap-2 mt-4 reveal">
+          {pairs.map((_, i) => (
+            <button
+              key={i}
+              onClick={() => setActive(i)}
+              className={`rounded-full transition-all duration-300 ${
+                i === active ? 'w-6 h-2 bg-primary' : 'w-2 h-2 bg-gray-300 hover:bg-gray-400'
+              }`}
+              aria-label={`Aller à ${i + 1}`}
+            />
+          ))}
+        </div>
+
+        {/* CTA */}
+        <div className="text-center mt-12 reveal">
+          <a
+            href="#soumission"
+            className="relative overflow-hidden inline-flex items-center gap-2 bg-dark hover:bg-dark-700 text-white font-bold px-8 py-4 rounded-xl text-base transition-all btn-shimmer"
+          >
             {get('beforeAfter.cta')}
           </a>
         </div>
