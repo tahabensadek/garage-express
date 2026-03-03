@@ -1,17 +1,18 @@
 'use client'
-import { Star, MapPin, Award } from 'lucide-react'
-
-const stats = [
-  { value: '500+', label: 'Garages transformés', sub: 'depuis notre fondation' },
-  { value: '4.9★', label: 'Note Google', sub: 'sur 200+ avis vérifiés' },
-  { value: '15 ans', label: 'Garantie complète', sub: 'matériaux & main-d\'oeuvre' },
-  { value: '1 jour', label: 'Installation', sub: 'prêt à utiliser dès demain' },
-]
+import { useTranslations } from '@/hooks/useTranslations'
 
 export default function SocialProofBar() {
+  const { get } = useTranslations()
+
+  const stats = [
+    { value: get('socialProof.stat1'), label: get('socialProof.stat1Label'), sub: get('socialProof.stat1Sub') },
+    { value: get('socialProof.stat2'), label: get('socialProof.stat2Label'), sub: get('socialProof.stat2Sub') },
+    { value: get('socialProof.stat3'), label: get('socialProof.stat3Label'), sub: get('socialProof.stat3Sub') },
+    { value: get('socialProof.stat4'), label: get('socialProof.stat4Label'), sub: get('socialProof.stat4Sub') },
+  ]
+
   return (
     <section className="bg-dark-800 border-y border-white/5 py-0">
-      {/* Scrolling ticker for mobile, grid for desktop */}
       <div className="max-w-7xl mx-auto px-4">
         <div className="grid grid-cols-2 lg:grid-cols-4 divide-x divide-white/5">
           {stats.map((s, i) => (

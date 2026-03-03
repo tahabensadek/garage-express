@@ -2,9 +2,12 @@
 import { useEffect, useState } from 'react'
 import Image from 'next/image'
 import { Phone } from 'lucide-react'
+import { useTranslations } from '@/hooks/useTranslations'
+import LanguageSwitcher from './LanguageSwitcher'
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false)
+  const { get } = useTranslations()
 
   useEffect(() => {
     const fn = () => setScrolled(window.scrollY > 40)
@@ -20,14 +23,17 @@ export default function Navbar() {
         <Image src="/logo.svg" alt="Garage Express" width={140} height={48} className="h-10 w-auto" />
         
         <div className="flex items-center gap-3">
-          <a href="tel:5148248618"
+          <LanguageSwitcher />
+          
+          <a href={`tel:${get('nav.phone').replace(/-/g, '')}`}
             className="hidden sm:flex items-center gap-2 text-white/90 hover:text-white text-sm font-medium transition-colors">
             <Phone className="w-4 h-4 text-primary" />
-            514-824-8618
+            {get('nav.phone')}
           </a>
+          
           <a href="#soumission"
             className="relative overflow-hidden bg-primary hover:bg-primary-dark text-white font-bold px-5 py-2.5 rounded-lg text-sm transition-all duration-200 btn-shimmer">
-            Soumission gratuite
+            {get('nav.cta')}
           </a>
         </div>
       </div>

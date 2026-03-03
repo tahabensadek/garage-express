@@ -1,66 +1,30 @@
 'use client'
 import { useEffect } from 'react'
 import { Star, Quote } from 'lucide-react'
+import { useTranslations } from '@/hooks/useTranslations'
 
-const reviews = [
-  {
-    name: 'Marc-André Tremblay',
-    city: 'Longueuil',
-    type: 'Garage double',
-    date: 'Janvier 2025',
-    stars: 5,
-    title: 'Exactement ce qui était promis. À la virgule près.',
-    text: 'J\'avais peur des frais cachés — ça ne s\'est pas produit. Le prix de la soumission est exactement ce que j\'ai payé. L\'équipe est arrivée à 8h et repartie à 17h. Le lendemain matin, j\'ai rentré ma F-150 et mon VTT. Le plancher est impeccable. Je recommande les yeux fermés.',
-    highlight: true,
-  },
-  {
-    name: 'Sophie Gagnon-Roy',
-    city: 'Brossard',
-    type: 'Garage simple',
-    date: 'Novembre 2024',
-    stars: 5,
-    title: 'Mon mari pensait que c\'était trop cher. Il a changé d\'avis.',
-    text: 'On hésitait entre l\'époxy "cheap" du Home Depot et Garage Express. Mon mari trouvait que 2750$ c\'était beaucoup. Maintenant qu\'on voit le résultat, on regrette juste de ne pas l\'avoir fait avant. Le plancher est magnifique et tellement facile à nettoyer. Le sel de décembre — un coup de mop et c\'est parti.',
-  },
-  {
-    name: 'Jean-François Côté',
-    city: 'Laval',
-    type: 'Garage double + options',
-    date: 'Octobre 2024',
-    stars: 5,
-    title: 'Professionnalisme du début à la fin.',
-    text: 'Troisième fois que je fais affaire avec une entreprise de revêtement de garage. Les deux premières fois ont été des désastres (décollement, fissures après 2 hivers). Garage Express, c\'est une autre game. L\'équipe explique chaque étape, l\'installation est propre, et ça fait maintenant 14 mois — aucun problème. C\'est ce qu\'on devrait appeler du travail bien fait.',
-  },
-  {
-    name: 'Isabelle Pelletier',
-    city: 'Saint-Hubert',
-    type: 'Garage simple',
-    date: 'Septembre 2024',
-    stars: 5,
-    title: 'Mon garage est plus beau que mon salon maintenant.',
-    text: 'Je rigole, mais c\'est presque vrai. Le fini est brillant, les flocons gris donnent un look vraiment luxueux. Mes voisins m\'ont demandé votre contact deux fois déjà. L\'installation en un jour, c\'était un gros plus — pas de deuxième journée à libérer dans mon agenda.',
-  },
-  {
-    name: 'Patrick Bouchard',
-    city: 'La Prairie',
-    type: 'Garage double',
-    date: 'Août 2024',
-    stars: 5,
-    title: 'Réactifs, ponctuels, propres. On demande quoi de plus?',
-    text: 'J\'ai appelé un vendredi, eu une réponse le samedi matin, et l\'installation était faite le mercredi suivant. L\'équipe a protégé mes murs avec du plastique, aspiré la poussière au fur et à mesure, et laissé le garage impeccable en partant. En plus du plancher bien sûr. Service 5 étoiles mérité.',
-  },
-  {
-    name: 'Nathalie Viens',
-    city: 'Boucherville',
-    type: 'Garage simple',
-    date: 'Juillet 2024',
-    stars: 5,
-    title: 'Valeur maison + plaisir d\'utilisation. Win-win.',
-    text: 'Mon courtier immobilier m\'a dit que le plancher polyaspartique ajoute de la valeur perçue lors d\'une vente. Mais au-delà de ça, j\'adore maintenant mon garage. Je fais du yoga là-dedans l\'été. Je ris, mais c\'est vrai. Plus de poussière, plus de taches d\'huile, plus de béton qui poudroie.',
-  },
+const reviewNames = [
+  { name: 'Marc-André Tremblay', city: 'Longueuil' },
+  { name: 'Sophie Gagnon-Roy',   city: 'Brossard' },
+  { name: 'Jean-François Côté',  city: 'Laval' },
+  { name: 'Isabelle Pelletier',  city: 'Saint-Hubert' },
+  { name: 'Patrick Bouchard',    city: 'La Prairie' },
+  { name: 'Nathalie Viens',      city: 'Boucherville' },
 ]
 
 export default function Testimonials() {
+  const { get } = useTranslations()
+
+  const reviews = reviewNames.map((r, i) => ({
+    name: r.name,
+    city: r.city,
+    type: get(`testimonials.review${i + 1}Type`),
+    date: get(`testimonials.review${i + 1}Date`),
+    title: get(`testimonials.review${i + 1}Title`),
+    text: get(`testimonials.review${i + 1}Text`),
+    stars: 5,
+  }))
+
   useEffect(() => {
     const obs = new IntersectionObserver((entries) => {
       entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target) } })
@@ -75,15 +39,15 @@ export default function Testimonials() {
         <div className="text-center mb-14 reveal">
           <div className="inline-flex items-center gap-2 mb-4">
             {[...Array(5)].map((_,i) => <Star key={i} className="w-5 h-5 fill-primary text-primary" />)}
-            <span className="font-bold text-dark ml-1">4.9/5</span>
-            <span className="text-gray-400">· 200+ avis Google vérifiés</span>
+            <span className="font-bold text-dark ml-1">{get('testimonials.rating')}</span>
+            <span className="text-gray-400">· {get('testimonials.verified')}</span>
           </div>
           <h2 className="font-display text-5xl sm:text-6xl font-black text-dark uppercase leading-tight mb-4">
-            Ce que disent
-            <span className="block text-gradient">vos voisins.</span>
+            {get('testimonials.title')}
+            <span className="block text-gradient">{get('testimonials.titleHighlight')}</span>
           </h2>
           <p className="text-gray-500 text-lg max-w-xl mx-auto">
-            Ces avis sont de vrais clients sur la Rive-Sud et à Laval. Pas de témoignages inventés, pas de fausses étoiles.
+            {get('testimonials.subtitle')}
           </p>
         </div>
 
@@ -133,7 +97,7 @@ export default function Testimonials() {
               {[...Array(5)].map((_,i) => <Star key={i} className="w-4 h-4 fill-yellow-400 text-yellow-400" />)}
             </div>
             <span className="font-bold text-dark">4.9</span>
-            <span className="text-gray-400 text-sm">· 200+ avis Google vérifiés</span>
+            <span className="text-gray-400 text-sm">· {get('testimonials.verified')}</span>
           </div>
         </div>
       </div>

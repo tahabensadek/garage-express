@@ -1,42 +1,20 @@
 'use client'
 import { useEffect } from 'react'
+import { useTranslations } from '@/hooks/useTranslations'
 import { Zap, Shield, Droplets, Thermometer, Sparkles, Clock } from 'lucide-react'
 
-const benefits = [
-  {
-    icon: Clock,
-    title: 'Installation en 1 seule journée',
-    desc: 'Nos techniciens arrivent le matin et repartent le soir. Le plancher est prêt à utiliser 24h après l\'application. Zéro inconvénient prolongé.',
-    highlight: true,
-  },
-  {
-    icon: Shield,
-    title: 'Garanti 15 ans — Matériaux & main-d\'oeuvre',
-    desc: 'Pas juste les matériaux. Notre garantie couvre l\'ensemble du travail. Si quelque chose arrive dans les 15 ans, on revient. Point.',
-  },
-  {
-    icon: Droplets,
-    title: 'Résistant à tout ce qu\'un hiver québécois peut lancer',
-    desc: 'Sel de déglaçage, calcium, huile à moteur, antigel. Le polyaspartique ne s\'imprègne pas — il repousse tout. Une vadrouille humide et c\'est propre.',
-  },
-  {
-    icon: Thermometer,
-    title: 'Conçu pour les -30°C à +40°C',
-    desc: 'Le béton se contracte et se dilate. Notre revêtement est flexible et suit le mouvement — sans fissurer, sans décoller, saison après saison.',
-  },
-  {
-    icon: Zap,
-    title: 'Deux fois plus dur que l\'époxy traditionnel',
-    desc: 'Le polyaspartique durcit plus rapidement et atteint une résistance supérieure à l\'époxy. Idéal pour les garages avec véhicules lourds, VTT, ou équipements.',
-  },
-  {
-    icon: Sparkles,
-    title: 'Fini professionnel — choix de couleurs',
-    desc: 'Flocons décoratifs, couleurs personnalisées, fini mat ou lustré. Votre garage peut ressembler à ce que vous voyez dans les concessions automobiles.',
-  },
-]
-
 export default function Benefits() {
+  const { get } = useTranslations()
+
+  const benefits = [
+    { icon: Clock, title: get('benefits.benefit1Title'), desc: get('benefits.benefit1Desc'), highlight: true },
+    { icon: Shield, title: get('benefits.benefit2Title'), desc: get('benefits.benefit2Desc') },
+    { icon: Droplets, title: get('benefits.benefit3Title'), desc: get('benefits.benefit3Desc') },
+    { icon: Thermometer, title: get('benefits.benefit4Title'), desc: get('benefits.benefit4Desc') },
+    { icon: Zap, title: get('benefits.benefit5Title'), desc: get('benefits.benefit5Desc') },
+    { icon: Sparkles, title: get('benefits.benefit6Title'), desc: get('benefits.benefit6Desc') },
+  ]
+
   useEffect(() => {
     const obs = new IntersectionObserver((entries) => {
       entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target) } })
@@ -50,15 +28,14 @@ export default function Benefits() {
       <div className="relative z-10 max-w-7xl mx-auto px-4">
         <div className="text-center mb-14 reveal">
           <div className="inline-block bg-primary/15 border border-primary/30 text-primary font-semibold text-sm uppercase tracking-widest px-4 py-2 rounded-full mb-5">
-            Technologie de classe commerciale
+            {get('benefits.badge')}
           </div>
           <h2 className="font-display text-5xl sm:text-6xl font-black text-white uppercase leading-tight mb-4">
-            Ce n'est pas de l'époxy.
-            <span className="block text-gradient">C'est bien mieux.</span>
+            {get('benefits.title')}
+            <span className="block text-gradient">{get('benefits.titleHighlight')}</span>
           </h2>
           <p className="text-white/50 text-lg max-w-2xl mx-auto">
-            Le polyaspartique est ce que les professionnels utilisent quand l'époxy ne suffit pas. 
-            Cure 5× plus rapide, résistance supérieure, durée de vie plus longue.
+            {get('benefits.subtitle')}
           </p>
         </div>
 
@@ -80,18 +57,17 @@ export default function Benefits() {
           ))}
         </div>
 
-        {/* Comparison table teaser */}
         <div className="reveal mt-14 bg-white/4 border border-white/8 rounded-3xl p-8">
           <h3 className="font-display text-3xl font-black text-white uppercase text-center mb-8">
-            Pourquoi pas juste de l'époxy ?
+            {get('benefits.comparisonTitle')}
           </h3>
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
               <thead>
                 <tr className="border-b border-white/10">
                   <th className="text-left text-white/40 font-medium py-3 pr-6">Caractéristique</th>
-                  <th className="text-center text-white/40 font-medium py-3 px-4">Époxy</th>
-                  <th className="text-center text-primary font-bold py-3 px-4">Polyaspartique ✦</th>
+                  <th className="text-center text-white/40 font-medium py-3 px-4">{get('benefits.comparisonEpoxy')}</th>
+                  <th className="text-center text-primary font-bold py-3 px-4">{get('benefits.comparisonPoly')}</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-white/5">
