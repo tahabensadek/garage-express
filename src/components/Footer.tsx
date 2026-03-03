@@ -42,7 +42,7 @@ export default function Footer() {
               </li>
               <li className="flex items-start gap-3 text-white/50 text-sm">
                 <MapPin className="w-4 h-4 text-primary flex-shrink-0 mt-0.5" />
-                Rive-Sud & Laval, Québec
+                {get('footer.address')}
               </li>
             </ul>
           </div>

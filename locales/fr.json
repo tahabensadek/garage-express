@@ -343,13 +343,20 @@
     "giftTitle": "En attendant votre appel",
     "giftText": "Téléchargez notre Guide des Couleurs (12 options de flocons avec photos réelles)",
     "giftCta": "Télécharger le PDF gratuit",
-    "callNow": "Appelez maintenant — 514-824-8618"
+    "callNow": "Appelez maintenant — 514-824-8618",
+    "errorAlert": "Erreur — appelez-nous au 514-824-8618",
+    "trustReviews": "200+ avis",
+    "trustResponse": "Réponse 24h",
+    "namePlaceholder": "Jean Tremblay",
+    "emailPlaceholder": "jean@exemple.com",
+    "cityPlaceholder": "Longueuil, Brossard, Laval…"
   },
   "footer": {
     "description": "Spécialiste en revêtement polyaspartique de plancher de garage. Installation professionnelle en 1 jour. Service Rive-Sud & Laval depuis plusieurs années.",
     "contact": "Contact",
     "serviceZone": "Zone desservie",
     "copyright": "Tous droits réservés.",
-    "madewith": "Fabriqué avec ❤ sur la Rive-Sud"
+    "madewith": "Fabriqué avec ❤ sur la Rive-Sud",
+    "address": "Rive-Sud & Laval, Québec"
   }
 }

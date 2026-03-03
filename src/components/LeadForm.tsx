@@ -48,7 +48,7 @@ export default function LeadForm() {
       console.log('Lead soumis:', data)
       setDone(true)
     } catch (err) {
-      alert('Erreur — appelez-nous au 514-824-8618')
+      alert(get('leadForm.errorAlert'))
     } finally {
       setLoading(false)
     }
@@ -195,7 +195,7 @@ export default function LeadForm() {
                       <input type="text" required value={data.name}
                         onChange={e => set('name', e.target.value)}
                         className="w-full px-4 py-3.5 rounded-xl border-2 border-gray-200 focus:border-primary focus:outline-none text-dark transition-all"
-                        placeholder="Jean Tremblay"
+                        placeholder={get('leadForm.namePlaceholder')}
                         autoComplete="name" />
                     </div>
                     <div>
@@ -205,7 +205,7 @@ export default function LeadForm() {
                       <input type="email" required value={data.email}
                         onChange={e => set('email', e.target.value)}
                         className="w-full px-4 py-3.5 rounded-xl border-2 border-gray-200 focus:border-primary focus:outline-none text-dark transition-all"
-                        placeholder="jean@exemple.com"
+                        placeholder={get('leadForm.emailPlaceholder')}
                         autoComplete="email" />
                       <div className="text-gray-400 text-xs mt-1.5">{get('leadForm.emailHelp')}</div>
                     </div>
@@ -220,9 +220,9 @@ export default function LeadForm() {
                         <span>4.9/5 Google</span>
                       </div>
                       <span>•</span>
-                      <span>200+ avis</span>
+                      <span>{get('leadForm.trustReviews')}</span>
                       <span>•</span>
-                      <span>Réponse 24h</span>
+                      <span>{get('leadForm.trustResponse')}</span>
                     </div>
                   </div>
                 )}
@@ -235,8 +235,8 @@ export default function LeadForm() {
                       </label>
                       <div className="space-y-3">
                         {[
-                          { val: 'Garage simple (≤300 pi²)', price: '2 749,99$', sub: get('pricing.simpleTagline') },
-                          { val: 'Garage double (>300 pi²)', price: '4 449,99$', sub: get('pricing.doubleTagline') },
+                          { val: get('hero.priceSimple'), price: '2 749,99$', sub: get('pricing.simpleTagline') },
+                          { val: get('hero.priceDouble'), price: '4 449,99$', sub: get('pricing.doubleTagline') },
                         ].map((opt) => (
                           <button type="button" key={opt.val}
                             onClick={() => set('garageSize', opt.val)}
@@ -263,7 +263,7 @@ export default function LeadForm() {
                       <input type="text" required value={data.city}
                         onChange={e => set('city', e.target.value)}
                         className="w-full px-4 py-3.5 rounded-xl border-2 border-gray-200 focus:border-primary focus:outline-none text-dark transition-all"
-                        placeholder="Longueuil, Brossard, Laval…"
+                        placeholder={get('leadForm.cityPlaceholder')}
                         autoComplete="address-level2" />
                     </div>
                     <div>
