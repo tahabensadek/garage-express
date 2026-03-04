@@ -189,6 +189,7 @@ export default function RootLayout({
       </head>
       <body>{children}</body>
       <GoogleAnalytics gaId="G-RF7B3D0RPS" />
+      <script dangerouslySetInnerHTML={{ __html: `gtag('config', 'AW-17940446235');` }} />
     </html>
   )
 }
