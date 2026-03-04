@@ -5,7 +5,7 @@
   },
   "hero": {
     "badge": "Fixed prices • No surprises",
-    "reviews": "+500 garages transformed on the South Shore & Laval",
+    "reviews": "+500 garages transformed on the South Shore & Montreal",
     "title": "Your garage",
     "titleHighlight": "deserves better",
     "titleEnd": "than stained",
@@ -63,7 +63,7 @@
     "badge": "Real results — Real customers",
     "title": "Slide to see",
     "titleHighlight": "the difference",
-    "subtitle": "Every photo is taken at a real Garage Express customer's home on the South Shore or in Laval. Slide the cursor to see the transformation.",
+    "subtitle": "Every photo is taken at a real Garage Express customer's home on the South Shore or in Montreal. Slide the cursor to see the transformation.",
     "before": "Before",
     "after": "After",
     "cta": "Get my free quote →"
@@ -145,7 +145,7 @@
     "verified": "200+ verified Google reviews",
     "title": "What your",
     "titleHighlight": "neighbors say.",
-    "subtitle": "These reviews are from real customers on the South Shore and in Laval. No fake testimonials, no fake stars.",
+    "subtitle": "These reviews are from real customers on the South Shore and in Montreal. No fake testimonials, no fake stars.",
     "review1Type": "Double garage",
     "review1Date": "January 2025",
     "review1Title": "Exactly what was promised. To the letter.",
@@ -349,14 +349,14 @@
     "trustResponse": "24h response",
     "namePlaceholder": "John Smith",
     "emailPlaceholder": "john@example.com",
-    "cityPlaceholder": "Longueuil, Brossard, Laval…"
+    "cityPlaceholder": "Longueuil, Brossard, Montreal…"
   },
   "footer": {
-    "description": "Specialist in polyaspartic garage floor coating. Professional installation in 1 day. Serving South Shore & Laval for several years.",
+    "description": "Specialist in polyaspartic garage floor coating. Professional installation in 1 day. Serving South Shore & Montreal for several years.",
     "contact": "Contact",
     "serviceZone": "Service area",
     "copyright": "All rights reserved.",
     "madewith": "Made with ❤ on the South Shore",
-    "address": "South Shore & Laval, Quebec"
+    "address": "South Shore & Montreal, Quebec"
   }
 }
