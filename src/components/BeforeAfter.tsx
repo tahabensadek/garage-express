@@ -68,11 +68,11 @@ function SliderCard({ pair, beforeText, afterText, onReady }: {
       onTouchStart={(e) => { dragging.current = true; touchStart.current = { x: e.touches[0].clientX, y: e.touches[0].clientY } }}
     >
       {/* After image (base) */}
-      <Image src={pair.a} alt="Après" fill className="object-cover" onLoad={onReady} />
+      <Image src={pair.a} alt={`Plancher de garage après revêtement polyaspartique — ${pair.city}, ${pair.type}`} fill className="object-cover" onLoad={onReady} />
 
       {/* Before image (clipped) */}
       <div className="absolute inset-0" style={{ clipPath: `inset(0 ${100 - pos}% 0 0)` }}>
-        <Image src={pair.b} alt="Avant" fill className="object-cover" />
+        <Image src={pair.b} alt={`Plancher de garage avant revêtement polyaspartique — ${pair.city}, ${pair.type}`} fill className="object-cover" />
         <div className="absolute top-4 left-4 bg-dark/80 backdrop-blur-sm text-white text-sm font-bold px-3 py-1.5 rounded-lg uppercase tracking-wide">
           {beforeText}
         </div>
@@ -185,7 +185,7 @@ export default function BeforeAfter() {
               }`}
               aria-label={`Voir ${pair.city}`}
             >
-              <Image src={pair.a} alt={pair.city} fill className="object-cover" />
+              <Image src={pair.a} alt={`Transformation garage ${pair.city} — ${pair.type}`} fill className="object-cover" />
               <div className="absolute inset-0 bg-dark/20" />
               <span className="absolute bottom-1 left-0 right-0 text-center text-white text-[9px] font-semibold">
                 {pair.city}

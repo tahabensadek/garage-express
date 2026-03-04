@@ -21,9 +21,11 @@ export default function Hero() {
       <div className="absolute inset-0">
         <img
           src="/images/hero-car.svg"
-          alt={get('hero.subtitle')}
+          alt="Garage avec plancher polyaspartique professionnel — Garage Express Rive-Sud & Laval"
           className="w-full h-full object-cover"
           style={{ objectPosition: 'center center' }}
+          fetchPriority="high"
+          loading="eager"
         />
         <div className="absolute inset-0 bg-gradient-to-r from-dark/97 via-dark/85 to-dark/30" />
         <div className="absolute inset-0 bg-gradient-to-t from-dark via-transparent to-dark/40" />

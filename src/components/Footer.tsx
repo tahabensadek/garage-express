@@ -11,7 +11,7 @@ export default function Footer() {
       <div className="max-w-7xl mx-auto px-4 py-16">
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-10 mb-12">
           <div className="lg:col-span-2">
-            <Image src="/logo.svg" alt="Garage Express" width={150} height={50} className="h-10 w-auto mb-4" />
+            <Image src="/images/logo-text.png" alt="Garage Express" width={200} height={50} className="h-10 w-auto mb-4" />
             <p className="text-white/40 text-sm leading-relaxed max-w-sm">
               {get('footer.description')}
             </p>
