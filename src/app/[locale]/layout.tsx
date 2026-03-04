@@ -138,7 +138,7 @@ export async function generateMetadata({ params }: { params: { locale: string } 
       siteName: 'Garage Express',
       images: [
         {
-          url: '/images/after-1.png',
+          url: '/images/og-image.png',
           width: 1200,
           height: 630,
           alt: locale === 'fr'
@@ -153,7 +153,7 @@ export async function generateMetadata({ params }: { params: { locale: string } 
       card: 'summary_large_image',
       title: meta.title,
       description: meta.description,
-      images: ['/images/after-1.png'],
+      images: ['/images/og-image.png'],
     },
     robots: {
       index: true,
