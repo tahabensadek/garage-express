@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import '../globals.css'
+import { GoogleAnalytics } from '@next/third-parties/google'
 
 const SITE_URL = 'https://garagexpress.ca'
 
@@ -187,6 +188,7 @@ export default function RootLayout({
         />
       </head>
       <body>{children}</body>
+      <GoogleAnalytics gaId="G-RF7B3D0RPS" />
     </html>
   )
 }
