@@ -20,9 +20,9 @@ export default function Navbar() {
       scrolled ? 'bg-dark/95 backdrop-blur-xl shadow-2xl shadow-black/50 py-3' : 'bg-transparent py-5'
     }`}>
       <div className="max-w-7xl mx-auto px-4 flex items-center justify-between">
-        <div className="flex items-center gap-2">
-          <Image src="/images/logo-icon.png" alt="GE" width={40} height={40} className="h-10 w-auto" />
-          <Image src="/images/logo-text.png" alt="Garage Express" width={160} height={40} className="h-8 w-auto hidden sm:block" />
+        <div className="flex items-center">
+          <Image src="/images/logo-icon.png" alt="Garage Express" width={44} height={44} className="h-11 w-auto sm:hidden" />
+          <Image src="/images/logo-text.png" alt="Garage Express" width={240} height={60} className="h-12 w-auto hidden sm:block" />
         </div>
         
         <div className="flex items-center gap-3">
