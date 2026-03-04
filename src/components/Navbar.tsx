@@ -22,7 +22,7 @@ export default function Navbar() {
       <div className="max-w-7xl mx-auto px-4 flex items-center justify-between">
         <div className="flex items-center">
           <Image src="/images/logo-icon.png" alt="Garage Express" width={44} height={44} className="h-11 w-auto sm:hidden" />
-          <Image src="/images/logo-text.png" alt="Garage Express" width={320} height={80} className="h-20 w-auto hidden sm:block" />
+          <Image src="/images/logo-text.png" alt="Garage Express" width={200} height={50} className="h-11 w-auto hidden sm:block" />
         </div>
         
         <div className="flex items-center gap-3">
