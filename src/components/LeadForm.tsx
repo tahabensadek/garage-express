@@ -44,8 +44,12 @@ export default function LeadForm() {
     setLoading(true)
     
     try {
-      await new Promise(r => setTimeout(r, 900))
-      console.log('Lead soumis:', data)
+      const res = await fetch('/api/submit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+      })
+      if (!res.ok) throw new Error('Erreur envoi')
       setDone(true)
       if (typeof window !== 'undefined' && typeof (window as any).gtag === 'function') {
         (window as any).gtag('event', 'conversion', { send_to: 'AW-17940446235/P5y4CPb31YIcEJv41epC' })
