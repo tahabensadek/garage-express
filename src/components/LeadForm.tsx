@@ -48,7 +48,7 @@ export default function LeadForm() {
       console.log('Lead soumis:', data)
       setDone(true)
       if (typeof window !== 'undefined' && typeof (window as any).gtag === 'function') {
-        (window as any).gtag('event', 'conversion', { send_to: 'AW-17940446235/DRFQCO7B1IIcEJv41epC' })
+        (window as any).gtag('event', 'conversion', { send_to: 'AW-17940446235/P5y4CPb31YIcEJv41epC' })
       }
     } catch (err) {
       alert(get('leadForm.errorAlert'))
