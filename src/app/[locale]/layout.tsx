@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import '../globals.css'
 import { GoogleAnalytics } from '@next/third-parties/google'
+import Script from 'next/script'
 
 const SITE_URL = 'https://garagexpress.ca'
 
@@ -189,7 +190,13 @@ export default function RootLayout({
       </head>
       <body>{children}</body>
       <GoogleAnalytics gaId="G-RF7B3D0RPS" />
-      <script dangerouslySetInnerHTML={{ __html: `gtag('config', 'AW-17940446235');` }} />
+      <Script async src="https://www.googletagmanager.com/gtag/js?id=AW-17940446235" strategy="afterInteractive" />
+      <Script id="google-ads-config" strategy="afterInteractive">{`
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'AW-17940446235');
+      `}</Script>
     </html>
   )
 }
