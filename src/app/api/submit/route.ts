@@ -8,9 +8,9 @@ export async function POST(req: Request) {
   const data = await req.json()
   const { name, email, phone, garageSize, city, cracks, message } = data
 
-  try {
+  const results = await Promise.allSettled([
     // Email à toi
-    await resend.emails.send({
+    resend.emails.send({
       from: 'Garage Express <onboarding@resend.dev>',
       to: 'tahabensadek@gmail.com',
       subject: `🔥 Nouveau lead — ${name} (${city})`,
@@ -35,25 +35,26 @@ export async function POST(req: Request) {
           </div>
         </div>
       `,
-    })
+    }),
 
     // SMS à toi
-    await sms.messages.create({
+    sms.messages.create({
       from: process.env.TWILIO_FROM!,
       to: process.env.TWILIO_TO!,
       body: `🔥 Nouveau lead Garage Express\n${name} — ${city} — ${garageSize}\n📞 ${phone}`,
-    })
+    }),
 
     // SMS de confirmation au client
-    await sms.messages.create({
+    sms.messages.create({
       from: process.env.TWILIO_FROM!,
       to: `+1${phone.replace(/\D/g, '')}`,
       body: `Garage Express: Demande reçue ✓ Un technicien vous appelle dans les 24h. Questions? 514-824-8618`,
-    })
+    }),
+  ])
 
-    return NextResponse.json({ ok: true })
-  } catch (err) {
-    console.error('Notification error:', err)
-    return NextResponse.json({ ok: false }, { status: 500 })
-  }
+  results.forEach((r, i) => {
+    if (r.status === 'rejected') console.error(`Notification ${i} failed:`, r.reason)
+  })
+
+  return NextResponse.json({ ok: true })
 }
