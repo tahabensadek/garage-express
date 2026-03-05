@@ -23,10 +23,10 @@
     "scroll": "Défiler"
   },
   "socialProof": {
-    "stat1": "500+",
+    "stat1": "100+",
     "stat1Label": "Garages transformés",
     "stat1Sub": "depuis notre fondation",
-    "stat2": "4.9★",
+    "stat2": "5★",
     "stat2Label": "Note Google",
     "stat2Sub": "sur 200+ avis vérifiés",
     "stat3": "15 ans",
@@ -141,7 +141,7 @@
     "endText": "Installation complète en ~8h. Prêt à marcher dessus le soir même. Véhicules admis après 24h. Pleine résistance en 72h."
   },
   "testimonials": {
-    "rating": "4.9/5",
+    "rating": "5/5",
     "verified": "200+ avis Google vérifiés",
     "title": "Ce que disent",
     "titleHighlight": "vos voisins.",
@@ -180,12 +180,12 @@
     "p2": "On utilise exclusivement du polyaspartique de grade commercial — la même technologie qu'on retrouve dans les garages de concessionnaires automobiles, les entrepôts industriels et les cliniques médicales. Pas des produits de quincaillerie grande surface.",
     "p3Pre": "Notre modèle est simple :",
     "p3Bold": "moins de chantiers, mieux faits",
-    "p3Post": ". On limite volontairement notre volume pour que chaque client reçoive le niveau de soin qu'il mérite. C'est pour ça qu'on a une note de 4.9/5 sur Google.",
+    "p3Post": ". On limite volontairement notre volume pour que chaque client reçoive le niveau de soin qu'il mérite. C'est pour ça qu'on a une note de 5/5 sur Google.",
     "card1Title": "Basés sur la Rive-Sud",
     "card1Desc": "On connaît les conditions hivernales d'ici. On installe pour elles.",
     "card2Title": "Techniciens certifiés",
     "card2Desc": "Formation continue, produits de grade commercial, standards élevés.",
-    "card3Title": "500+ clients dans la région",
+    "card3Title": "100+ clients dans la région",
     "card3Desc": "Vos voisins nous connaissent. Demandez-leur.",
     "card4Title": "Équipement professionnel",
     "card4Desc": "Rectifieuses diamant, aspirateurs HEPA, systèmes de mélange précis.",

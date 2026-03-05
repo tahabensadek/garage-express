@@ -69,7 +69,7 @@ function buildSchemas(locale: string) {
     })),
     aggregateRating: {
       '@type': 'AggregateRating',
-      ratingValue: '4.9',
+      ratingValue: '5',
       reviewCount: '200',
       bestRating: '5',
       worstRating: '1',

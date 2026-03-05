@@ -23,10 +23,10 @@
     "scroll": "Scroll"
   },
   "socialProof": {
-    "stat1": "500+",
+    "stat1": "100+",
     "stat1Label": "Garages transformed",
     "stat1Sub": "since our founding",
-    "stat2": "4.9★",
+    "stat2": "5★",
     "stat2Label": "Google rating",
     "stat2Sub": "from 200+ verified reviews",
     "stat3": "15 years",
@@ -141,7 +141,7 @@
     "endText": "Complete installation in ~8h. Ready to walk on same evening. Vehicles in after 24h. Full strength in 72h."
   },
   "testimonials": {
-    "rating": "4.9/5",
+    "rating": "5/5",
     "verified": "200+ verified Google reviews",
     "title": "What your",
     "titleHighlight": "neighbors say.",
@@ -180,12 +180,12 @@
     "p2": "We exclusively use commercial-grade polyaspartic — the same technology found in car dealership garages, industrial warehouses, and medical clinics. Not big-box hardware store products.",
     "p3Pre": "Our model is simple:",
     "p3Bold": "fewer jobs, done better",
-    "p3Post": ". We intentionally limit our volume so every client gets the level of care they deserve. That's why we have a 4.9/5 rating on Google.",
+    "p3Post": ". We intentionally limit our volume so every client gets the level of care they deserve. That's why we have a 5/5 rating on Google.",
     "card1Title": "Based on the South Shore",
     "card1Desc": "We know the winter conditions here. We install for them.",
     "card2Title": "Certified technicians",
     "card2Desc": "Ongoing training, commercial-grade products, high standards.",
-    "card3Title": "500+ clients in the region",
+    "card3Title": "100+ clients in the region",
     "card3Desc": "Your neighbors know us. Ask them.",
     "card4Title": "Professional equipment",
     "card4Desc": "Diamond grinders, HEPA vacuums, precision mixing systems.",
