@@ -1,12 +1,15 @@
 import { Resend } from 'resend'
+import twilio from 'twilio'
 import { NextResponse } from 'next/server'
 
 export async function POST(req: Request) {
   const resend = new Resend(process.env.RESEND_API_KEY)
+  const sms = twilio(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TOKEN)
   const data = await req.json()
   const { name, email, phone, garageSize, city, cracks, message } = data
 
   try {
+    // Email à toi
     await resend.emails.send({
       from: 'Garage Express <onboarding@resend.dev>',
       to: 'tahabensadek@gmail.com',
@@ -34,9 +37,23 @@ export async function POST(req: Request) {
       `,
     })
 
+    // SMS à toi
+    await sms.messages.create({
+      from: process.env.TWILIO_FROM!,
+      to: process.env.TWILIO_TO!,
+      body: `🔥 Nouveau lead Garage Express\n${name} — ${city} — ${garageSize}\n📞 ${phone}`,
+    })
+
+    // SMS de confirmation au client
+    await sms.messages.create({
+      from: process.env.TWILIO_FROM!,
+      to: `+1${phone.replace(/\D/g, '')}`,
+      body: `Garage Express: Demande reçue ✓ Un technicien vous appelle dans les 24h. Questions? 514-824-8618`,
+    })
+
     return NextResponse.json({ ok: true })
   } catch (err) {
-    console.error('Resend error:', err)
+    console.error('Notification error:', err)
     return NextResponse.json({ ok: false }, { status: 500 })
   }
 }
