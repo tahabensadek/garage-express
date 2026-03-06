@@ -48,7 +48,7 @@ export default function ColorSelector() {
           {featured.map((color, i) => (
             <div
               key={i}
-              className="relative rounded-2xl overflow-hidden cursor-pointer group aspect-square"
+              className="relative rounded-2xl overflow-hidden cursor-pointer group h-48 sm:h-56"
               onMouseEnter={() => setHovered(i)}
               onMouseLeave={() => setHovered(null)}
             >
