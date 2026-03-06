@@ -34,6 +34,30 @@ export async function POST(req: Request) {
   const { name, email, phone, garageSize, city, cracks, message, locale } = data
   const t = locale === 'en' ? copy.en : copy.fr
 
+  // GoHighLevel CRM
+  await fetch('https://rest.gohighlevel.com/v1/contacts/', {
+    method: 'POST',
+    headers: {
+      Authorization: `Bearer ${process.env.GHL_API_KEY}`,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      locationId: process.env.GHL_LOCATION_ID,
+      firstName: name.split(' ')[0],
+      lastName: name.split(' ').slice(1).join(' ') || '',
+      email,
+      phone: `+1${phone.replace(/\D/g, '')}`,
+      city,
+      customField: [
+        { id: 'garage_size', value: garageSize },
+        { id: 'cracks', value: cracks },
+        { id: 'langue', value: locale === 'en' ? 'EN' : 'FR' },
+        { id: 'notes', value: message || '' },
+      ],
+      tags: ['lead-site', locale === 'en' ? 'en' : 'fr'],
+    }),
+  }).catch(e => console.error('GHL failed:', e))
+
   const results = await Promise.allSettled([
     // Email à toi
     resend.emails.send({
