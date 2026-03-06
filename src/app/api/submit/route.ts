@@ -44,6 +44,34 @@ export async function POST(req: Request) {
       body: `🔥 Nouveau lead Garage Express\n${name} — ${city} — ${garageSize}\n📞 ${phone}`,
     }),
 
+    // Email de confirmation au client
+    resend.emails.send({
+      from: 'Garage Express <onboarding@resend.dev>',
+      to: email,
+      subject: `Demande reçue — On vous appelle dans les 24h`,
+      html: `
+        <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto;">
+          <div style="background: #111; padding: 24px; border-radius: 8px 8px 0 0; text-align: center;">
+            <h1 style="color: white; margin: 0; font-size: 22px;">Garage Express</h1>
+          </div>
+          <div style="background: #f9f9f9; padding: 32px; border-radius: 0 0 8px 8px; border: 1px solid #e5e5e5;">
+            <h2 style="color: #111; margin: 0 0 16px;">Bonjour ${name} ✓</h2>
+            <p style="color: #444; line-height: 1.6;">Votre demande de soumission a bien été reçue. Un technicien Garage Express vous appellera dans les <strong>24 heures</strong> au <strong>${phone}</strong> pour confirmer les détails de votre projet.</p>
+            <div style="background: white; border: 1px solid #eee; border-radius: 8px; padding: 20px; margin: 24px 0;">
+              <p style="margin: 0 0 8px; color: #666; font-size: 14px;"><strong>Récapitulatif :</strong></p>
+              <p style="margin: 4px 0; color: #444; font-size: 14px;">📍 Ville : ${city}</p>
+              <p style="margin: 4px 0; color: #444; font-size: 14px;">🏠 Garage : ${garageSize}</p>
+            </div>
+            <p style="color: #444; line-height: 1.6;">En attendant notre appel, vous pouvez nous rejoindre directement :</p>
+            <div style="text-align: center; margin-top: 24px;">
+              <a href="tel:5148248618" style="background: #DC2626; color: white; padding: 14px 32px; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 16px;">📞 514-824-8618</a>
+            </div>
+            <p style="color: #999; font-size: 12px; margin-top: 32px; text-align: center;">Garage Express — Rive-Sud & Montréal</p>
+          </div>
+        </div>
+      `,
+    }),
+
     // SMS de confirmation au client
     sms.messages.create({
       from: process.env.TWILIO_FROM!,
