@@ -57,6 +57,8 @@ export default function ColorSelector() {
                 src={`/flakes/${color.file}.avif`}
                 alt={fr ? color.name : color.nameEn}
                 className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                loading="lazy"
+                decoding="async"
               />
 
               {/* Overlay */}
