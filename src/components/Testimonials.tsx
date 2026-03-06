@@ -40,7 +40,6 @@ export default function Testimonials() {
           <div className="inline-flex items-center gap-2 mb-4">
             {[...Array(5)].map((_,i) => <Star key={i} className="w-5 h-5 fill-primary text-primary" />)}
             <span className="font-bold text-dark ml-1">{get('testimonials.rating')}</span>
-            <span className="text-gray-400">· {get('testimonials.verified')}</span>
           </div>
           <h2 className="font-display text-5xl sm:text-6xl font-black text-dark uppercase leading-tight mb-4">
             {get('testimonials.title')}
