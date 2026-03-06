@@ -34,28 +34,6 @@ export async function POST(req: Request) {
   const { name, email, phone, garageSize, city, cracks, message, locale } = data
   const t = locale === 'en' ? copy.en : copy.fr
 
-  // Airtable CRM
-  await fetch(`https://api.airtable.com/v0/${process.env.AIRTABLE_BASE_ID}/${process.env.AIRTABLE_TABLE_ID}`, {
-    method: 'POST',
-    headers: {
-      Authorization: `Bearer ${process.env.AIRTABLE_TOKEN}`,
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      fields: {
-        Nom: name,
-        Téléphone: phone,
-        Email: email,
-        Ville: city,
-        Garage: garageSize,
-        Fissures: cracks,
-        Langue: locale === 'en' ? 'EN' : 'FR',
-        Notes: message || '',
-        Statut: 'Nouveau',
-      },
-    }),
-  }).catch(e => console.error('Airtable failed:', e))
-
   const results = await Promise.allSettled([
     // Email à toi
     resend.emails.send({
