@@ -59,7 +59,7 @@ export default function Footer() {
 
         <div className="border-t border-white/5 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
           <p className="text-white/25 text-xs">© {new Date().getFullYear()} Garage Express. {get('footer.copyright')}</p>
-          <p className="text-white/25 text-xs">RBQ : À venir · {get('footer.madewith')}</p>
+          <p className="text-white/25 text-xs">{get('footer.madewith')}</p>
         </div>
       </div>
     </footer>
