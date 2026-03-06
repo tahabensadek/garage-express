@@ -9,7 +9,7 @@ type FormData = {
 }
 
 export default function LeadForm() {
-  const { get } = useTranslations()
+  const { get, locale } = useTranslations()
   const [step, setStep] = useState(1)
   const [data, setData] = useState<FormData>({
     name: '', phone: '', email: '', garageSize: '', city: '', cracks: '', message: ''
@@ -47,7 +47,7 @@ export default function LeadForm() {
       const res = await fetch('/api/submit', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data),
+        body: JSON.stringify({ ...data, locale }),
       })
       if (!res.ok) throw new Error('Erreur envoi')
       setDone(true)

@@ -2,11 +2,37 @@ import { Resend } from 'resend'
 import twilio from 'twilio'
 import { NextResponse } from 'next/server'
 
+const copy = {
+  fr: {
+    clientSubject: `Demande reçue — On vous appelle dans les 24h`,
+    clientGreeting: (name: string) => `Bonjour ${name} ✓`,
+    clientBody: (phone: string) => `Votre demande de soumission a bien été reçue. Un technicien Garage Express vous appellera dans les <strong>24 heures</strong> au <strong>${phone}</strong> pour confirmer les détails de votre projet.`,
+    clientRecap: 'Récapitulatif :',
+    clientCity: (city: string) => `📍 Ville : ${city}`,
+    clientGarage: (size: string) => `🏠 Garage : ${size}`,
+    clientWaiting: `En attendant notre appel, vous pouvez nous rejoindre directement :`,
+    clientCta: `📞 514-824-8618`,
+    clientSms: `Garage Express: Demande reçue ✓ Un technicien vous appelle dans les 24h. Questions? 514-824-8618`,
+  },
+  en: {
+    clientSubject: `Request received — We'll call you within 24h`,
+    clientGreeting: (name: string) => `Hello ${name} ✓`,
+    clientBody: (phone: string) => `Your quote request has been received. A Garage Express technician will call you within <strong>24 hours</strong> at <strong>${phone}</strong> to confirm your project details.`,
+    clientRecap: 'Summary:',
+    clientCity: (city: string) => `📍 City: ${city}`,
+    clientGarage: (size: string) => `🏠 Garage: ${size}`,
+    clientWaiting: `While you wait for our call, you can reach us directly:`,
+    clientCta: `📞 514-824-8618`,
+    clientSms: `Garage Express: Request received ✓ A technician will call you within 24h. Questions? 514-824-8618`,
+  },
+}
+
 export async function POST(req: Request) {
   const resend = new Resend(process.env.RESEND_API_KEY)
   const sms = twilio(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TOKEN)
   const data = await req.json()
-  const { name, email, phone, garageSize, city, cracks, message } = data
+  const { name, email, phone, garageSize, city, cracks, message, locale } = data
+  const t = locale === 'en' ? copy.en : copy.fr
 
   const results = await Promise.allSettled([
     // Email à toi
@@ -27,11 +53,40 @@ export async function POST(req: Request) {
               <tr><td style="padding: 10px 0; border-bottom: 1px solid #eee; font-weight: bold;">Ville</td><td style="padding: 10px 0; border-bottom: 1px solid #eee;">${city}</td></tr>
               <tr><td style="padding: 10px 0; border-bottom: 1px solid #eee; font-weight: bold;">Taille garage</td><td style="padding: 10px 0; border-bottom: 1px solid #eee;">${garageSize}</td></tr>
               <tr><td style="padding: 10px 0; border-bottom: 1px solid #eee; font-weight: bold;">Fissures</td><td style="padding: 10px 0; border-bottom: 1px solid #eee;">${cracks}</td></tr>
+              <tr><td style="padding: 10px 0; border-bottom: 1px solid #eee; font-weight: bold;">Langue</td><td style="padding: 10px 0; border-bottom: 1px solid #eee;">${locale === 'en' ? '🇬🇧 EN' : '🇫🇷 FR'}</td></tr>
               ${message ? `<tr><td style="padding: 10px 0; font-weight: bold;">Notes</td><td style="padding: 10px 0;">${message}</td></tr>` : ''}
             </table>
             <div style="margin-top: 24px; text-align: center;">
               <a href="tel:${phone}" style="background: #DC2626; color: white; padding: 14px 32px; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 16px;">📞 Appeler ${name}</a>
             </div>
+          </div>
+        </div>
+      `,
+    }),
+
+    // Email de confirmation au client (FR ou EN)
+    resend.emails.send({
+      from: 'Garage Express <onboarding@resend.dev>',
+      to: email,
+      subject: t.clientSubject,
+      html: `
+        <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto;">
+          <div style="background: #111; padding: 24px; border-radius: 8px 8px 0 0; text-align: center;">
+            <h1 style="color: white; margin: 0; font-size: 22px;">Garage Express</h1>
+          </div>
+          <div style="background: #f9f9f9; padding: 32px; border-radius: 0 0 8px 8px; border: 1px solid #e5e5e5;">
+            <h2 style="color: #111; margin: 0 0 16px;">${t.clientGreeting(name)}</h2>
+            <p style="color: #444; line-height: 1.6;">${t.clientBody(phone)}</p>
+            <div style="background: white; border: 1px solid #eee; border-radius: 8px; padding: 20px; margin: 24px 0;">
+              <p style="margin: 0 0 8px; color: #666; font-size: 14px;"><strong>${t.clientRecap}</strong></p>
+              <p style="margin: 4px 0; color: #444; font-size: 14px;">${t.clientCity(city)}</p>
+              <p style="margin: 4px 0; color: #444; font-size: 14px;">${t.clientGarage(garageSize)}</p>
+            </div>
+            <p style="color: #444; line-height: 1.6;">${t.clientWaiting}</p>
+            <div style="text-align: center; margin-top: 24px;">
+              <a href="tel:5148248618" style="background: #DC2626; color: white; padding: 14px 32px; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 16px;">${t.clientCta}</a>
+            </div>
+            <p style="color: #999; font-size: 12px; margin-top: 32px; text-align: center;">Garage Express — Rive-Sud & Montréal</p>
           </div>
         </div>
       `,
@@ -44,39 +99,11 @@ export async function POST(req: Request) {
       body: `🔥 Nouveau lead Garage Express\n${name} — ${city} — ${garageSize}\n📞 ${phone}`,
     }),
 
-    // Email de confirmation au client
-    resend.emails.send({
-      from: 'Garage Express <onboarding@resend.dev>',
-      to: email,
-      subject: `Demande reçue — On vous appelle dans les 24h`,
-      html: `
-        <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto;">
-          <div style="background: #111; padding: 24px; border-radius: 8px 8px 0 0; text-align: center;">
-            <h1 style="color: white; margin: 0; font-size: 22px;">Garage Express</h1>
-          </div>
-          <div style="background: #f9f9f9; padding: 32px; border-radius: 0 0 8px 8px; border: 1px solid #e5e5e5;">
-            <h2 style="color: #111; margin: 0 0 16px;">Bonjour ${name} ✓</h2>
-            <p style="color: #444; line-height: 1.6;">Votre demande de soumission a bien été reçue. Un technicien Garage Express vous appellera dans les <strong>24 heures</strong> au <strong>${phone}</strong> pour confirmer les détails de votre projet.</p>
-            <div style="background: white; border: 1px solid #eee; border-radius: 8px; padding: 20px; margin: 24px 0;">
-              <p style="margin: 0 0 8px; color: #666; font-size: 14px;"><strong>Récapitulatif :</strong></p>
-              <p style="margin: 4px 0; color: #444; font-size: 14px;">📍 Ville : ${city}</p>
-              <p style="margin: 4px 0; color: #444; font-size: 14px;">🏠 Garage : ${garageSize}</p>
-            </div>
-            <p style="color: #444; line-height: 1.6;">En attendant notre appel, vous pouvez nous rejoindre directement :</p>
-            <div style="text-align: center; margin-top: 24px;">
-              <a href="tel:5148248618" style="background: #DC2626; color: white; padding: 14px 32px; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 16px;">📞 514-824-8618</a>
-            </div>
-            <p style="color: #999; font-size: 12px; margin-top: 32px; text-align: center;">Garage Express — Rive-Sud & Montréal</p>
-          </div>
-        </div>
-      `,
-    }),
-
-    // SMS de confirmation au client
+    // SMS de confirmation au client (FR ou EN)
     sms.messages.create({
       from: process.env.TWILIO_FROM!,
       to: `+1${phone.replace(/\D/g, '')}`,
-      body: `Garage Express: Demande reçue ✓ Un technicien vous appelle dans les 24h. Questions? 514-824-8618`,
+      body: t.clientSms,
     }),
   ])
 
