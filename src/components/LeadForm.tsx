@@ -224,7 +224,7 @@ export default function LeadForm() {
                     <div className="flex items-center justify-center gap-4 text-xs text-gray-400 pt-2">
                       <div className="flex items-center gap-1">
                         <Star className="w-3 h-3 fill-primary text-primary" />
-                        <span>4.9/5 Google</span>
+                        <span>5/5 Google</span>
                       </div>
                       <span>•</span>
                       <span>{get('leadForm.trustReviews')}</span>
