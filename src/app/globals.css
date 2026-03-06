@@ -17,6 +17,18 @@ body {
 
 ::selection { background: #DC2626; color: #fff; }
 
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+@keyframes marquee-reverse {
+  0% { transform: translateX(-50%); }
+  100% { transform: translateX(0); }
+}
+.animate-marquee { animation: marquee 60s linear infinite; }
+.animate-marquee-reverse { animation: marquee-reverse 60s linear infinite; }
+.animate-marquee:hover, .animate-marquee-reverse:hover { animation-play-state: paused; }
+
 .font-display { font-family: 'Barlow Condensed', sans-serif; }
 
 /* Scroll fade-in animation */

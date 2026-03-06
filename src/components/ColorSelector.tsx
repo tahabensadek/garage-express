@@ -1,34 +1,94 @@
 'use client'
-import { useState } from 'react'
-
 import { useTranslations } from '@/hooks/useTranslations'
 
-const featured = [
-  { file: 'FB-612_SWAN_PILE', name: 'Blanc Immaculé', nameEn: 'Pure White', tag: 'Clair', tagEn: 'Light' },
-  { file: 'FB-951_SAND_DOLLAR_PILE', name: 'Sable Chaud', nameEn: 'Warm Sand', tag: 'Beige', tagEn: 'Beige' },
-  { file: 'FB-901_OPAL_PILE', name: 'Gris Perle', nameEn: 'Pearl Gray', tag: 'Neutre', tagEn: 'Neutral', popular: true },
-  { file: 'FB-902_SIBERIAN_PILE', name: 'Gris Classique', nameEn: 'Classic Gray', tag: 'Neutre', tagEn: 'Neutral', popular: true },
-  { file: 'FB-6003_WEATHERED_GRAY_PILE-2', name: 'Gris Ardoise', nameEn: 'Slate Gray', tag: 'Neutre foncé', tagEn: 'Dark Neutral' },
-  { file: 'F9202_CARBON_PILE', name: 'Anthracite', nameEn: 'Anthracite', tag: 'Sombre', tagEn: 'Dark' },
-  { file: 'FB-915_RAVEN_PILE', name: 'Noir Absolu', nameEn: 'Absolute Black', tag: 'Sombre', tagEn: 'Dark' },
-  { file: 'FB-933_SMOKEY_BLUE_PILE', name: 'Bleu Fumé', nameEn: 'Smokey Blue', tag: 'Couleur', tagEn: 'Color' },
-  { file: 'FB-927_JUNIPER_PILE', name: 'Vert Forêt', nameEn: 'Forest Green', tag: 'Couleur', tagEn: 'Color' },
-  { file: 'F9305_GARNET_PILE', name: 'Rouge Brique', nameEn: 'Brick Red', tag: 'Couleur', tagEn: 'Color' },
-  { file: 'FB-504_SAFARI_PILE', name: 'Brun Naturel', nameEn: 'Natural Brown', tag: 'Terre', tagEn: 'Earth' },
-  { file: 'FB-907_GALAXY_PILE', name: 'Galaxie', nameEn: 'Galaxy', tag: 'Spectaculaire', tagEn: 'Spectacular' },
+const allFlakes = [
+  'F3080_LANAI_GRAY_PILE','F9202_CARBON_PILE','F9203_FELDSPAR_PILE','F9205_SABLE_PILE',
+  'F9303_PUMICE_PILE','F9304_OBSIDIAN_PILE','F9305_GARNET_PILE','F9307_SCHIST_PILE',
+  'F9309_BASALT_PILE','F9311_DOLERITE_PILE','F9313_SPILITE_PILE','F9317_METAPELITE_PILE',
+  'F9318_ARKOSE_PILE','F9319_TALUS_PILE','F9320_SOAPSTONE_PILE','FB-1005_BIRCH_BARK_PILE',
+  'FB-127_CABIN_FEVER_PILE','FB-130_CANNOLI_PILE','FB-310_ORBIT_PILE','FB-320_CROSSBOW_PILE',
+  'FB-330_POLAR_PILE','FB-411_DOMINO_PILE','FB-414_GRAVEL_PILE','FB-421_SHORELINE_PILE',
+  'FB-424_QUICKSILVER_PILE','FB-427_STONEHENGE_PILE','FB-504_SAFARI_PILE','FB-506_RAPIDS_PILE',
+  'FB-507_REED_PILE','FB-508_STINGER_PILE','FB-509_PRAIRIE_PILE','FB-513_COYOTE_PILE',
+  'FB-514_NORDIC_GREEN_PILE','FB-516_WOODLAND_PILE','FB-517_OUTBACK_PILE','FB-6001_BLIZZARD_PILE',
+  'FB-6002_SYCAMORE_PILE','FB-6003_WEATHERED_GRAY_PILE-2','FB-602_SNOWFALL_PILE','FB-608_SUBMARINE_PILE',
+  'FB-609_MORNING_DEW_PILE','FB-612_SWAN_PILE','FB-613_TRAILMIX_PILE','FB-616_WOMBAT_PILE',
+  'FB-703_FOG_PILE','FB-704_ARCTIC_PILE','FB-706_MADRAS_PILE','FB-708_STONEWASH_PILE',
+  'FB-711_COMET_PILE','FB-712_OASIS_PILE','FB-713_KEYSTONE_PILE','FB-714_MUSHROOM_PILE',
+  'FB-715_NIGHTFALL_PILE','FB-716_CREEKBED_PILE','FB-720_STEELCUT_1.4','FB-721_SUMMIT_1.4',
+  'FB-722_AVALANCH_1.4','FB-723_BURROW_1.4','FB-724_OSPREY_1.4','FB-725_BRICKYARD_1.4',
+  'FB-726_ANVIL_1.4','FB-801_ROCKY_RIDGE_PILE','FB-802_SEA_MIST_PILE','FB-803_SEA_CREST_PILE',
+  'FB-806_STONY_CREEK_PILE','FB-807_TIDAL_WAVE_PILE','FB-811_KOALA_PILE','FB-817_COLONIAL_PILE',
+  'FB-818_VICTORIAN_PILE','FB-823_DOVETAIL_PILE','FB-901_OPAL_PILE','FB-902_SIBERIAN_PILE',
+  'FB-903_SILVER_BELLS_PILE','FB-904_LUNAR_PILE','FB-905_FEATHER_GRAY_PILE','FB-906_MOON_MIST_PILE',
+  'FB-907_GALAXY_PILE','FB-908_STARGAZER_PILE','FB-909_TIMBERWOLF_PILE','FB-910_HOUNDSTOOTH_PILE',
+  'FB-911_WILD_DOVE_PILE','FB-912_THUNDER_PILE','FB-913_SHADOW_PILE','FB-914_GARGOYLE_PILE',
+  'FB-915_RAVEN_PILE','FB-916_GRACIOUS_1.4','FB-917_FULL_MOON_PILE','FB-918_CAPRICORN_PILE',
+  'FB-919_WOVEN_PILE','FB-920_SUAVE_PILE','FB-921_WATER_LILY_PILE','FB-922_NIMBUS_PILE',
+  'FB-923_JAVA_PILE','FB-924_MOOSE_PILE','FB-925_CAST_IRON_PILE','FB-926_CELESTIAL_PILE',
+  'FB-927_JUNIPER_PILE','FB-928_AVIATOR_PILE','FB-929_CURRENT_PILE','FB-930_FROSTBITE_PILE',
+  'FB-931_SEDUM_PILE','FB-932_MAGMA_PILE','FB-933_SMOKEY_BLUE_PILE','FB-934_BLACK_ICE_PILE',
+  'FB-935_CARDAMOM_PILE','FB-936_MERCURY_PILE','FB-937_SLALOM_PILE','FB-938_SPROUT_PILE',
+  'FB-939_CARAWAY_PILE','FB-940_GLACIAL_PILE','FB-941_BRAMBLE_PILE','FB-942_MAGNOLIA_PILE',
+  'FB-943_LAPIS_PILE','FB-944_RAINSTORM_PILE','FB-945_KISMET_PILE','FB-946_VOLTAGE_PILE',
+  'FB-947_CHICORY_PILE','FB-948_FIG_PILE','FB-951_SAND_DOLLAR_PILE','FB-954_BUFFALO_PILE',
+  'FB-959_BAMBI_PILE','FB-966_LOON_PILE','FB-967_CHICKADEE_PILE','FB-968_WAXWING_PILE',
+  'FB-969_ROSY_FINCH_PILE','FB-970_WREN_PILE','FB-971_MERINO_PILE','FB-972_SPARROW_PILE',
+  'FB-973_ROBIN_PILE','FB-974_QUAIL_PILE','FB-975_WOODPECKER_PILE','FB-976_HERON_PILE',
+  'FB-977_THYME_PILE','FB-978_CITRINE_PILE','FB-979_MOREL_PILE','FB-980-DINGO_PILE','FB-981_CHENILLE_PILE',
 ]
+
+function toLabel(file: string) {
+  return file
+    .replace(/_PILE$/, '')
+    .replace(/_1\.4$/, '')
+    .replace(/^F[B0-9]+-?\d*_?/, '')
+    .replace(/_/g, ' ')
+    .toLowerCase()
+    .replace(/\b\w/g, c => c.toUpperCase())
+}
+
+const row1 = allFlakes.slice(0, 69)
+const row2 = allFlakes.slice(69)
+
+function MarqueeRow({ files, reverse = false }: { files: string[], reverse?: boolean }) {
+  const doubled = [...files, ...files]
+  return (
+    <div className="overflow-hidden">
+      <div
+        className={`flex gap-4 ${reverse ? 'animate-marquee-reverse' : 'animate-marquee'}`}
+        style={{ width: 'max-content' }}
+      >
+        {doubled.map((file, i) => (
+          <div key={i} className="group relative flex-shrink-0 w-24 h-24 sm:w-28 sm:h-28">
+            <div className="w-full h-full rounded-full overflow-hidden border-2 border-white/10 group-hover:border-primary transition-all duration-300 group-hover:scale-110">
+              <img
+                src={`/flakes/${file}.avif`}
+                alt={toLabel(file)}
+                loading="lazy"
+                decoding="async"
+                className="w-full h-full object-cover"
+              />
+            </div>
+            {/* Tooltip */}
+            <div className="absolute -top-10 left-1/2 -translate-x-1/2 bg-dark border border-white/20 text-white text-xs px-2 py-1 rounded-lg whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-10">
+              {toLabel(file)}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  )
+}
 
 export default function ColorSelector() {
   const { locale } = useTranslations()
-  const [hovered, setHovered] = useState<number | null>(null)
   const fr = locale !== 'en'
 
   return (
     <section className="py-24 bg-dark overflow-hidden">
-      <div className="max-w-7xl mx-auto px-4">
-
-        {/* Header */}
-        <div className="text-center mb-16">
+      <div className="max-w-7xl mx-auto px-4 mb-16">
+        <div className="text-center">
           <span className="inline-block text-primary text-sm font-bold tracking-widest uppercase mb-4">
             {fr ? '137 nuances disponibles' : '137 shades available'}
           </span>
@@ -38,62 +98,31 @@ export default function ColorSelector() {
           </h2>
           <p className="text-white/50 text-lg max-w-xl mx-auto">
             {fr
-              ? '137 mélanges exclusifs Torginol. Du plus classique au plus spectaculaire — un seul bon choix.'
-              : '137 exclusive Torginol blends. From the most classic to the most spectacular — one perfect choice.'}
+              ? '137 mélanges exclusifs Torginol. Du plus classique au plus spectaculaire.'
+              : '137 exclusive Torginol blends. From the most classic to the most spectacular.'}
           </p>
         </div>
+      </div>
 
-        {/* Color grid */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 mb-6">
-          {featured.map((color, i) => (
-            <div
-              key={i}
-              className="relative rounded-2xl overflow-hidden cursor-pointer group h-48 sm:h-56"
-              onMouseEnter={() => setHovered(i)}
-              onMouseLeave={() => setHovered(null)}
-            >
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src={`/flakes/${color.file}.avif`}
-                alt={fr ? color.name : color.nameEn}
-                className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                loading="lazy"
-                decoding="async"
-              />
+      {/* Carousels */}
+      <div className="space-y-4">
+        <MarqueeRow files={row1} />
+        <MarqueeRow files={row2} reverse />
+      </div>
 
-              {/* Overlay */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-60 group-hover:opacity-90 transition-opacity duration-300" />
-
-              {/* Popular badge */}
-              {color.popular && (
-                <div className="absolute top-3 left-3 bg-primary text-white text-xs font-bold px-2.5 py-1 rounded-full">
-                  {fr ? '⭐ Populaire' : '⭐ Popular'}
-                </div>
-              )}
-
-              {/* Color info */}
-              <div className="absolute bottom-0 left-0 right-0 p-4">
-                <div className="text-white/60 text-xs mb-1">{fr ? color.tag : color.tagEn}</div>
-                <div className="font-bold text-white text-sm leading-tight">{fr ? color.name : color.nameEn}</div>
-              </div>
-            </div>
-          ))}
-        </div>
-
-        {/* Bottom CTA */}
-        <div className="text-center mt-12">
-          <p className="text-white/40 text-sm mb-6">
-            {fr
-              ? 'Vous hésitez entre plusieurs nuances ? On vous conseille lors de l\'estimé gratuit.'
-              : 'Can\'t decide between shades? We\'ll guide you during your free estimate.'}
-          </p>
-          <a
-            href="#soumission"
-            className="inline-flex items-center gap-2 bg-primary hover:bg-red-700 text-white font-bold px-8 py-4 rounded-xl transition-all text-sm uppercase tracking-wide"
-          >
-            {fr ? 'Obtenir mon estimé gratuit' : 'Get my free estimate'}
-          </a>
-        </div>
+      {/* CTA */}
+      <div className="text-center mt-16 px-4">
+        <p className="text-white/40 text-sm mb-6">
+          {fr
+            ? "Vous hésitez entre plusieurs nuances ? On vous conseille lors de l'estimé gratuit."
+            : "Can't decide between shades? We'll guide you during your free estimate."}
+        </p>
+        <a
+          href="#soumission"
+          className="inline-flex items-center gap-2 bg-primary hover:bg-red-700 text-white font-bold px-8 py-4 rounded-xl transition-all text-sm uppercase tracking-wide"
+        >
+          {fr ? 'Obtenir mon estimé gratuit' : 'Get my free estimate'}
+        </a>
       </div>
     </section>
   )
