@@ -7,6 +7,7 @@ import Benefits from '@/components/Benefits'
 import Pricing from '@/components/Pricing'
 import Process from '@/components/Process'
 import LeadForm from '@/components/LeadForm'
+import ColorSelector from '@/components/ColorSelector'
 import Testimonials from '@/components/Testimonials'
 import About from '@/components/About'
 import FAQ from '@/components/FAQ'
@@ -25,6 +26,7 @@ export default function Home() {
       <Pricing />
       <Process />
       <LeadForm />
+      <ColorSelector />
       <Testimonials />
       <About />
       <FAQ />
