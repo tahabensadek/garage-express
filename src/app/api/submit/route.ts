@@ -37,7 +37,7 @@ export async function POST(req: Request) {
   const results = await Promise.allSettled([
     // Email à toi
     resend.emails.send({
-      from: 'Garage Express <onboarding@resend.dev>',
+      from: 'Garage Express <info@garagexpress.ca>',
       to: 'tahabensadek@gmail.com',
       subject: `🔥 Nouveau lead — ${name} (${city})`,
       html: `
@@ -66,7 +66,7 @@ export async function POST(req: Request) {
 
     // Email de confirmation au client (FR ou EN)
     resend.emails.send({
-      from: 'Garage Express <onboarding@resend.dev>',
+      from: 'Garage Express <info@garagexpress.ca>',
       to: email,
       subject: t.clientSubject,
       html: `
