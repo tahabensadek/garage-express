@@ -67,6 +67,7 @@ export async function POST(req: Request) {
     // Email de confirmation au client (FR ou EN)
     resend.emails.send({
       from: 'Garage Express <info@garagexpress.ca>',
+      replyTo: 'tahabensadek@gmail.com',
       to: email,
       subject: t.clientSubject,
       html: `
