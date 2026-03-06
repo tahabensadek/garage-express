@@ -41,6 +41,6 @@ function getLocale(request: NextRequest): string | undefined {
 export const config = {
   matcher: [
     // Skip all internal paths (_next, api, static files)
-    '/((?!api|_next/static|_next/image|images|favicon.ico|logo.svg).*)',
+    '/((?!api|_next/static|_next/image|images|flakes|favicon|favicon.ico|logo.svg).*)',
   ],
 }
