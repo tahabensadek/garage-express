@@ -22,11 +22,11 @@ export default function Home() {
       <SocialProofBar />
       <Problem />
       <BeforeAfter />
+      <ColorSelector />
       <Benefits />
       <Pricing />
       <Process />
       <LeadForm />
-      <ColorSelector />
       <Testimonials />
       <About />
       <FAQ />
