@@ -86,7 +86,7 @@ function FlakeCircle({ file }: { file: string }) {
 function MarqueeRow({ files, reverse = false, duration }: { files: string[], reverse?: boolean, duration: string }) {
   const doubled = [...files, ...files]
   return (
-    <div className="overflow-hidden">
+    <div className="overflow-x-hidden py-4">
       <div
         className={reverse ? 'marquee-reverse' : 'marquee-forward'}
         style={{ animationDuration: duration, display: 'flex', gap: '1rem', width: 'max-content' }}
