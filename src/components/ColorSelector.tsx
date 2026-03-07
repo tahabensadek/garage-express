@@ -1,4 +1,6 @@
 'use client'
+import { useState } from 'react'
+import { X } from 'lucide-react'
 import { useTranslations } from '@/hooks/useTranslations'
 
 const allFlakes = [
@@ -42,12 +44,16 @@ function toLabel(file: string) {
   return file
     .replace(/_PILE$/, '')
     .replace(/_1\.4$/, '')
-    .replace(/^(FB?-?\d+[A-Z]?-?\d*_?)/, '')
-    .replace(/^[A-Z0-9]+-?\d*_/, '')
+    .replace(/^(FB?-\d+[A-Z]?-?\d*_|F\d+_)/, '')
     .replace(/_/g, ' ')
     .trim()
     .toLowerCase()
     .replace(/\b\w/g, c => c.toUpperCase())
+}
+
+function toCode(file: string) {
+  const match = file.match(/^(F[B]?-?\d+[A-Z]?-?\d*|F\d+)/)
+  return match ? match[0] : ''
 }
 
 const chunk = Math.ceil(allFlakes.length / 3)
@@ -56,42 +62,108 @@ const rows = [
   allFlakes.slice(chunk, chunk * 2),
   allFlakes.slice(chunk * 2),
 ]
-const speeds = ['50s', '65s', '55s']
+const speeds = ['50s', '70s', '58s']
 const directions = [false, true, false]
 
-function FlakeCircle({ file }: { file: string }) {
+function FlakeCircle({ file, onClick }: { file: string, onClick: () => void }) {
   const label = toLabel(file)
   return (
-    <div className="group relative flex-shrink-0 w-24 h-24 sm:w-28 sm:h-28 cursor-pointer">
-      {/* Circle image */}
-      <div className="w-full h-full rounded-full overflow-hidden border-2 border-white/10 transition-all duration-300 group-hover:border-primary group-hover:shadow-[0_0_20px_4px_rgba(220,38,38,0.5)] group-hover:scale-125 group-hover:z-20 relative">
+    <button
+      onClick={onClick}
+      className="group relative flex-shrink-0 w-24 h-24 sm:w-28 sm:h-28 cursor-pointer focus:outline-none"
+    >
+      <div className="w-full h-full rounded-full overflow-hidden border-2 border-white/10 transition-all duration-300 group-hover:border-primary group-hover:shadow-[0_0_24px_6px_rgba(220,38,38,0.45)] group-hover:scale-110">
         <img
           src={`/flakes/${file}.avif`}
           alt={label}
           loading="lazy"
           decoding="async"
-          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+          className="w-full h-full object-cover"
         />
-        {/* Inner overlay on hover */}
-        <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col items-center justify-center rounded-full">
-          <span className="text-white font-black text-[10px] sm:text-xs text-center leading-tight px-2 uppercase tracking-wide">
-            {label}
-          </span>
-        </div>
+      </div>
+      {/* Name pill on hover */}
+      <div className="absolute -bottom-7 left-1/2 -translate-x-1/2 whitespace-nowrap bg-white text-dark text-[10px] font-bold px-2 py-0.5 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none">
+        {label}
+      </div>
+    </button>
+  )
+}
+
+function MarqueeRow({ files, reverse = false, duration, onSelect }: {
+  files: string[], reverse?: boolean, duration: string, onSelect: (f: string) => void
+}) {
+  const doubled = [...files, ...files]
+  return (
+    <div className="overflow-x-hidden py-6">
+      <div
+        className={reverse ? 'marquee-reverse' : 'marquee-forward'}
+        style={{ animationDuration: duration, display: 'flex', gap: '1rem', width: 'max-content' }}
+      >
+        {doubled.map((file, i) => (
+          <FlakeCircle key={i} file={file} onClick={() => onSelect(file)} />
+        ))}
       </div>
     </div>
   )
 }
 
-function MarqueeRow({ files, reverse = false, duration }: { files: string[], reverse?: boolean, duration: string }) {
-  const doubled = [...files, ...files]
+function ColorModal({ file, onClose, fr }: { file: string, onClose: () => void, fr: boolean }) {
+  const label = toLabel(file)
+  const code = toCode(file)
+
   return (
-    <div className="overflow-x-hidden py-4">
+    <div
+      className="fixed inset-0 z-50 flex items-center justify-center p-4"
+      onClick={onClose}
+      style={{ animation: 'fadeIn 0.2s ease' }}
+    >
+      {/* Backdrop */}
+      <div className="absolute inset-0 bg-black/80 backdrop-blur-sm" />
+
+      {/* Modal */}
       <div
-        className={reverse ? 'marquee-reverse' : 'marquee-forward'}
-        style={{ animationDuration: duration, display: 'flex', gap: '1rem', width: 'max-content' }}
+        className="relative z-10 bg-[#111] rounded-3xl overflow-hidden max-w-sm w-full shadow-2xl"
+        onClick={e => e.stopPropagation()}
+        style={{ animation: 'scaleIn 0.25s cubic-bezier(0.34,1.56,0.64,1)' }}
       >
-        {doubled.map((file, i) => <FlakeCircle key={i} file={file} />)}
+        {/* Close */}
+        <button
+          onClick={onClose}
+          className="absolute top-4 right-4 z-10 w-8 h-8 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center transition-colors"
+        >
+          <X className="w-4 h-4 text-white" />
+        </button>
+
+        {/* Image — grand cercle centré */}
+        <div className="flex justify-center pt-10 pb-6 px-8 bg-white/5">
+          <div className="w-52 h-52 rounded-full overflow-hidden border-4 border-primary shadow-[0_0_40px_10px_rgba(220,38,38,0.3)]">
+            <img
+              src={`/flakes/${file}.avif`}
+              alt={label}
+              className="w-full h-full object-cover"
+            />
+          </div>
+        </div>
+
+        {/* Info */}
+        <div className="px-8 pb-8 text-center">
+          {code && (
+            <p className="text-primary text-xs font-bold tracking-widest uppercase mb-1">{code}</p>
+          )}
+          <h3 className="font-display text-4xl font-black text-white uppercase mb-2">{label}</h3>
+          <p className="text-white/40 text-sm mb-6">
+            {fr
+              ? 'Flocons polyaspartiques Torginol — résistant, durable, et magnifique pour des décennies.'
+              : 'Torginol polyaspartic flakes — resistant, durable, and stunning for decades.'}
+          </p>
+          <a
+            href="#soumission"
+            onClick={onClose}
+            className="block w-full bg-primary hover:bg-red-700 text-white font-bold py-3.5 rounded-xl transition-colors text-sm uppercase tracking-wide"
+          >
+            {fr ? `Je veux ${label}` : `I want ${label}`}
+          </a>
+        </div>
       </div>
     </div>
   )
@@ -100,43 +172,56 @@ function MarqueeRow({ files, reverse = false, duration }: { files: string[], rev
 export default function ColorSelector() {
   const { locale } = useTranslations()
   const fr = locale !== 'en'
+  const [selected, setSelected] = useState<string | null>(null)
 
   return (
-    <section className="py-24 bg-dark overflow-hidden">
-      <div className="max-w-7xl mx-auto px-4 mb-16 text-center">
-        <span className="inline-block text-primary text-sm font-bold tracking-widest uppercase mb-4">
-          {fr ? '137 nuances disponibles' : '137 shades available'}
-        </span>
-        <h2 className="font-display text-5xl sm:text-6xl font-black text-white uppercase leading-tight mb-4">
-          {fr ? 'Votre garage,' : 'Your garage,'}
-          <span className="block text-gradient">{fr ? 'votre signature.' : 'your signature.'}</span>
-        </h2>
-        <p className="text-white/50 text-lg max-w-xl mx-auto">
-          {fr
-            ? '137 mélanges exclusifs Torginol. Du plus classique au plus spectaculaire.'
-            : '137 exclusive Torginol blends. From the most classic to the most spectacular.'}
-        </p>
-      </div>
+    <>
+      <section className="py-24 bg-dark overflow-hidden">
+        <div className="max-w-7xl mx-auto px-4 mb-16 text-center">
+          <span className="inline-block text-primary text-sm font-bold tracking-widest uppercase mb-4">
+            {fr ? '137 nuances disponibles' : '137 shades available'}
+          </span>
+          <h2 className="font-display text-5xl sm:text-6xl font-black text-white uppercase leading-tight mb-4">
+            {fr ? 'Votre garage,' : 'Your garage,'}
+            <span className="block text-gradient">{fr ? 'votre signature.' : 'your signature.'}</span>
+          </h2>
+          <p className="text-white/50 text-lg max-w-xl mx-auto">
+            {fr
+              ? 'Cliquez sur une couleur pour la voir en détail.'
+              : 'Click on a color to see it up close.'}
+          </p>
+        </div>
 
-      <div className="space-y-4">
-        {rows.map((row, i) => (
-          <MarqueeRow key={i} files={row} reverse={directions[i]} duration={speeds[i]} />
-        ))}
-      </div>
+        <div className="space-y-0">
+          {rows.map((row, i) => (
+            <MarqueeRow
+              key={i}
+              files={row}
+              reverse={directions[i]}
+              duration={speeds[i]}
+              onSelect={setSelected}
+            />
+          ))}
+        </div>
 
-      <div className="text-center mt-16 px-4">
-        <p className="text-white/40 text-sm mb-6">
-          {fr
-            ? "Vous hésitez entre plusieurs nuances ? On vous conseille lors de l'estimé gratuit."
-            : "Can't decide between shades? We'll guide you during your free estimate."}
-        </p>
-        <a
-          href="#soumission"
-          className="inline-flex items-center gap-2 bg-primary hover:bg-red-700 text-white font-bold px-8 py-4 rounded-xl transition-all text-sm uppercase tracking-wide"
-        >
-          {fr ? 'Obtenir mon estimé gratuit' : 'Get my free estimate'}
-        </a>
-      </div>
-    </section>
+        <div className="text-center mt-16 px-4">
+          <p className="text-white/40 text-sm mb-6">
+            {fr
+              ? "Vous hésitez ? On vous conseille lors de l'estimé gratuit."
+              : "Can't decide? We'll guide you during your free estimate."}
+          </p>
+          <a
+            href="#soumission"
+            className="inline-flex items-center gap-2 bg-primary hover:bg-red-700 text-white font-bold px-8 py-4 rounded-xl transition-all text-sm uppercase tracking-wide"
+          >
+            {fr ? 'Obtenir mon estimé gratuit' : 'Get my free estimate'}
+          </a>
+        </div>
+      </section>
+
+      {selected && (
+        <ColorModal file={selected} onClose={() => setSelected(null)} fr={fr} />
+      )}
+    </>
   )
 }
