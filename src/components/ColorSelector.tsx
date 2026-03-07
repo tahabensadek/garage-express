@@ -72,7 +72,7 @@ function FlakeCircle({ file, onClick }: { file: string, onClick: () => void }) {
       onClick={onClick}
       className="group relative flex-shrink-0 w-24 h-24 sm:w-28 sm:h-28 cursor-pointer focus:outline-none"
     >
-      <div className="w-full h-full rounded-full overflow-hidden border-2 border-white/10 transition-all duration-300 group-hover:border-primary group-hover:shadow-[0_0_24px_6px_rgba(220,38,38,0.45)] group-hover:scale-110">
+      <div className="w-full h-full rounded-full overflow-hidden border-2 border-white/10 transition-all duration-300 group-hover:border-primary group-hover:shadow-[0_0_24px_6px_rgba(220,38,38,0.45)] group-hover:scale-110 relative">
         <img
           src={`/flakes/${file}.avif`}
           alt={label}
@@ -80,10 +80,12 @@ function FlakeCircle({ file, onClick }: { file: string, onClick: () => void }) {
           decoding="async"
           className="w-full h-full object-cover"
         />
-      </div>
-      {/* Name pill on hover */}
-      <div className="absolute -bottom-7 left-1/2 -translate-x-1/2 whitespace-nowrap bg-white text-dark text-[10px] font-bold px-2 py-0.5 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none">
-        {label}
+        {/* Name overlay inside circle */}
+        <div className="absolute inset-0 rounded-full bg-black/60 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+          <span className="text-white font-black text-[9px] sm:text-[10px] text-center leading-tight px-2 uppercase tracking-wide">
+            {label}
+          </span>
+        </div>
       </div>
     </button>
   )
