@@ -31,7 +31,7 @@ export async function POST(req: Request) {
   const resend = new Resend(process.env.RESEND_API_KEY)
   const sms = twilio(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TOKEN)
   const data = await req.json()
-  const { name, email, phone, garageSize, city, cracks, message, locale } = data
+  const { name, email, phone, garageSize, city, cracks, message, locale, colorName, colorFile } = data
   const t = locale === 'en' ? copy.en : copy.fr
 
   // GoHighLevel CRM — create contact then opportunity in "Nouveau Lead"
@@ -72,7 +72,7 @@ export async function POST(req: Request) {
           pipelineId: 'NwqgBVo8HctRW7RpiOhr',
           pipelineStageId: '2ab9c92a-e51a-43dd-9b25-efea34da0d6c',
           contactId,
-          name: `${name} — ${city} (${garageSize})`,
+          name: `${name} — ${city} (${garageSize}${colorName ? ` · ${colorName}` : ''})`,
           status: 'open',
           source: 'garagexpress.ca',
         }),
@@ -103,6 +103,7 @@ export async function POST(req: Request) {
               <tr><td style="padding: 10px 0; border-bottom: 1px solid #eee; font-weight: bold;">Taille garage</td><td style="padding: 10px 0; border-bottom: 1px solid #eee;">${garageSize}</td></tr>
               <tr><td style="padding: 10px 0; border-bottom: 1px solid #eee; font-weight: bold;">Fissures</td><td style="padding: 10px 0; border-bottom: 1px solid #eee;">${cracks}</td></tr>
               <tr><td style="padding: 10px 0; border-bottom: 1px solid #eee; font-weight: bold;">Langue</td><td style="padding: 10px 0; border-bottom: 1px solid #eee;">${locale === 'en' ? '🇬🇧 EN' : '🇫🇷 FR'}</td></tr>
+              ${colorName ? `<tr><td style="padding: 10px 0; border-bottom: 1px solid #eee; font-weight: bold;">🎨 Couleur</td><td style="padding: 10px 0; border-bottom: 1px solid #eee; font-weight: bold; color: #DC2626;">${colorName}</td></tr>` : ''}
               ${message ? `<tr><td style="padding: 10px 0; font-weight: bold;">Notes</td><td style="padding: 10px 0;">${message}</td></tr>` : ''}
             </table>
             <div style="margin-top: 24px; text-align: center;">
@@ -131,6 +132,7 @@ export async function POST(req: Request) {
               <p style="margin: 0 0 8px; color: #666; font-size: 14px;"><strong>${t.clientRecap}</strong></p>
               <p style="margin: 4px 0; color: #444; font-size: 14px;">${t.clientCity(city)}</p>
               <p style="margin: 4px 0; color: #444; font-size: 14px;">${t.clientGarage(garageSize)}</p>
+              ${colorName ? `<p style="margin: 4px 0; color: #444; font-size: 14px;">🎨 ${locale === 'en' ? 'Color' : 'Couleur'} : <strong>${colorName}</strong></p>` : ''}
             </div>
             <p style="color: #444; line-height: 1.6;">${t.clientWaiting}</p>
             <div style="text-align: center; margin-top: 24px;">
@@ -146,7 +148,7 @@ export async function POST(req: Request) {
     sms.messages.create({
       from: process.env.TWILIO_FROM!,
       to: process.env.TWILIO_TO!,
-      body: `🔥 Nouveau lead Garage Express\n${name} — ${city} — ${garageSize}\n📞 ${phone}`,
+      body: `🔥 Nouveau lead Garage Express\n${name} — ${city} — ${garageSize}${colorName ? ` — 🎨 ${colorName}` : ''}\n📞 ${phone}`,
     }),
 
     // SMS de confirmation au client (FR ou EN)
