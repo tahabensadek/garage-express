@@ -42,9 +42,10 @@ const allFlakes = [
 
 function toLabel(file: string) {
   return file
-    .replace(/_PILE$/, '')
-    .replace(/_1\.4$/, '')
-    .replace(/^(FB?-\d+[A-Z]?-?\d*_|F\d+_)/, '')
+    .replace(/_PILE.*$/, '')        // strip _PILE-2, _PILE, etc.
+    .replace(/_1\.4$/, '')          // strip _1.4 suffix
+    .replace(/^[A-Z]+-\d+-/, '')    // strip prefix like FB-980-
+    .replace(/^[A-Z]+[\d-]+_/, '')  // strip prefix like FB-901_ or F9202_
     .replace(/_/g, ' ')
     .trim()
     .toLowerCase()
@@ -65,11 +66,13 @@ const rows = [
 const speeds = ['50s', '70s', '58s']
 const directions = [false, true, false]
 
-function FlakeCircle({ file, onClick }: { file: string, onClick: () => void }) {
+function FlakeCircle({ file, onClick, 'aria-hidden': ariaHidden }: { file: string, onClick: () => void, 'aria-hidden'?: boolean }) {
   const label = toLabel(file)
   return (
     <button
       onClick={onClick}
+      aria-hidden={ariaHidden}
+      tabIndex={ariaHidden ? -1 : 0}
       className="group relative flex-shrink-0 w-24 h-24 sm:w-28 sm:h-28 cursor-pointer focus:outline-none"
     >
       <div className="w-full h-full rounded-full overflow-hidden border-2 border-white/10 transition-all duration-300 group-hover:border-primary group-hover:shadow-[0_0_24px_6px_rgba(220,38,38,0.45)] group-hover:scale-110 relative">
@@ -94,15 +97,18 @@ function FlakeCircle({ file, onClick }: { file: string, onClick: () => void }) {
 function MarqueeRow({ files, reverse = false, duration, onSelect }: {
   files: string[], reverse?: boolean, duration: string, onSelect: (f: string) => void
 }) {
-  const doubled = [...files, ...files]
   return (
     <div className="overflow-x-hidden py-6">
       <div
         className={reverse ? 'marquee-reverse' : 'marquee-forward'}
         style={{ animationDuration: duration, display: 'flex', gap: '1rem', width: 'max-content' }}
       >
-        {doubled.map((file, i) => (
+        {files.map((file, i) => (
           <FlakeCircle key={i} file={file} onClick={() => onSelect(file)} />
+        ))}
+        {/* Duplicate for seamless loop */}
+        {files.map((file, i) => (
+          <FlakeCircle key={`d-${i}`} file={file} onClick={() => onSelect(file)} aria-hidden />
         ))}
       </div>
     </div>
