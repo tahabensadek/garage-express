@@ -42,40 +42,56 @@ function toLabel(file: string) {
   return file
     .replace(/_PILE$/, '')
     .replace(/_1\.4$/, '')
-    .replace(/^F[B0-9]+-?\d*_?/, '')
+    .replace(/^(FB?-?\d+[A-Z]?-?\d*_?)/, '')
+    .replace(/^[A-Z0-9]+-?\d*_/, '')
     .replace(/_/g, ' ')
+    .trim()
     .toLowerCase()
     .replace(/\b\w/g, c => c.toUpperCase())
 }
 
-const row1 = allFlakes.slice(0, 69)
-const row2 = allFlakes.slice(69)
+const chunk = Math.ceil(allFlakes.length / 3)
+const rows = [
+  allFlakes.slice(0, chunk),
+  allFlakes.slice(chunk, chunk * 2),
+  allFlakes.slice(chunk * 2),
+]
+const speeds = ['50s', '65s', '55s']
+const directions = [false, true, false]
 
-function MarqueeRow({ files, reverse = false }: { files: string[], reverse?: boolean }) {
+function FlakeCircle({ file }: { file: string }) {
+  const label = toLabel(file)
+  return (
+    <div className="group relative flex-shrink-0 w-24 h-24 sm:w-28 sm:h-28 cursor-pointer">
+      {/* Circle image */}
+      <div className="w-full h-full rounded-full overflow-hidden border-2 border-white/10 transition-all duration-300 group-hover:border-primary group-hover:shadow-[0_0_20px_4px_rgba(220,38,38,0.5)] group-hover:scale-125 group-hover:z-20 relative">
+        <img
+          src={`/flakes/${file}.avif`}
+          alt={label}
+          loading="lazy"
+          decoding="async"
+          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+        />
+        {/* Inner overlay on hover */}
+        <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col items-center justify-center rounded-full">
+          <span className="text-white font-black text-[10px] sm:text-xs text-center leading-tight px-2 uppercase tracking-wide">
+            {label}
+          </span>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+function MarqueeRow({ files, reverse = false, duration }: { files: string[], reverse?: boolean, duration: string }) {
   const doubled = [...files, ...files]
   return (
     <div className="overflow-hidden">
       <div
-        className={`flex gap-4 ${reverse ? 'animate-marquee-reverse' : 'animate-marquee'}`}
-        style={{ width: 'max-content' }}
+        className={reverse ? 'marquee-reverse' : 'marquee-forward'}
+        style={{ animationDuration: duration, display: 'flex', gap: '1rem', width: 'max-content' }}
       >
-        {doubled.map((file, i) => (
-          <div key={i} className="group relative flex-shrink-0 w-24 h-24 sm:w-28 sm:h-28">
-            <div className="w-full h-full rounded-full overflow-hidden border-2 border-white/10 group-hover:border-primary transition-all duration-300 group-hover:scale-110">
-              <img
-                src={`/flakes/${file}.avif`}
-                alt={toLabel(file)}
-                loading="lazy"
-                decoding="async"
-                className="w-full h-full object-cover"
-              />
-            </div>
-            {/* Tooltip */}
-            <div className="absolute -top-10 left-1/2 -translate-x-1/2 bg-dark border border-white/20 text-white text-xs px-2 py-1 rounded-lg whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-10">
-              {toLabel(file)}
-            </div>
-          </div>
-        ))}
+        {doubled.map((file, i) => <FlakeCircle key={i} file={file} />)}
       </div>
     </div>
   )
@@ -87,30 +103,27 @@ export default function ColorSelector() {
 
   return (
     <section className="py-24 bg-dark overflow-hidden">
-      <div className="max-w-7xl mx-auto px-4 mb-16">
-        <div className="text-center">
-          <span className="inline-block text-primary text-sm font-bold tracking-widest uppercase mb-4">
-            {fr ? '137 nuances disponibles' : '137 shades available'}
-          </span>
-          <h2 className="font-display text-5xl sm:text-6xl font-black text-white uppercase leading-tight mb-4">
-            {fr ? 'Votre garage,' : 'Your garage,'}
-            <span className="block text-gradient">{fr ? 'votre signature.' : 'your signature.'}</span>
-          </h2>
-          <p className="text-white/50 text-lg max-w-xl mx-auto">
-            {fr
-              ? '137 mélanges exclusifs Torginol. Du plus classique au plus spectaculaire.'
-              : '137 exclusive Torginol blends. From the most classic to the most spectacular.'}
-          </p>
-        </div>
+      <div className="max-w-7xl mx-auto px-4 mb-16 text-center">
+        <span className="inline-block text-primary text-sm font-bold tracking-widest uppercase mb-4">
+          {fr ? '137 nuances disponibles' : '137 shades available'}
+        </span>
+        <h2 className="font-display text-5xl sm:text-6xl font-black text-white uppercase leading-tight mb-4">
+          {fr ? 'Votre garage,' : 'Your garage,'}
+          <span className="block text-gradient">{fr ? 'votre signature.' : 'your signature.'}</span>
+        </h2>
+        <p className="text-white/50 text-lg max-w-xl mx-auto">
+          {fr
+            ? '137 mélanges exclusifs Torginol. Du plus classique au plus spectaculaire.'
+            : '137 exclusive Torginol blends. From the most classic to the most spectacular.'}
+        </p>
       </div>
 
-      {/* Carousels */}
       <div className="space-y-4">
-        <MarqueeRow files={row1} />
-        <MarqueeRow files={row2} reverse />
+        {rows.map((row, i) => (
+          <MarqueeRow key={i} files={row} reverse={directions[i]} duration={speeds[i]} />
+        ))}
       </div>
 
-      {/* CTA */}
       <div className="text-center mt-16 px-4">
         <p className="text-white/40 text-sm mb-6">
           {fr
