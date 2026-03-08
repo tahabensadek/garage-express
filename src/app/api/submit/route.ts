@@ -31,7 +31,7 @@ export async function POST(req: Request) {
   const resend = new Resend(process.env.RESEND_API_KEY)
   const sms = twilio(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TOKEN)
   const data = await req.json()
-  const { name, email, phone, garageSize, city, cracks, message, locale, colorName, colorFile } = data
+  const { name, email, phone, garageSize, city, address, cracks, message, locale, colorName, colorFile } = data
   const t = locale === 'en' ? copy.en : copy.fr
 
   // GoHighLevel CRM — create contact then opportunity in "Nouveau Lead"
@@ -100,6 +100,7 @@ export async function POST(req: Request) {
               <tr><td style="padding: 10px 0; border-bottom: 1px solid #eee; font-weight: bold;">Téléphone</td><td style="padding: 10px 0; border-bottom: 1px solid #eee;"><a href="tel:${phone}" style="color: #DC2626; font-weight: bold; font-size: 18px;">${phone}</a></td></tr>
               <tr><td style="padding: 10px 0; border-bottom: 1px solid #eee; font-weight: bold;">Email</td><td style="padding: 10px 0; border-bottom: 1px solid #eee;"><a href="mailto:${email}" style="color: #DC2626;">${email}</a></td></tr>
               <tr><td style="padding: 10px 0; border-bottom: 1px solid #eee; font-weight: bold;">Ville</td><td style="padding: 10px 0; border-bottom: 1px solid #eee;">${city}</td></tr>
+              ${address ? `<tr><td style="padding: 10px 0; border-bottom: 1px solid #eee; font-weight: bold;">Adresse</td><td style="padding: 10px 0; border-bottom: 1px solid #eee;">${address}</td></tr>` : ''}
               <tr><td style="padding: 10px 0; border-bottom: 1px solid #eee; font-weight: bold;">Taille garage</td><td style="padding: 10px 0; border-bottom: 1px solid #eee;">${garageSize}</td></tr>
               <tr><td style="padding: 10px 0; border-bottom: 1px solid #eee; font-weight: bold;">Fissures</td><td style="padding: 10px 0; border-bottom: 1px solid #eee;">${cracks}</td></tr>
               <tr><td style="padding: 10px 0; border-bottom: 1px solid #eee; font-weight: bold;">Langue</td><td style="padding: 10px 0; border-bottom: 1px solid #eee;">${locale === 'en' ? '🇬🇧 EN' : '🇫🇷 FR'}</td></tr>

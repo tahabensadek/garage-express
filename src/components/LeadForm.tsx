@@ -5,8 +5,107 @@ import { Phone, Mail, User, Home, MapPin, MessageSquare, CheckCircle, ArrowRight
 
 type FormData = {
   name: string; phone: string; email: string
-  garageSize: string; city: string; cracks: string; message: string
+  garageSize: string; city: string; address: string; cracks: string; message: string
   colorName: string; colorFile: string
+}
+
+function AddressAutocomplete({ value, onChange, onCityDetected, fr }: {
+  value: string
+  onChange: (v: string) => void
+  onCityDetected: (city: string) => void
+  fr: boolean
+}) {
+  const [suggestions, setSuggestions] = useState<any[]>([])
+  const [open, setOpen] = useState(false)
+  const timer = useRef<ReturnType<typeof setTimeout> | null>(null)
+  const ref = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    const handler = (e: MouseEvent) => {
+      if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false)
+    }
+    document.addEventListener('mousedown', handler)
+    return () => document.removeEventListener('mousedown', handler)
+  }, [])
+
+  const handleInput = (val: string) => {
+    onChange(val)
+    if (timer.current) clearTimeout(timer.current)
+    if (val.length < 4) { setSuggestions([]); setOpen(false); return }
+    timer.current = setTimeout(async () => {
+      try {
+        const res = await fetch(
+          `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(val)}&format=json&addressdetails=1&countrycodes=ca&limit=5&accept-language=${fr ? 'fr' : 'en'}`,
+          { headers: { 'Accept-Language': fr ? 'fr' : 'en' } }
+        )
+        const data = await res.json()
+        setSuggestions(data)
+        setOpen(data.length > 0)
+      } catch { setSuggestions([]); setOpen(false) }
+    }, 450)
+  }
+
+  const select = (item: any) => {
+    const addr = item.address
+    const number = addr.house_number || ''
+    const street = addr.road || addr.pedestrian || ''
+    const city = addr.city || addr.town || addr.village || addr.municipality || ''
+    const formatted = [number, street].filter(Boolean).join(' ')
+    onChange(formatted || item.display_name.split(',')[0])
+    if (city) onCityDetected(city)
+    setSuggestions([])
+    setOpen(false)
+  }
+
+  const formatSuggestion = (item: any) => {
+    const addr = item.address
+    const number = addr.house_number || ''
+    const street = addr.road || addr.pedestrian || ''
+    const city = addr.city || addr.town || addr.village || addr.municipality || ''
+    const province = addr.state || ''
+    return {
+      main: [number, street].filter(Boolean).join(' ') || item.display_name.split(',')[0],
+      sub: [city, province].filter(Boolean).join(', '),
+    }
+  }
+
+  return (
+    <div ref={ref} className="relative">
+      <div className="relative">
+        <MapPin className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-primary" />
+        <input
+          type="text"
+          value={value}
+          onChange={e => handleInput(e.target.value)}
+          onFocus={() => suggestions.length > 0 && setOpen(true)}
+          className="w-full pl-10 pr-4 py-3.5 rounded-xl border-2 border-gray-200 focus:border-primary focus:outline-none text-dark transition-all"
+          placeholder={fr ? '123 Rue des Érables' : '123 Maple Street'}
+          autoComplete="off"
+        />
+      </div>
+      {open && suggestions.length > 0 && (
+        <div className="absolute top-full left-0 right-0 mt-1 bg-white border border-gray-200 rounded-xl shadow-xl z-50 overflow-hidden">
+          {suggestions.map((item, i) => {
+            const { main, sub } = formatSuggestion(item)
+            return (
+              <button
+                key={i}
+                type="button"
+                onClick={() => select(item)}
+                className="w-full flex items-start gap-3 px-4 py-3 hover:bg-gray-50 transition-colors text-left border-b border-gray-100 last:border-0"
+              >
+                <MapPin className="w-4 h-4 text-primary flex-shrink-0 mt-0.5" />
+                <div>
+                  <div className="font-semibold text-dark text-sm">{main}</div>
+                  <div className="text-gray-400 text-xs">{sub}</div>
+                </div>
+              </button>
+            )
+          })}
+        </div>
+      )}
+    </div>
+  )
 }
 
 const ALL_FLAKES = [
@@ -164,7 +263,7 @@ export default function LeadForm() {
   const fr = locale !== 'en'
   const [step, setStep] = useState(1)
   const [data, setData] = useState<FormData>({
-    name: '', phone: '', email: '', garageSize: '', city: '', cracks: '', message: '',
+    name: '', phone: '', email: '', garageSize: '', city: '', address: '', cracks: '', message: '',
     colorName: '', colorFile: '',
   })
   const [done, setDone] = useState(false)
@@ -415,6 +514,17 @@ export default function LeadForm() {
                           </button>
                         ))}
                       </div>
+                    </div>
+                    <div>
+                      <label className="flex items-center gap-2 text-dark font-semibold text-sm mb-2">
+                        <MapPin className="w-4 h-4 text-primary" /> {fr ? 'Adresse' : 'Address'}
+                      </label>
+                      <AddressAutocomplete
+                        value={data.address}
+                        onChange={v => set('address', v)}
+                        onCityDetected={city => set('city', city)}
+                        fr={fr}
+                      />
                     </div>
                     <div>
                       <label className="flex items-center gap-2 text-dark font-semibold text-sm mb-2">
