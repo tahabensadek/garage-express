@@ -1,7 +1,7 @@
 'use client'
 import { useState, useEffect, useRef } from 'react'
 import { useTranslations, replace } from '@/hooks/useTranslations'
-import { Phone, Mail, User, Home, MapPin, MessageSquare, CheckCircle, ArrowRight, Clock, Download, Star, AlertCircle, ChevronDown, Search, Palette } from 'lucide-react'
+import { Phone, Mail, User, Home, MapPin, MessageSquare, CheckCircle, ArrowRight, Clock, Download, Star, AlertCircle, ChevronDown, Search, Palette, ImagePlus, X } from 'lucide-react'
 
 type FormData = {
   name: string; phone: string; email: string
@@ -268,6 +268,8 @@ export default function LeadForm() {
   })
   const [done, setDone] = useState(false)
   const [loading, setLoading] = useState(false)
+  const [photos, setPhotos] = useState<File[]>([])
+  const fileRef = useRef<HTMLInputElement>(null)
 
   useEffect(() => {
     const obs = new IntersectionObserver((entries) => {
@@ -296,10 +298,19 @@ export default function LeadForm() {
     setLoading(true)
     
     try {
+      let photoUrls: string[] = []
+      if (photos.length > 0) {
+        const form = new FormData()
+        photos.forEach(p => form.append('photos', p))
+        const uploadRes = await fetch('/api/upload', { method: 'POST', body: form })
+        const uploadData = await uploadRes.json()
+        photoUrls = uploadData.urls || []
+      }
+
       const res = await fetch('/api/submit', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ...data, locale }),
+        body: JSON.stringify({ ...data, locale, photoUrls }),
       })
       if (!res.ok) throw new Error('Erreur envoi')
       setDone(true)
@@ -633,6 +644,54 @@ export default function LeadForm() {
                       <textarea value={data.message} onChange={e => set('message', e.target.value)} rows={3}
                         className="w-full px-4 py-3.5 rounded-xl border-2 border-gray-200 focus:border-primary focus:outline-none text-dark transition-all resize-none text-sm"
                         placeholder={get('leadForm.messagePlaceholder')} />
+                    </div>
+
+                    {/* Photo upload */}
+                    <div>
+                      <label className="flex items-center gap-2 text-dark font-semibold text-sm mb-2">
+                        <ImagePlus className="w-4 h-4 text-primary" />
+                        {fr ? 'Photos de votre garage (optionnel)' : 'Photos of your garage (optional)'}
+                      </label>
+                      <div
+                        onClick={() => fileRef.current?.click()}
+                        className="w-full border-2 border-dashed border-gray-200 hover:border-primary rounded-xl p-4 cursor-pointer transition-all text-center"
+                      >
+                        <ImagePlus className="w-6 h-6 text-gray-300 mx-auto mb-1" />
+                        <p className="text-gray-400 text-xs">
+                          {fr ? 'Cliquez pour ajouter des photos (max 3)' : 'Click to add photos (max 3)'}
+                        </p>
+                        <input
+                          ref={fileRef}
+                          type="file"
+                          accept="image/*"
+                          multiple
+                          className="hidden"
+                          onChange={e => {
+                            const files = Array.from(e.target.files || []).slice(0, 3)
+                            setPhotos(files)
+                          }}
+                        />
+                      </div>
+                      {photos.length > 0 && (
+                        <div className="flex gap-2 mt-2 flex-wrap">
+                          {photos.map((p, i) => (
+                            <div key={i} className="relative group">
+                              <img
+                                src={URL.createObjectURL(p)}
+                                alt={p.name}
+                                className="w-16 h-16 object-cover rounded-lg border border-gray-200"
+                              />
+                              <button
+                                type="button"
+                                onClick={() => setPhotos(prev => prev.filter((_, j) => j !== i))}
+                                className="absolute -top-1.5 -right-1.5 w-5 h-5 bg-dark rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
+                              >
+                                <X className="w-3 h-3 text-white" />
+                              </button>
+                            </div>
+                          ))}
+                        </div>
+                      )}
                     </div>
 
                     <div className="flex gap-3 pt-2">

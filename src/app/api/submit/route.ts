@@ -31,7 +31,7 @@ export async function POST(req: Request) {
   const resend = new Resend(process.env.RESEND_API_KEY)
   const sms = twilio(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TOKEN)
   const data = await req.json()
-  const { name, email, phone, garageSize, city, address, cracks, message, locale, colorName, colorFile } = data
+  const { name, email, phone, garageSize, city, address, cracks, message, locale, colorName, colorFile, photoUrls = [] } = data
   const t = locale === 'en' ? copy.en : copy.fr
 
   // GoHighLevel CRM — create contact then opportunity in "Nouveau Lead"
@@ -102,7 +102,8 @@ export async function POST(req: Request) {
               <tr><td style="padding: 10px 0; border-bottom: 1px solid #eee; font-weight: bold;">Fissures</td><td style="padding: 10px 0; border-bottom: 1px solid #eee;">${cracks}</td></tr>
               <tr><td style="padding: 10px 0; border-bottom: 1px solid #eee; font-weight: bold;">Langue</td><td style="padding: 10px 0; border-bottom: 1px solid #eee;">${locale === 'en' ? '🇬🇧 EN' : '🇫🇷 FR'}</td></tr>
               ${colorName ? `<tr><td style="padding: 10px 0; border-bottom: 1px solid #eee; font-weight: bold;">🎨 Couleur</td><td style="padding: 10px 0; border-bottom: 1px solid #eee; font-weight: bold; color: #DC2626;">${colorName}</td></tr>` : ''}
-              ${message ? `<tr><td style="padding: 10px 0; font-weight: bold;">Notes</td><td style="padding: 10px 0;">${message}</td></tr>` : ''}
+              ${message ? `<tr><td style="padding: 10px 0; border-bottom: 1px solid #eee; font-weight: bold;">Notes</td><td style="padding: 10px 0; border-bottom: 1px solid #eee;">${message}</td></tr>` : ''}
+              ${photoUrls.length ? `<tr><td style="padding: 10px 0; font-weight: bold; vertical-align: top;">📷 Photos</td><td style="padding: 10px 0;">${photoUrls.map((url: string, i: number) => `<a href="${url}" target="_blank" style="display:inline-block; margin-right:8px; color:#DC2626; font-weight:bold;">Photo ${i+1}</a>`).join('')}</td></tr>` : ''}
             </table>
             <div style="margin-top: 24px; text-align: center;">
               <a href="tel:${phone}" style="background: #DC2626; color: white; padding: 14px 32px; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 16px;">📞 Appeler ${name}</a>
