@@ -35,7 +35,7 @@ function AddressAutocomplete({ value, onChange, onCityDetected, fr }: {
     timer.current = setTimeout(async () => {
       try {
         const res = await fetch(
-          `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(val)}&format=json&addressdetails=1&countrycodes=ca&limit=5&accept-language=${fr ? 'fr' : 'en'}`,
+          `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(val)}&format=json&addressdetails=1&countrycodes=ca&limit=5&accept-language=${fr ? 'fr' : 'en'}&viewbox=-79.76,62.58,-57.10,44.99&bounded=0`,
           { headers: { 'Accept-Language': fr ? 'fr' : 'en' } }
         )
         const data = await res.json()
