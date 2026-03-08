@@ -20,7 +20,7 @@ export default function Hero() {
     <section className="relative min-h-screen flex items-center overflow-hidden bg-dark">
       <div className="absolute inset-0">
         <img
-          src="/images/hero-car.svg"
+          src="/images/hero-car2.png"
           alt="Garage avec plancher polyaspartique professionnel — Garage Express Rive-Sud & Laval"
           className="w-full h-full object-cover"
           style={{ objectPosition: 'center center' }}
