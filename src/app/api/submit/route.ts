@@ -40,7 +40,6 @@ export async function POST(req: Request) {
     'Content-Type': 'application/json',
     Version: '2021-07-28',
   }
-  let ghlDebug: any = null
   try {
     const contactRes = await fetch('https://services.leadconnectorhq.com/contacts/', {
       method: 'POST',
@@ -61,7 +60,6 @@ export async function POST(req: Request) {
       }),
     })
     const contact = await contactRes.json()
-    ghlDebug = contact
     const contactId = contact?.contact?.id
     if (contactId) {
       await fetch('https://services.leadconnectorhq.com/opportunities/', {
@@ -79,7 +77,6 @@ export async function POST(req: Request) {
       })
     }
   } catch (e) {
-    ghlDebug = String(e)
     console.error('GHL failed:', e)
   }
 
@@ -164,5 +161,5 @@ export async function POST(req: Request) {
     if (r.status === 'rejected') console.error(`Notification ${i} failed:`, r.reason)
   })
 
-  return NextResponse.json({ ok: true, ghl: ghlDebug })
+  return NextResponse.json({ ok: true })
 }
