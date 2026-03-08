@@ -300,11 +300,15 @@ export default function LeadForm() {
     try {
       let photoUrls: string[] = []
       if (photos.length > 0) {
-        const form = new FormData()
-        photos.forEach(p => form.append('photos', p))
-        const uploadRes = await fetch('/api/upload', { method: 'POST', body: form })
-        const uploadData = await uploadRes.json()
-        photoUrls = uploadData.urls || []
+        try {
+          const form = new FormData()
+          photos.forEach(p => form.append('photos', p))
+          const uploadRes = await fetch('/api/upload', { method: 'POST', body: form })
+          const uploadData = await uploadRes.json()
+          photoUrls = uploadData.urls || []
+        } catch {
+          // photos non-blocking — continue without them
+        }
       }
 
       const res = await fetch('/api/submit', {
