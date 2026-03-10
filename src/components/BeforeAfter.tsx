@@ -68,11 +68,11 @@ function SliderCard({ pair, beforeText, afterText, onReady }: {
       onTouchStart={(e) => { dragging.current = true; touchStart.current = { x: e.touches[0].clientX, y: e.touches[0].clientY } }}
     >
       {/* After image (base) */}
-      <Image src={pair.a} alt={`Plancher de garage après revêtement polyaspartique — ${pair.city}, ${pair.type}`} fill className="object-cover" onLoad={onReady} />
+      <Image src={pair.a} alt={`Plancher de garage après revêtement polyaspartique — ${pair.city}, ${pair.type}`} fill className="object-cover pointer-events-none" draggable={false} onLoad={onReady} />
 
       {/* Before image (clipped) */}
       <div className="absolute inset-0" style={{ clipPath: `inset(0 ${100 - pos}% 0 0)` }}>
-        <Image src={pair.b} alt={`Plancher de garage avant revêtement polyaspartique — ${pair.city}, ${pair.type}`} fill className="object-cover" />
+        <Image src={pair.b} alt={`Plancher de garage avant revêtement polyaspartique — ${pair.city}, ${pair.type}`} fill className="object-cover pointer-events-none" draggable={false} />
         <div className="absolute top-4 left-4 bg-dark/80 backdrop-blur-sm text-white text-sm font-bold px-3 py-1.5 rounded-lg uppercase tracking-wide">
           {beforeText}
         </div>
