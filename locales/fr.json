@@ -349,7 +349,14 @@
     "trustResponse": "Réponse 24h",
     "namePlaceholder": "Jean Tremblay",
     "emailPlaceholder": "jean@exemple.com",
-    "cityPlaceholder": "Longueuil, Brossard, Montréal…"
+    "cityPlaceholder": "Longueuil, Brossard, Montréal…",
+    "nextStepsTitle": "Ce qui se passe après",
+    "nextStep1": "Appel de confirmation",
+    "nextStep1Desc": "Un technicien vous joint dans les 24h pour valider les détails.",
+    "nextStep2": "Soumission par courriel",
+    "nextStep2Desc": "Prix fixe garanti, tout inclus — aucune surprise.",
+    "nextStep3": "Vous décidez",
+    "nextStep3Desc": "Zéro pression. Aucun engagement de votre part."
   },
   "footer": {
     "description": "Spécialiste en revêtement polyaspartique de plancher de garage. Installation professionnelle en 1 jour. Service Rive-Sud & Montréal depuis plusieurs années.",

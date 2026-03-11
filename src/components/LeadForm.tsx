@@ -590,7 +590,15 @@ export default function LeadForm() {
                         className="px-6 py-4 bg-gray-100 hover:bg-gray-200 text-dark font-bold rounded-xl transition-all text-sm">
                         {get('leadForm.back')}
                       </button>
-                      <button type="button" onClick={() => step2ok && setStep(3)} disabled={!step2ok}
+                      <button type="button" onClick={() => {
+                        if (!step2ok) return
+                        fetch('/api/partial-lead', {
+                          method: 'POST',
+                          headers: { 'Content-Type': 'application/json' },
+                          body: JSON.stringify({ name: data.name, email: data.email, garageSize: data.garageSize, city: data.city, locale }),
+                        }).catch(() => {})
+                        setStep(3)
+                      }} disabled={!step2ok}
                         className="flex-1 py-4 bg-primary hover:bg-primary-dark disabled:opacity-30 disabled:cursor-not-allowed text-white font-bold rounded-xl text-base transition-all flex items-center justify-center gap-2">
                         {get('leadForm.continue')} <ArrowRight className="w-5 h-5" />
                       </button>
@@ -696,6 +704,26 @@ export default function LeadForm() {
                           ))}
                         </div>
                       )}
+                    </div>
+
+                    {/* What happens next */}
+                    <div className="bg-primary/5 border border-primary/15 rounded-xl p-4">
+                      <div className="text-xs font-bold text-primary uppercase tracking-widest mb-3">{get('leadForm.nextStepsTitle')}</div>
+                      <div className="space-y-2.5">
+                        {[
+                          { label: get('leadForm.nextStep1'), desc: get('leadForm.nextStep1Desc') },
+                          { label: get('leadForm.nextStep2'), desc: get('leadForm.nextStep2Desc') },
+                          { label: get('leadForm.nextStep3'), desc: get('leadForm.nextStep3Desc') },
+                        ].map(({ label, desc }, i) => (
+                          <div key={i} className="flex items-start gap-2.5">
+                            <div className="w-5 h-5 bg-primary rounded-full flex items-center justify-center flex-shrink-0 mt-0.5 text-white text-[10px] font-bold">{i + 1}</div>
+                            <div>
+                              <div className="font-semibold text-dark text-sm">{label}</div>
+                              <div className="text-gray-500 text-xs">{desc}</div>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
                     </div>
 
                     <div className="flex gap-3 pt-2">

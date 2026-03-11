@@ -349,7 +349,14 @@
     "trustResponse": "24h response",
     "namePlaceholder": "John Smith",
     "emailPlaceholder": "john@example.com",
-    "cityPlaceholder": "Longueuil, Brossard, Montreal…"
+    "cityPlaceholder": "Longueuil, Brossard, Montreal…",
+    "nextStepsTitle": "What happens next",
+    "nextStep1": "Confirmation call",
+    "nextStep1Desc": "A technician reaches out within 24h to confirm details.",
+    "nextStep2": "Email quote",
+    "nextStep2Desc": "Fixed price guaranteed, all included — no surprises.",
+    "nextStep3": "You decide",
+    "nextStep3Desc": "Zero pressure. No commitment from you."
   },
   "footer": {
     "description": "Specialist in polyaspartic garage floor coating. Professional installation in 1 day. Serving South Shore & Montreal for several years.",
