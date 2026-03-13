@@ -15,14 +15,24 @@ export default function Pricing() {
       size: '≤ 300 pi²',
       popular: false,
       includes: Array.from({ length: 11 }, (_, i) => get(`pricing.simpleIncludes${i + 1}`)),
-      excludes: [get('pricing.simpleExcludes1'), get('pricing.simpleExcludes2')],
+      excludes: [get('pricing.simpleExcludes1')],
+      cta: get('pricing.cta'),
+    },
+    {
+      name: get('pricing.storage'),
+      tagline: get('pricing.storageTagline'),
+      price: get('pricing.storagePrice'),
+      size: get('pricing.storageSize'),
+      popular: false,
+      includes: Array.from({ length: 11 }, (_, i) => get(`pricing.storageIncludes${i + 1}`)),
+      excludes: [get('pricing.storageExcludes1')],
       cta: get('pricing.cta'),
     },
     {
       name: get('pricing.double'),
       tagline: get('pricing.doubleTagline'),
       price: get('pricing.doublePrice'),
-      size: '> 300 pi²',
+      size: '450-600 pi²',
       popular: true,
       badge: get('pricing.popularBadge'),
       includes: Array.from({ length: 12 }, (_, i) => get(`pricing.doubleIncludes${i + 1}`)),
@@ -61,7 +71,7 @@ export default function Pricing() {
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 gap-7 max-w-5xl mx-auto mb-10">
+        <div className="grid md:grid-cols-3 gap-5 max-w-6xl mx-auto mb-10">
           {plans.map((plan, i) => (
             <div key={i} className={`reveal reveal-delay-${i + 1} relative rounded-3xl overflow-hidden card-lift ${
               plan.popular
@@ -74,7 +84,7 @@ export default function Pricing() {
                 </div>
               )}
 
-              <div className="p-8">
+              <div className="p-6">
                 <div className="mb-6 pb-6 border-b border-gray-100">
                   <div className="flex items-start justify-between mb-3">
                     <div>
@@ -135,7 +145,7 @@ export default function Pricing() {
           ))}
         </div>
 
-        <div className="reveal max-w-5xl mx-auto">
+        <div className="reveal max-w-6xl mx-auto">
           <button
             onClick={() => setAddonsOpen(!addonsOpen)}
             className="w-full flex items-center justify-between bg-gray-50 hover:bg-gray-100 border-2 border-gray-200 hover:border-primary/30 rounded-2xl p-6 transition-all duration-200 group">
@@ -164,7 +174,7 @@ export default function Pricing() {
           )}
         </div>
 
-        <div className="reveal mt-14 grid md:grid-cols-3 gap-5 max-w-5xl mx-auto">
+        <div className="reveal mt-14 grid md:grid-cols-3 gap-5 max-w-6xl mx-auto">
           {[
             { icon: Shield, title: get('pricing.guarantee1'), desc: get('pricing.guarantee1Desc') },
             { icon: Star, title: get('pricing.guarantee2'), desc: get('pricing.guarantee2Desc') },

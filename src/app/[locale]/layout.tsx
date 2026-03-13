@@ -24,7 +24,7 @@ const faqsByLocale = {
     { q: "Dois-je vider complètement mon garage ?", a: "Idéalement oui — ça accélère l'installation et assure une couverture complète. Si vous ne pouvez pas tout sortir, nos techniciens peuvent travailler en sections et déplacer les objets pendant l'installation (selon le volume). Contactez-nous pour en discuter avant." },
     { q: "Est-ce que ça résiste vraiment aux hivers québécois ?", a: "Absolument. C'est conçu pour ça. Le polyaspartique est flexible, donc il suit la contraction/dilatation du béton avec les cycles gel/dégel sans décoller ni fissurer. Il est également résistant au sel de déglaçage, au calcium, et aux changements brusques de température de -30°C à +40°C." },
     { q: "Combien de temps dure la garantie et qu'est-ce qu'elle couvre ?", a: "La garantie est de 15 ans et couvre les matériaux ET la main-d'oeuvre. Si le revêtement se décolle, fissure, pèle ou présente des défauts non liés à un choc ou à une usure anormale, on revient le réparer sans frais. C'est une garantie réelle, pas juste du marketing." },
-    { q: "Puis-je choisir la couleur des flocons ?", a: "Oui. Vous choisissez votre couleur lors de la prise de rendez-vous. Les forfaits standard incluent 8 couleurs (Garage Simple) ou 12 couleurs (Garage Double). Des mélanges personnalisés sont disponibles pour 200$ supplémentaires. On vous envoie un catalogue dès que vous confirmez." },
+    { q: "Puis-je choisir la couleur des flocons ?", a: "Oui. Vous choisissez parmi 137 couleurs Torginol disponibles directement sur notre site. Des mélanges hors catalogue sont disponibles pour 200$ supplémentaires." },
     { q: "Pourquoi ne pas juste acheter un kit époxy au Home Depot ?", a: "Vous pouvez. Mais voici ce qui se passe généralement : le produit est de grade résidentiel bas, la préparation de surface est inadéquate, et le plancher commence à peler après 1-2 hivers. Vous le refaites. Au total, vous avez dépensé plus que le prix de notre forfait, eu le trouble de le faire vous-même deux fois, et le résultat est inférieur. Notre garantie 15 ans vous évite tout ça." },
   ],
   en: [
@@ -34,7 +34,7 @@ const faqsByLocale = {
     { q: "Do I need to completely empty my garage?", a: "Ideally yes — it speeds up installation and ensures complete coverage. If you can't move everything, our technicians can work in sections and move items during installation (depending on volume). Contact us to discuss beforehand." },
     { q: "Does it really hold up to Quebec winters?", a: "Absolutely. It's designed for that. Polyaspartic is flexible, so it follows the concrete's expansion and contraction with freeze-thaw cycles without peeling or cracking. It's also resistant to de-icing salt, calcium, and sudden temperature changes from -30°C to +40°C." },
     { q: "How long is the warranty and what does it cover?", a: "The warranty is 15 years and covers both materials AND labor. If the coating peels, cracks, chips, or shows defects unrelated to impact or abnormal wear, we come back to repair it at no cost. It's a real warranty, not just marketing." },
-    { q: "Can I choose the flake color?", a: "Yes. You choose your color when booking. Standard packages include 8 colors (Single Garage) or 12 colors (Double Garage). Custom blends are available for an additional $200. We send you a catalog as soon as you confirm." },
+    { q: "Can I choose the flake color?", a: "Yes. You choose from 137 Torginol colors available directly on our website. Custom blends outside the catalog are available for an additional $200." },
     { q: "Why not just buy an epoxy kit from Home Depot?", a: "You can. But here's what typically happens: the product is low residential grade, surface preparation is inadequate, and the floor starts peeling after 1-2 winters. You do it again. In total, you've spent more than our package price, had the hassle of doing it yourself twice, and the result is inferior. Our 15-year warranty saves you all that." },
   ],
 }
@@ -94,8 +94,15 @@ function buildSchemas(locale: string) {
         },
         {
           '@type': 'Offer',
+          name: isFr ? 'Garage Simple + Rangement' : 'Single Garage with Storage',
+          description: isFr ? 'Revêtement polyaspartique pour garage simple + rangement (300-450 pi²), installation en 1 jour, garantie 15 ans.' : 'Polyaspartic coating for single garage with storage (300-450 sq ft), 1-day install, 15-year warranty.',
+          price: '3449.99',
+          priceCurrency: 'CAD',
+        },
+        {
+          '@type': 'Offer',
           name: isFr ? 'Garage Double' : 'Double Garage',
-          description: isFr ? 'Revêtement polyaspartique pour garage double (>300 pi²), installation en 1 jour, garantie 15 ans.' : 'Polyaspartic coating for double garage (>300 sq ft), 1-day install, 15-year warranty.',
+          description: isFr ? 'Revêtement polyaspartique pour garage double (450-600 pi²), installation en 1 jour, garantie 15 ans.' : 'Polyaspartic coating for double garage (450-600 sq ft), 1-day install, 15-year warranty.',
           price: '4449.99',
           priceCurrency: 'CAD',
         },

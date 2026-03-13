@@ -5,7 +5,7 @@ import { Phone, Mail, User, Home, MapPin, MessageSquare, CheckCircle, ArrowRight
 
 type FormData = {
   name: string; phone: string; email: string
-  garageSize: string; city: string; address: string; cracks: string; message: string
+  garageSize: string; superficie: string; city: string; address: string; cracks: string; message: string
   colorName: string; colorFile: string
 }
 
@@ -263,7 +263,7 @@ export default function LeadForm() {
   const fr = locale !== 'en'
   const [step, setStep] = useState(1)
   const [data, setData] = useState<FormData>({
-    name: '', phone: '', email: '', garageSize: '', city: '', address: '', cracks: '', message: '',
+    name: '', phone: '', email: '', garageSize: '', superficie: '', city: '', address: '', cracks: '', message: '',
     colorName: '', colorFile: '',
   })
   const [done, setDone] = useState(false)
@@ -282,7 +282,7 @@ export default function LeadForm() {
   const set = (k: keyof FormData, v: string) => setData(prev => ({ ...prev, [k]: v }))
   
   const step1ok = data.name.trim() && data.email.trim()
-  const step2ok = data.garageSize && data.city.trim() && data.cracks
+  const step2ok = data.garageSize && data.superficie && data.city.trim() && data.cracks
   const step3ok = data.phone.trim()
 
   const formatPhone = (val: string) => {
@@ -314,7 +314,7 @@ export default function LeadForm() {
       const res = await fetch('/api/submit', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ...data, locale, photoUrls }),
+        body: JSON.stringify({ ...data, locale, photoUrls, superficie: data.superficie }),
       })
       if (!res.ok) throw new Error('Erreur envoi')
       setDone(true)
@@ -510,6 +510,7 @@ export default function LeadForm() {
                       <div className="space-y-3">
                         {[
                           { val: get('hero.priceSimple'), price: '2 749,99$', sub: get('pricing.simpleTagline') },
+                          { val: get('hero.priceStorage'), price: '3 449,99$', sub: get('pricing.storageTagline') },
                           { val: get('hero.priceDouble'), price: '4 449,99$', sub: get('pricing.doubleTagline') },
                         ].map((opt) => (
                           <button type="button" key={opt.val}
@@ -530,6 +531,24 @@ export default function LeadForm() {
                         ))}
                       </div>
                     </div>
+                    <div>
+                      <label className="flex items-center gap-2 text-dark font-semibold text-sm mb-2">
+                        <Home className="w-4 h-4 text-primary" /> {get('leadForm.superficie')} *
+                      </label>
+                      <select
+                        required
+                        value={data.superficie}
+                        onChange={e => set('superficie', e.target.value)}
+                        className="w-full px-4 py-3.5 rounded-xl border-2 border-gray-200 focus:border-primary focus:outline-none text-dark transition-all bg-white"
+                      >
+                        <option value="">{fr ? 'Sélectionner…' : 'Select…'}</option>
+                        <option value={get('leadForm.superficieOption1')}>{get('leadForm.superficieOption1')}</option>
+                        <option value={get('leadForm.superficieOption2')}>{get('leadForm.superficieOption2')}</option>
+                        <option value={get('leadForm.superficieOption3')}>{get('leadForm.superficieOption3')}</option>
+                        <option value={get('leadForm.superficieOption4')}>{get('leadForm.superficieOption4')} — {get('leadForm.superficieOption4Note')}</option>
+                      </select>
+                    </div>
+
                     <div>
                       <label className="flex items-center gap-2 text-dark font-semibold text-sm mb-2">
                         <MapPin className="w-4 h-4 text-primary" /> {fr ? 'Adresse' : 'Address'}
@@ -595,7 +614,7 @@ export default function LeadForm() {
                         fetch('/api/partial-lead', {
                           method: 'POST',
                           headers: { 'Content-Type': 'application/json' },
-                          body: JSON.stringify({ name: data.name, email: data.email, garageSize: data.garageSize, city: data.city, locale }),
+                          body: JSON.stringify({ name: data.name, email: data.email, garageSize: data.garageSize, superficie: data.superficie, city: data.city, locale }),
                         }).catch(() => {})
                         setStep(3)
                       }} disabled={!step2ok}
@@ -614,6 +633,10 @@ export default function LeadForm() {
                         <div className="flex justify-between">
                           <span className="text-gray-500">{get('leadForm.recapForfait')}</span>
                           <span className="font-bold text-dark">{data.garageSize.split('(')[0]}</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-gray-500">{get('leadForm.recapSuperficie')}</span>
+                          <span className="font-bold text-dark">{data.superficie}</span>
                         </div>
                         <div className="flex justify-between">
                           <span className="text-gray-500">{get('leadForm.recapVille')}</span>

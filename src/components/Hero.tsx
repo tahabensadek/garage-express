@@ -60,6 +60,10 @@ export default function Hero() {
               <div className="text-white/50 text-xs uppercase tracking-widest mb-1">{get('hero.priceSimple')}</div>
               <div className="font-display text-3xl font-black text-white">2 749<span className="text-lg text-white/70">,99$</span></div>
             </div>
+            <div className="bg-white/8 backdrop-blur border border-white/12 rounded-xl px-5 py-3">
+              <div className="text-white/50 text-xs uppercase tracking-widest mb-1">{get('hero.priceStorage')}</div>
+              <div className="font-display text-3xl font-black text-white">3 449<span className="text-lg text-white/70">,99$</span></div>
+            </div>
             <div className="bg-primary/15 backdrop-blur border border-primary/40 rounded-xl px-5 py-3">
               <div className="text-primary/80 text-xs uppercase tracking-widest mb-1">{get('hero.priceDouble')}</div>
               <div className="font-display text-3xl font-black text-primary">4 449<span className="text-lg text-primary/70">,99$</span></div>
