@@ -56,10 +56,10 @@ export default function Hero() {
           />
 
           <div className="reveal hero-reveal flex flex-wrap gap-3 mb-8">
-            <div className="bg-white/8 backdrop-blur border border-white/12 rounded-xl px-5 py-3">
+            <a href="#tarifs" className="bg-white/8 hover:bg-white/15 backdrop-blur border border-white/12 rounded-xl px-5 py-3 transition-all cursor-pointer">
               <div className="text-white/50 text-xs uppercase tracking-widest mb-1">{get('hero.startingFrom')}</div>
               <div className="font-display text-3xl font-black text-white">2 749<span className="text-lg text-white/70">,99$</span></div>
-            </div>
+            </a>
             <div className="flex items-center">
               <span className="text-white/40 text-xs leading-tight">
                 {get('hero.fixedPrice')}
