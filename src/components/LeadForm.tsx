@@ -368,7 +368,7 @@ export default function LeadForm() {
             <div className="text-left flex-1">
               <h3 className="font-bold text-white mb-2">{get('leadForm.giftTitle')}</h3>
               <p className="text-white/60 text-sm mb-4">{get('leadForm.giftText')}</p>
-              <a href="/guide-couleurs.pdf" target="_blank"
+              <a href="https://rlaiiydrgywcdrah.public.blob.vercel-storage.com/guide-couleurs.pdf" target="_blank"
                 className="inline-flex items-center gap-2 bg-primary hover:bg-primary-dark text-white font-bold px-6 py-3 rounded-xl text-sm transition-all">
                 <Download className="w-4 h-4" />
                 {get('leadForm.giftCta')}
