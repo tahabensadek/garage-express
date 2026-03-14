@@ -522,8 +522,11 @@ export default function LeadForm() {
                             }`}>
                             <div className="flex items-center justify-between">
                               <div>
-                                <div className="font-bold text-dark text-sm">{opt.val.split('(')[0]}</div>
-                                <div className="text-gray-400 text-xs">{opt.sub}</div>
+                                <div className="font-bold text-dark text-sm">{opt.val.split('(')[0].trim()}</div>
+                                <div className="text-gray-400 text-xs">
+                                  <span className="font-semibold text-dark/60">{opt.val.match(/\(([^)]+)\)/)?.[1]}</span>
+                                  {' · '}{opt.sub}
+                                </div>
                               </div>
                               <div className="font-display font-black text-primary text-xl">{opt.price}</div>
                             </div>
