@@ -1,6 +1,6 @@
 'use client'
 import { useState } from 'react'
-import { X } from 'lucide-react'
+import { X, Download } from 'lucide-react'
 import { useTranslations } from '@/hooks/useTranslations'
 
 const allFlakes = [
@@ -193,11 +193,20 @@ export default function ColorSelector() {
             {fr ? 'Votre garage,' : 'Your garage,'}
             <span className="block text-gradient">{fr ? 'votre signature.' : 'your signature.'}</span>
           </h2>
-          <p className="text-white/50 text-lg max-w-xl mx-auto">
+          <p className="text-white/50 text-lg max-w-xl mx-auto mb-4">
             {fr
               ? 'Cliquez sur une couleur pour la voir en détail.'
               : 'Click on a color to see it up close.'}
           </p>
+          <a
+            href="https://rlaiiydrgywcdrah.public.blob.vercel-storage.com/guide-couleurs.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 bg-white/8 hover:bg-white/15 border border-white/15 text-white/70 hover:text-white text-sm font-semibold px-5 py-2.5 rounded-xl transition-all"
+          >
+            <Download className="w-4 h-4" />
+            {fr ? 'Télécharger le catalogue complet (PDF)' : 'Download full catalog (PDF)'}
+          </a>
         </div>
 
         <div className="space-y-0">
