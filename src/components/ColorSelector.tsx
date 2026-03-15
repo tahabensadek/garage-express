@@ -184,7 +184,7 @@ export default function ColorSelector() {
 
   return (
     <>
-      <section className="py-24 bg-dark overflow-hidden">
+      <section id="couleurs" className="py-24 bg-dark overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 mb-16 text-center">
           <span className="inline-block text-primary text-sm font-bold tracking-widest uppercase mb-4">
             {fr ? '137 nuances disponibles' : '137 shades available'}
