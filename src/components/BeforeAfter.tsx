@@ -2,7 +2,7 @@
 import { useState, useRef, useCallback, useEffect } from 'react'
 import { useTranslations } from '@/hooks/useTranslations'
 import Image from 'next/image'
-import { ArrowLeftRight, ChevronLeft, ChevronRight } from 'lucide-react'
+import { ArrowsLeftRight, CaretLeft, CaretRight } from '@phosphor-icons/react'
 
 const pairs = [
   { b: '/images/before-1.png', a: '/images/after-1.png', city: 'Longueuil', type: 'Garage double' },
@@ -81,7 +81,7 @@ function SliderCard({ pair, beforeText, afterText, onReady }: {
       {/* Divider line + handle */}
       <div className="absolute inset-y-0 w-0.5 bg-white shadow-xl pointer-events-none" style={{ left: `${pos}%` }}>
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-11 h-11 bg-white rounded-full shadow-2xl flex items-center justify-center ring-2 ring-primary/20">
-          <ArrowLeftRight className="w-5 h-5 text-dark" />
+          <ArrowsLeftRight weight="bold" size={20} color="#0C0C0C" />
         </div>
       </div>
 
@@ -97,7 +97,7 @@ function SliderCard({ pair, beforeText, afterText, onReady }: {
 
       {/* Drag hint */}
       <div className="absolute bottom-4 right-4 text-white/60 text-xs flex items-center gap-1 pointer-events-none">
-        <ArrowLeftRight className="w-3 h-3" />
+        <ArrowsLeftRight weight="bold" size={12} />
         <span>Glisser</span>
       </div>
     </div>
@@ -161,14 +161,14 @@ export default function BeforeAfter() {
             className="absolute left-3 top-1/2 -translate-y-1/2 w-10 h-10 bg-white/90 hover:bg-white rounded-full shadow-lg flex items-center justify-center transition-all hover:scale-110 z-10"
             aria-label="Précédent"
           >
-            <ChevronLeft className="w-5 h-5 text-dark" />
+            <CaretLeft weight="bold" size={20} color="#0C0C0C" />
           </button>
           <button
             onClick={next}
             className="absolute right-3 top-1/2 -translate-y-1/2 w-10 h-10 bg-white/90 hover:bg-white rounded-full shadow-lg flex items-center justify-center transition-all hover:scale-110 z-10"
             aria-label="Suivant"
           >
-            <ChevronRight className="w-5 h-5 text-dark" />
+            <CaretRight weight="bold" size={20} color="#0C0C0C" />
           </button>
         </div>
 

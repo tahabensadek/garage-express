@@ -1,7 +1,7 @@
 'use client'
 import { useTranslations } from '@/hooks/useTranslations'
 import Image from 'next/image'
-import { Phone, Mail, MapPin, Instagram, Facebook } from 'lucide-react'
+import { Phone, Envelope, MapPin, InstagramLogo, FacebookLogo } from '@phosphor-icons/react'
 
 export default function Footer() {
   const { get } = useTranslations()
@@ -17,10 +17,10 @@ export default function Footer() {
             </p>
             <div className="flex gap-3 mt-5">
               <a href="#" className="w-10 h-10 bg-white/6 hover:bg-primary rounded-xl flex items-center justify-center transition-all">
-                <Facebook className="w-5 h-5 text-white" />
+                <FacebookLogo weight="duotone" size={20} color="white" />
               </a>
               <a href="#" className="w-10 h-10 bg-white/6 hover:bg-primary rounded-xl flex items-center justify-center transition-all">
-                <Instagram className="w-5 h-5 text-white" />
+                <InstagramLogo weight="duotone" size={20} color="white" />
               </a>
             </div>
           </div>
@@ -30,18 +30,18 @@ export default function Footer() {
             <ul className="space-y-3">
               <li>
                 <a href="tel:5148248618" className="flex items-center gap-3 text-white/50 hover:text-white text-sm transition-colors">
-                  <Phone className="w-4 h-4 text-primary flex-shrink-0" />
+                  <Phone weight="duotone" size={16} color="#DC2626" className="flex-shrink-0" />
                   514-824-8618
                 </a>
               </li>
               <li>
                 <a href="mailto:info@garageexpress.ca" className="flex items-center gap-3 text-white/50 hover:text-white text-sm transition-colors">
-                  <Mail className="w-4 h-4 text-primary flex-shrink-0" />
+                  <Envelope weight="duotone" size={16} color="#DC2626" className="flex-shrink-0" />
                   info@garageexpress.ca
                 </a>
               </li>
               <li className="flex items-start gap-3 text-white/50 text-sm">
-                <MapPin className="w-4 h-4 text-primary flex-shrink-0 mt-0.5" />
+                <MapPin weight="duotone" size={16} color="#DC2626" className="flex-shrink-0 mt-0.5" />
                 {get('footer.address')}
               </li>
             </ul>
@@ -58,7 +58,11 @@ export default function Footer() {
         </div>
 
         <div className="border-t border-white/5 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <p className="text-white/25 text-xs">© {new Date().getFullYear()} Garage Express. {get('footer.copyright')}</p>
+          <div className="flex flex-col sm:flex-row items-center gap-3">
+            <p className="text-white/25 text-xs">© {new Date().getFullYear()} Garage Express. {get('footer.copyright')}</p>
+            <span className="hidden sm:block text-white/10 text-xs">·</span>
+            <p className="text-white/25 text-xs">RBQ : 5762-3605-01</p>
+          </div>
           <p className="text-white/25 text-xs">{get('footer.madewith')}</p>
         </div>
       </div>

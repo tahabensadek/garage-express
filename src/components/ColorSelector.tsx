@@ -1,6 +1,6 @@
 'use client'
 import { useState } from 'react'
-import { X, Download } from 'lucide-react'
+import { X, DownloadSimple } from '@phosphor-icons/react'
 import { useTranslations } from '@/hooks/useTranslations'
 
 const allFlakes = [
@@ -139,7 +139,7 @@ function ColorModal({ file, onClose, fr }: { file: string, onClose: () => void, 
           onClick={onClose}
           className="absolute top-4 right-4 z-10 w-8 h-8 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center transition-colors"
         >
-          <X className="w-4 h-4 text-white" />
+          <X weight="bold" size={16} color="white" />
         </button>
 
         {/* Image — grand cercle centré */}
@@ -204,7 +204,7 @@ export default function ColorSelector() {
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 bg-white/8 hover:bg-white/15 border border-white/15 text-white/70 hover:text-white text-sm font-semibold px-5 py-2.5 rounded-xl transition-all"
           >
-            <Download className="w-4 h-4" />
+            <DownloadSimple weight="duotone" size={16} />
             {fr ? 'Télécharger le catalogue complet (PDF)' : 'Download full catalog (PDF)'}
           </a>
         </div>

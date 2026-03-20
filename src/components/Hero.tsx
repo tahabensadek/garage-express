@@ -1,6 +1,6 @@
 'use client'
 import { useEffect, useRef } from 'react'
-import { Phone, ArrowDown, Star, Shield, Clock, ChevronRight } from 'lucide-react'
+import { Phone, ArrowDown, Shield, Clock, Star, CaretRight } from '@phosphor-icons/react'
 import { useTranslations } from '@/hooks/useTranslations'
 
 export default function Hero() {
@@ -37,7 +37,7 @@ export default function Hero() {
           <div className="reveal hero-reveal flex items-center gap-2.5 mb-6">
             <div className="flex gap-0.5">
               {[...Array(5)].map((_,i) => (
-                <Star key={i} className="w-4 h-4 fill-primary text-primary" />
+                <Star key={i} weight="fill" size={16} color="#DC2626" />
               ))}
             </div>
             <span className="text-white/70 text-sm">{get('hero.reviews')}</span>
@@ -71,11 +71,11 @@ export default function Hero() {
             <a href="#soumission"
               className="relative overflow-hidden group bg-primary hover:bg-primary-dark text-white font-bold px-8 py-4 rounded-xl text-base transition-all duration-200 flex items-center justify-center gap-2 shadow-2xl shadow-primary/30 btn-shimmer">
               {get('hero.ctaPrimary')}
-              <ChevronRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+              <CaretRight weight="bold" size={20} className="group-hover:translate-x-1 transition-transform" />
             </a>
             <a href={`tel:${get('nav.phone').replace(/-/g, '')}`}
               className="group bg-white/8 hover:bg-white/15 border border-white/20 text-white font-semibold px-8 py-4 rounded-xl text-base transition-all duration-200 flex items-center justify-center gap-2 backdrop-blur-sm">
-              <Phone className="w-5 h-5 text-primary" />
+              <Phone weight="duotone" size={20} color="#DC2626" />
               {get('hero.ctaPhone')}
             </a>
           </div>
@@ -87,7 +87,7 @@ export default function Hero() {
               { icon: Star, label: get('hero.trust3') },
             ].map(({icon: Icon, label}, i) => (
               <div key={i} className="flex items-center gap-2 text-white/60 text-sm">
-                <Icon className="w-4 h-4 text-primary" />
+                <Icon weight="duotone" size={16} color="#DC2626" />
                 {label}
               </div>
             ))}
@@ -97,7 +97,7 @@ export default function Hero() {
 
       <a href="#pourquoi" className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-2 text-white/30 hover:text-white/60 transition-colors group">
         <span className="text-xs uppercase tracking-widest">{get('hero.scroll')}</span>
-        <ArrowDown className="w-5 h-5 animate-bounce" />
+        <ArrowDown weight="bold" size={20} className="animate-bounce" />
       </a>
     </section>
   )

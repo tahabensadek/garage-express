@@ -1,7 +1,7 @@
 'use client'
 import { useEffect, useState } from 'react'
 import Image from 'next/image'
-import { Phone } from 'lucide-react'
+import { Phone } from '@phosphor-icons/react'
 import { useTranslations } from '@/hooks/useTranslations'
 import LanguageSwitcher from './LanguageSwitcher'
 
@@ -30,7 +30,7 @@ export default function Navbar() {
           
           <a href={`tel:${get('nav.phone').replace(/-/g, '')}`}
             className="hidden sm:flex items-center gap-2 text-white/90 hover:text-white text-sm font-medium transition-colors">
-            <Phone className="w-4 h-4 text-primary" />
+            <Phone weight="duotone" size={16} color="#DC2626" />
             {get('nav.phone')}
           </a>
           

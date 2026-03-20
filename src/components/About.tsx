@@ -1,10 +1,10 @@
 'use client'
 import { useEffect } from 'react'
-import { MapPin, Award, Users, Wrench } from 'lucide-react'
+import { MapPin, Medal, Users, Wrench } from '@phosphor-icons/react'
 import { useTranslations } from '@/hooks/useTranslations'
 
 const cities = ['Longueuil', 'Brossard', 'Saint-Hubert', 'La Prairie', 'Boucherville', 'Sainte-Julie', 'Laval']
-const cardIcons = [MapPin, Award, Users, Wrench]
+const cardIcons = [MapPin, Medal, Users, Wrench]
 
 export default function About() {
   const { get } = useTranslations()
@@ -51,7 +51,7 @@ export default function About() {
               {cards.map(({ Icon, title, desc }, i) => (
                 <div key={i} className="bg-white rounded-2xl p-5 border border-gray-100 shadow-sm card-lift">
                   <div className="w-10 h-10 bg-primary/8 rounded-xl flex items-center justify-center mb-4">
-                    <Icon className="w-5 h-5 text-primary" />
+                    <Icon weight="duotone" size={20} color="#DC2626" />
                   </div>
                   <h3 className="font-bold text-dark text-sm mb-2">{title}</h3>
                   <p className="text-gray-500 text-xs leading-relaxed">{desc}</p>
@@ -59,8 +59,16 @@ export default function About() {
               ))}
             </div>
 
+            {/* RBQ */}
+            <div className="mt-4 flex items-center gap-2">
+              <div className="bg-primary/8 border border-primary/15 rounded-lg px-3 py-2 flex items-center gap-2">
+                <Medal weight="duotone" size={14} color="#DC2626" className="flex-shrink-0" />
+                <span className="text-xs font-semibold text-dark">RBQ : 5762-3605-01</span>
+              </div>
+            </div>
+
             {/* Zone map */}
-            <div className="mt-5 bg-dark text-white rounded-2xl p-5">
+            <div className="mt-4 bg-dark text-white rounded-2xl p-5">
               <div className="text-xs font-bold uppercase tracking-widest text-white/40 mb-3">{get('about.zoneLabel')}</div>
               <div className="flex flex-wrap gap-2">
                 {cities.map(city => (

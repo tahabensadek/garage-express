@@ -1,7 +1,7 @@
 'use client'
 import { useEffect } from 'react'
 import { useTranslations } from '@/hooks/useTranslations'
-import { X, AlertTriangle } from 'lucide-react'
+import { X, Warning } from '@phosphor-icons/react'
 
 export default function Problem() {
   const { get } = useTranslations()
@@ -28,7 +28,7 @@ export default function Problem() {
       <div className="max-w-7xl mx-auto px-4">
         <div className="max-w-3xl mx-auto text-center mb-16 reveal">
           <div className="inline-flex items-center gap-2 bg-red-50 border border-red-100 text-primary font-semibold text-sm uppercase tracking-widest px-4 py-2 rounded-full mb-6">
-            <AlertTriangle className="w-4 h-4" />
+            <Warning weight="duotone" size={16} />
             {get('problem.badge')}
           </div>
           <h2 className="font-display text-5xl sm:text-6xl font-black text-dark uppercase leading-tight mb-6">
@@ -45,7 +45,7 @@ export default function Problem() {
           {problems.map((p, i) => (
             <div key={i} className={`reveal reveal-delay-${(i % 4) + 1} bg-gray-50 border border-gray-100 rounded-2xl p-6 flex gap-4`}>
               <div className="w-8 h-8 bg-red-100 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
-                <X className="w-4 h-4 text-primary" />
+                <X weight="bold" size={16} color="#DC2626" />
               </div>
               <div>
                 <h3 className="font-bold text-dark mb-2 text-base">{p.title}</h3>

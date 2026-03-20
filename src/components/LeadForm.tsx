@@ -1,7 +1,7 @@
 'use client'
 import { useState, useEffect, useRef } from 'react'
 import { useTranslations, replace } from '@/hooks/useTranslations'
-import { Phone, Mail, User, Home, MapPin, MessageSquare, CheckCircle, ArrowRight, Clock, Download, Star, AlertCircle, ChevronDown, Search, Palette, ImagePlus, X } from 'lucide-react'
+import { Phone, Envelope, User, House, MapPin, ChatText, CheckCircle, ArrowRight, Clock, DownloadSimple, Star, WarningCircle, CaretDown, MagnifyingGlass, Palette, Image as ImageIcon, X } from '@phosphor-icons/react'
 
 type FormData = {
   name: string; phone: string; email: string
@@ -72,7 +72,7 @@ function AddressAutocomplete({ value, onChange, onCityDetected, fr }: {
   return (
     <div ref={ref} className="relative">
       <div className="relative">
-        <MapPin className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-primary" />
+        <MapPin weight="duotone" size={16} color="#DC2626" className="absolute left-4 top-1/2 -translate-y-1/2" />
         <input
           type="text"
           value={value}
@@ -94,7 +94,7 @@ function AddressAutocomplete({ value, onChange, onCityDetected, fr }: {
                 onClick={() => select(item)}
                 className="w-full flex items-start gap-3 px-4 py-3 hover:bg-gray-50 transition-colors text-left border-b border-gray-100 last:border-0"
               >
-                <MapPin className="w-4 h-4 text-primary flex-shrink-0 mt-0.5" />
+                <MapPin weight="duotone" size={16} color="#DC2626" className="flex-shrink-0 mt-0.5" />
                 <div>
                   <div className="font-semibold text-dark text-sm">{main}</div>
                   <div className="text-gray-400 text-xs">{sub}</div>
@@ -194,12 +194,12 @@ function ColorPicker({ value, onChange, fr }: { value: string, onChange: (file: 
         ) : (
           <>
             <div className="w-9 h-9 rounded-full bg-gray-100 flex items-center justify-center flex-shrink-0">
-              <Palette className="w-4 h-4 text-gray-400" />
+              <Palette weight="duotone" size={16} color="#9ca3af" />
             </div>
             <span className="text-gray-400 text-sm flex-1">{fr ? 'Choisir une couleur (optionnel)' : 'Choose a color (optional)'}</span>
           </>
         )}
-        <ChevronDown className={`w-4 h-4 text-gray-400 transition-transform flex-shrink-0 ${open ? 'rotate-180' : ''}`} />
+        <CaretDown weight="bold" size={16} color="#9ca3af" className={`transition-transform flex-shrink-0 ${open ? 'rotate-180' : ''}`} />
       </button>
 
       {/* Dropdown */}
@@ -208,7 +208,7 @@ function ColorPicker({ value, onChange, fr }: { value: string, onChange: (file: 
           {/* Search */}
           <div className="p-3 border-b border-gray-100">
             <div className="flex items-center gap-2 bg-gray-50 rounded-xl px-3 py-2">
-              <Search className="w-4 h-4 text-gray-400 flex-shrink-0" />
+              <MagnifyingGlass weight="duotone" size={16} color="#9ca3af" className="flex-shrink-0" />
               <input
                 type="text"
                 value={search}
@@ -332,7 +332,7 @@ export default function LeadForm() {
     <section id="soumission" className="py-24 bg-dark">
       <div className="max-w-2xl mx-auto px-4 text-center">
         <div className="w-20 h-20 bg-primary/20 rounded-full flex items-center justify-center mx-auto mb-6">
-          <CheckCircle className="w-10 h-10 text-primary" />
+          <CheckCircle weight="duotone" size={40} color="#DC2626" />
         </div>
         <h2 className="font-display text-5xl font-black text-white uppercase mb-4">{get('leadForm.confirmationTitle')}</h2>
         <p 
@@ -363,14 +363,14 @@ export default function LeadForm() {
         <div className="bg-primary/10 border border-primary/30 rounded-2xl p-6 mb-6">
           <div className="flex items-start gap-4">
             <div className="w-12 h-12 bg-primary/20 rounded-xl flex items-center justify-center flex-shrink-0">
-              <Download className="w-6 h-6 text-primary" />
+              <DownloadSimple weight="duotone" size={24} color="#DC2626" />
             </div>
             <div className="text-left flex-1">
               <h3 className="font-bold text-white mb-2">{get('leadForm.giftTitle')}</h3>
               <p className="text-white/60 text-sm mb-4">{get('leadForm.giftText')}</p>
               <a href="https://rlaiiydrgywcdrah.public.blob.vercel-storage.com/guide-couleurs.pdf" target="_blank"
                 className="inline-flex items-center gap-2 bg-primary hover:bg-primary-dark text-white font-bold px-6 py-3 rounded-xl text-sm transition-all">
-                <Download className="w-4 h-4" />
+                <DownloadSimple weight="duotone" size={16} />
                 {get('leadForm.giftCta')}
               </a>
             </div>
@@ -378,7 +378,7 @@ export default function LeadForm() {
         </div>
 
         <a href="tel:5148248618" className="inline-flex items-center gap-2 bg-white/10 hover:bg-white/20 border border-white/20 text-white font-bold px-8 py-4 rounded-xl transition-all">
-          <Phone className="w-5 h-5" /> {get('leadForm.callNow')}
+          <Phone weight="duotone" size={20} /> {get('leadForm.callNow')}
         </a>
       </div>
     </section>
@@ -410,7 +410,7 @@ export default function LeadForm() {
               ].map(({icon: Icon, title, desc}, i) => (
                 <div key={i} className="flex gap-4 items-start">
                   <div className="w-10 h-10 bg-primary/15 rounded-xl flex items-center justify-center flex-shrink-0">
-                    <Icon className="w-5 h-5 text-primary" />
+                    <Icon weight="duotone" size={20} color="#DC2626" />
                   </div>
                   <div>
                     <div className="font-bold text-white text-sm">{title}</div>
@@ -439,7 +439,7 @@ export default function LeadForm() {
               <div className="text-white/60 text-sm mb-3">{get('leadForm.callOption')}</div>
               <a href="tel:5148248618"
                 className="inline-flex items-center gap-2 bg-white text-dark hover:bg-gray-100 font-bold px-6 py-3 rounded-xl text-sm transition-all">
-                <Phone className="w-4 h-4" /> {get('leadForm.callCta')}
+                <Phone weight="duotone" size={16} /> {get('leadForm.callCta')}
               </a>
             </div>
 
@@ -464,7 +464,7 @@ export default function LeadForm() {
                   <div className="space-y-5">
                     <div>
                       <label className="flex items-center gap-2 text-dark font-semibold text-sm mb-2">
-                        <User className="w-4 h-4 text-primary" /> {get('leadForm.name')} *
+                        <User weight="duotone" size={16} color="#DC2626" /> {get('leadForm.name')} *
                       </label>
                       <input type="text" required value={data.name}
                         onChange={e => set('name', e.target.value)}
@@ -474,7 +474,7 @@ export default function LeadForm() {
                     </div>
                     <div>
                       <label className="flex items-center gap-2 text-dark font-semibold text-sm mb-2">
-                        <Mail className="w-4 h-4 text-primary" /> {get('leadForm.email')} *
+                        <Envelope weight="duotone" size={16} color="#DC2626" /> {get('leadForm.email')} *
                       </label>
                       <input type="email" required value={data.email}
                         onChange={e => set('email', e.target.value)}
@@ -485,12 +485,12 @@ export default function LeadForm() {
                     </div>
                     <button type="button" onClick={() => step1ok && setStep(2)} disabled={!step1ok}
                       className="w-full py-4 bg-primary hover:bg-primary-dark disabled:opacity-30 disabled:cursor-not-allowed text-white font-bold rounded-xl text-base transition-all flex items-center justify-center gap-2">
-                      {get('leadForm.continue')} <ArrowRight className="w-5 h-5" />
+                      {get('leadForm.continue')} <ArrowRight weight="bold" size={20} />
                     </button>
                     
                     <div className="flex items-center justify-center gap-4 text-xs text-gray-400 pt-2">
                       <div className="flex items-center gap-1">
-                        <Star className="w-3 h-3 fill-primary text-primary" />
+                        <Star weight="fill" size={12} color="#DC2626" />
                         <span>5/5 Google</span>
                       </div>
                       <span>•</span>
@@ -505,7 +505,7 @@ export default function LeadForm() {
                   <div className="space-y-5">
                     <div>
                       <label className="flex items-center gap-2 text-dark font-semibold text-sm mb-2">
-                        <Home className="w-4 h-4 text-primary" /> {get('leadForm.garageSize')} *
+                        <House weight="duotone" size={16} color="#DC2626" /> {get('leadForm.garageSize')} *
                       </label>
                       <div className="space-y-3">
                         {[
@@ -542,7 +542,7 @@ export default function LeadForm() {
 
                     <div>
                       <label className="flex items-center gap-2 text-dark font-semibold text-sm mb-2">
-                        <MapPin className="w-4 h-4 text-primary" /> {fr ? 'Adresse' : 'Address'}
+                        <MapPin weight="duotone" size={16} color="#DC2626" /> {fr ? 'Adresse' : 'Address'}
                       </label>
                       <AddressAutocomplete
                         value={data.address}
@@ -553,7 +553,7 @@ export default function LeadForm() {
                     </div>
                     <div>
                       <label className="flex items-center gap-2 text-dark font-semibold text-sm mb-2">
-                        <MapPin className="w-4 h-4 text-primary" /> {get('leadForm.city')} *
+                        <MapPin weight="duotone" size={16} color="#DC2626" /> {get('leadForm.city')} *
                       </label>
                       <input type="text" required value={data.city}
                         onChange={e => set('city', e.target.value)}
@@ -563,7 +563,7 @@ export default function LeadForm() {
                     </div>
                     <div>
                       <label className="flex items-center gap-2 text-dark font-semibold text-sm mb-2">
-                        <AlertCircle className="w-4 h-4 text-primary" /> {get('leadForm.cracks')} *
+                        <WarningCircle weight="duotone" size={16} color="#DC2626" /> {get('leadForm.cracks')} *
                       </label>
                       <div className="space-y-2">
                         {[
@@ -586,7 +586,7 @@ export default function LeadForm() {
                     </div>
                     <div>
                       <label className="flex items-center gap-2 text-dark font-semibold text-sm mb-2">
-                        <Palette className="w-4 h-4 text-primary" /> {fr ? 'Couleur préférée' : 'Preferred color'}
+                        <Palette weight="duotone" size={16} color="#DC2626" /> {fr ? 'Couleur préférée' : 'Preferred color'}
                       </label>
                       <ColorPicker
                         value={data.colorFile}
@@ -610,7 +610,7 @@ export default function LeadForm() {
                         setStep(3)
                       }} disabled={!step2ok}
                         className="flex-1 py-4 bg-primary hover:bg-primary-dark disabled:opacity-30 disabled:cursor-not-allowed text-white font-bold rounded-xl text-base transition-all flex items-center justify-center gap-2">
-                        {get('leadForm.continue')} <ArrowRight className="w-5 h-5" />
+                        {get('leadForm.continue')} <ArrowRight weight="bold" size={20} />
                       </button>
                     </div>
                   </div>
@@ -661,7 +661,7 @@ export default function LeadForm() {
 
                     <div>
                       <label className="flex items-center gap-2 text-dark font-semibold text-sm mb-2">
-                        <MessageSquare className="w-4 h-4 text-primary" /> {get('leadForm.message')}
+                        <ChatText weight="duotone" size={16} color="#DC2626" /> {get('leadForm.message')}
                       </label>
                       <textarea value={data.message} onChange={e => set('message', e.target.value)} rows={3}
                         className="w-full px-4 py-3.5 rounded-xl border-2 border-gray-200 focus:border-primary focus:outline-none text-dark transition-all resize-none text-sm"
@@ -671,14 +671,14 @@ export default function LeadForm() {
                     {/* Photo upload */}
                     <div>
                       <label className="flex items-center gap-2 text-dark font-semibold text-sm mb-2">
-                        <ImagePlus className="w-4 h-4 text-primary" />
+                        <ImageIcon weight="duotone" size={16} color="#DC2626" />
                         {fr ? 'Photos de votre garage (optionnel)' : 'Photos of your garage (optional)'}
                       </label>
                       <div
                         onClick={() => fileRef.current?.click()}
                         className="w-full border-2 border-dashed border-gray-200 hover:border-primary rounded-xl p-4 cursor-pointer transition-all text-center"
                       >
-                        <ImagePlus className="w-6 h-6 text-gray-300 mx-auto mb-1" />
+                        <ImageIcon weight="duotone" size={24} color="#d1d5db" className="mx-auto mb-1" />
                         <p className="text-gray-400 text-xs">
                           {fr ? 'Cliquez pour ajouter des photos (max 3)' : 'Click to add photos (max 3)'}
                         </p>

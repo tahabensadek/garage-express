@@ -1,6 +1,6 @@
 'use client'
 import { useEffect } from 'react'
-import { Star, Quote } from 'lucide-react'
+import { Star, Quotes } from '@phosphor-icons/react'
 import { useTranslations } from '@/hooks/useTranslations'
 
 const reviewNames = [
@@ -38,7 +38,7 @@ export default function Testimonials() {
       <div className="max-w-7xl mx-auto px-4">
         <div className="text-center mb-14 reveal">
           <div className="inline-flex items-center gap-2 mb-4">
-            {[...Array(5)].map((_,i) => <Star key={i} className="w-5 h-5 fill-primary text-primary" />)}
+            {[...Array(5)].map((_,i) => <Star key={i} weight="fill" size={20} color="#DC2626" />)}
             <span className="font-bold text-dark ml-1">{get('testimonials.rating')}</span>
           </div>
           <h2 className="font-display text-5xl sm:text-6xl font-black text-dark uppercase leading-tight mb-4">
@@ -53,9 +53,9 @@ export default function Testimonials() {
         {/* Featured review */}
         <div className="reveal max-w-3xl mx-auto mb-8">
           <div className="relative bg-dark text-white rounded-3xl p-8 overflow-hidden">
-            <Quote className="absolute top-6 right-8 w-16 h-16 text-primary/15" />
+            <Quotes weight="duotone" size={64} color="rgba(220,38,38,0.15)" className="absolute top-6 right-8" />
             <div className="flex gap-1 mb-3">
-              {[...Array(5)].map((_,i) => <Star key={i} className="w-5 h-5 fill-primary text-primary" />)}
+              {[...Array(5)].map((_,i) => <Star key={i} weight="fill" size={20} color="#DC2626" />)}
             </div>
             <h3 className="font-display text-2xl font-black uppercase text-white mb-4">{reviews[0].title}</h3>
             <p className="text-white/60 leading-relaxed mb-6">{reviews[0].text}</p>
@@ -74,7 +74,7 @@ export default function Testimonials() {
           {reviews.slice(1).map((r, i) => (
             <div key={i} className={`reveal reveal-delay-${(i % 3) + 1} bg-gray-50 border border-gray-100 rounded-2xl p-6 card-lift`}>
               <div className="flex gap-1 mb-3">
-                {[...Array(r.stars)].map((_,j) => <Star key={j} className="w-4 h-4 fill-primary text-primary" />)}
+                {[...Array(r.stars)].map((_,j) => <Star key={j} weight="fill" size={16} color="#DC2626" />)}
               </div>
               <h4 className="font-bold text-dark mb-2 text-sm leading-snug">{r.title}</h4>
               <p className="text-gray-500 text-sm leading-relaxed mb-5">{r.text}</p>
@@ -93,7 +93,7 @@ export default function Testimonials() {
         <div className="reveal text-center">
           <div className="inline-flex items-center gap-3 bg-gray-50 border border-gray-200 rounded-full px-6 py-3">
             <div className="flex gap-1">
-              {[...Array(5)].map((_,i) => <Star key={i} className="w-4 h-4 fill-yellow-400 text-yellow-400" />)}
+              {[...Array(5)].map((_,i) => <Star key={i} weight="fill" size={16} color="#facc15" />)}
             </div>
             <span className="font-bold text-dark">5.0</span>
           </div>

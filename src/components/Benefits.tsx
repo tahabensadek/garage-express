@@ -1,18 +1,18 @@
 'use client'
-import { useEffect } from 'react'
+import { useEffect, useRef } from 'react'
 import { useTranslations } from '@/hooks/useTranslations'
-import { Zap, Shield, Droplets, Thermometer, Sparkles, Clock } from 'lucide-react'
+import { Lightning, Shield, Drop, Thermometer, Sparkle, Clock } from '@phosphor-icons/react'
 
 export default function Benefits() {
   const { get } = useTranslations()
 
   const benefits = [
-    { icon: Clock, title: get('benefits.benefit1Title'), desc: get('benefits.benefit1Desc'), highlight: true },
-    { icon: Shield, title: get('benefits.benefit2Title'), desc: get('benefits.benefit2Desc') },
-    { icon: Droplets, title: get('benefits.benefit3Title'), desc: get('benefits.benefit3Desc') },
-    { icon: Thermometer, title: get('benefits.benefit4Title'), desc: get('benefits.benefit4Desc') },
-    { icon: Zap, title: get('benefits.benefit5Title'), desc: get('benefits.benefit5Desc') },
-    { icon: Sparkles, title: get('benefits.benefit6Title'), desc: get('benefits.benefit6Desc') },
+    { icon: Clock,       title: get('benefits.benefit1Title'), desc: get('benefits.benefit1Desc'), highlight: true  },
+    { icon: Shield,      title: get('benefits.benefit2Title'), desc: get('benefits.benefit2Desc'), highlight: false },
+    { icon: Drop,        title: get('benefits.benefit3Title'), desc: get('benefits.benefit3Desc'), highlight: false },
+    { icon: Thermometer, title: get('benefits.benefit4Title'), desc: get('benefits.benefit4Desc'), highlight: false },
+    { icon: Lightning,   title: get('benefits.benefit5Title'), desc: get('benefits.benefit5Desc'), highlight: false },
+    { icon: Sparkle,     title: get('benefits.benefit6Title'), desc: get('benefits.benefit6Desc'), highlight: false },
   ]
 
   useEffect(() => {
@@ -41,15 +41,22 @@ export default function Benefits() {
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
           {benefits.map((b, i) => (
-            <div key={i} className={`reveal reveal-delay-${(i % 3) + 1} card-lift rounded-2xl p-7 border ${
-              b.highlight
-                ? 'bg-primary/10 border-primary/30 ring-1 ring-primary/20'
-                : 'bg-white/4 border-white/8'
-            }`}>
+            <div
+              key={i}
+              className={`reveal reveal-delay-${(i % 3) + 1} card-lift rounded-2xl p-7 border relative overflow-hidden ${
+                b.highlight
+                  ? 'bg-primary/10 border-primary/30 ring-1 ring-primary/20'
+                  : 'bg-white/4 border-white/8'
+              }`}
+              style={{ '--shine-delay': `${i * 0.4}s` } as React.CSSProperties}
+            >
+              {/* Shine sweep */}
+              <span className="shine-sweep" />
+
               <div className={`w-12 h-12 rounded-xl flex items-center justify-center mb-5 ${
                 b.highlight ? 'bg-primary' : 'bg-white/8'
               }`}>
-                <b.icon className={`w-6 h-6 ${b.highlight ? 'text-white' : 'text-primary'}`} />
+                <b.icon weight="duotone" size={24} color={b.highlight ? '#ffffff' : '#DC2626'} />
               </div>
               <h3 className="font-display text-xl font-bold text-white uppercase leading-tight mb-3">{b.title}</h3>
               <p className="text-white/50 text-sm leading-relaxed">{b.desc}</p>

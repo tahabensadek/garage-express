@@ -1,6 +1,6 @@
 'use client'
 import { useEffect, useState } from 'react'
-import { ChevronDown } from 'lucide-react'
+import { CaretDown } from '@phosphor-icons/react'
 import { useTranslations } from '@/hooks/useTranslations'
 
 const FAQ_COUNT = 8
@@ -40,7 +40,7 @@ export default function FAQ() {
                 onClick={() => setOpen(open === i ? null : i)}
                 className="w-full flex items-center justify-between px-6 py-5 text-left hover:bg-gray-50 transition-colors">
                 <span className="font-bold text-dark pr-4 text-base">{faq.q}</span>
-                <ChevronDown className={`w-5 h-5 text-primary flex-shrink-0 transition-transform duration-300 ${open === i ? 'rotate-180' : ''}`} />
+                <CaretDown weight="bold" size={20} color="#DC2626" className={`flex-shrink-0 transition-transform duration-300 ${open === i ? 'rotate-180' : ''}`} />
               </button>
               {open === i && (
                 <div className="px-6 pb-5 text-gray-600 leading-relaxed text-sm border-t border-gray-100 pt-4">

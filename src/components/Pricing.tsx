@@ -1,7 +1,7 @@
 'use client'
 import { useEffect, useState } from 'react'
 import { useTranslations } from '@/hooks/useTranslations'
-import { Check, X, ChevronDown, Shield, Star, ArrowRight } from 'lucide-react'
+import { Check, X, CaretDown, Shield, Star, ArrowRight } from '@phosphor-icons/react'
 
 export default function Pricing() {
   const { get } = useTranslations()
@@ -109,7 +109,7 @@ export default function Pricing() {
                   <ul className="space-y-2.5">
                     {plan.includes.map((item, j) => (
                       <li key={j} className="flex gap-3 items-start">
-                        <Check className="w-4 h-4 text-primary flex-shrink-0 mt-0.5" />
+                        <Check weight="bold" size={16} color="#DC2626" className="flex-shrink-0 mt-0.5" />
                         <span className="text-gray-700 text-sm leading-snug">{item}</span>
                       </li>
                     ))}
@@ -122,7 +122,7 @@ export default function Pricing() {
                     <ul className="space-y-2">
                       {plan.excludes.map((item, j) => (
                         <li key={j} className="flex gap-3 items-start">
-                          <X className="w-4 h-4 text-gray-300 flex-shrink-0 mt-0.5" />
+                          <X weight="bold" size={16} color="#d1d5db" className="flex-shrink-0 mt-0.5" />
                           <span className="text-gray-400 text-sm leading-snug">{item}</span>
                         </li>
                       ))}
@@ -137,7 +137,7 @@ export default function Pricing() {
                       : 'bg-dark hover:bg-dark-700 text-white shadow-lg'
                   }`}>
                   {plan.cta}
-                  <ArrowRight className="w-5 h-5" />
+                  <ArrowRight weight="bold" size={20} />
                 </a>
                 <p className="text-center text-xs text-gray-400 mt-3">{get('pricing.responseNote')}</p>
               </div>
@@ -153,7 +153,7 @@ export default function Pricing() {
               <div className="font-bold text-dark text-lg">{get('pricing.addonsTitle')}</div>
               <div className="text-gray-500 text-sm">{get('pricing.addonsSubtitle')}</div>
             </div>
-            <ChevronDown className={`w-6 h-6 text-primary transition-transform duration-300 ${addonsOpen ? 'rotate-180' : ''}`} />
+            <CaretDown weight="bold" size={24} color="#DC2626" className={`transition-transform duration-300 ${addonsOpen ? 'rotate-180' : ''}`} />
           </button>
 
           {addonsOpen && (
@@ -181,7 +181,7 @@ export default function Pricing() {
             { icon: Check, title: get('pricing.guarantee3'), desc: get('pricing.guarantee3Desc') },
           ].map(({icon: Icon, title, desc}, i) => (
             <div key={i} className="bg-dark text-white rounded-2xl p-6 card-lift">
-              <Icon className="w-7 h-7 text-primary mb-4" />
+              <Icon weight="duotone" size={28} color="#DC2626" className="mb-4" />
               <div className="font-display text-xl font-black uppercase mb-2">{title}</div>
               <div className="text-white/50 text-sm leading-relaxed">{desc}</div>
             </div>

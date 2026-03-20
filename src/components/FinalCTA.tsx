@@ -1,6 +1,6 @@
 'use client'
 import { useEffect } from 'react'
-import { Phone, ArrowRight } from 'lucide-react'
+import { Phone, ArrowRight } from '@phosphor-icons/react'
 import { useTranslations } from '@/hooks/useTranslations'
 
 export default function FinalCTA() {
@@ -37,11 +37,11 @@ export default function FinalCTA() {
             <a href="#soumission"
               className="group relative overflow-hidden bg-white text-primary hover:bg-gray-50 font-black px-10 py-5 rounded-xl text-lg transition-all shadow-2xl flex items-center justify-center gap-2">
               {get('finalCta.ctaPrimary')}
-              <ArrowRight className="w-6 h-6 group-hover:translate-x-1 transition-transform" />
+              <ArrowRight weight="bold" size={24} className="group-hover:translate-x-1 transition-transform" />
             </a>
             <a href={`tel:${get('finalCta.ctaPhone').replace(/-/g, '')}`}
               className="bg-white/15 hover:bg-white/25 border-2 border-white/40 text-white font-bold px-10 py-5 rounded-xl text-lg transition-all flex items-center justify-center gap-2 backdrop-blur-sm">
-              <Phone className="w-6 h-6" />
+              <Phone weight="duotone" size={24} />
               {get('finalCta.ctaPhone')}
             </a>
           </div>

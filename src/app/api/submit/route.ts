@@ -60,7 +60,7 @@ export async function POST(req: Request) {
       }),
     })
     const contact = await contactRes.json()
-    const contactId = contact?.contact?.id
+    const contactId = contact?.contact?.id || contact?.id
     if (contactId) {
       await fetch('https://services.leadconnectorhq.com/opportunities/', {
         method: 'POST',
