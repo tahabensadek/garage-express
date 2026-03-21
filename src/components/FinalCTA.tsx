@@ -40,6 +40,7 @@ export default function FinalCTA() {
               <ArrowRight weight="bold" size={24} className="group-hover:translate-x-1 transition-transform" />
             </a>
             <a href={`tel:${get('finalCta.ctaPhone').replace(/-/g, '')}`}
+              onClick={() => (window as any).gtag?.('event', 'conversion', { send_to: 'AW-17940446235/AoXGCLDrhI0cEJv41epC', value: 1.0, currency: 'CAD' })}
               className="bg-white/15 hover:bg-white/25 border-2 border-white/40 text-white font-bold px-10 py-5 rounded-xl text-lg transition-all flex items-center justify-center gap-2 backdrop-blur-sm">
               <Phone weight="duotone" size={24} />
               {get('finalCta.ctaPhone')}

@@ -54,6 +54,7 @@ export default function FAQ() {
         <div className="reveal mt-10 text-center bg-gray-50 border border-gray-200 rounded-2xl p-7">
           <p className="text-gray-600 mb-4">{get('faq.callQuestion')}</p>
           <a href="tel:5148248618"
+            onClick={() => (window as any).gtag?.('event', 'conversion', { send_to: 'AW-17940446235/AoXGCLDrhI0cEJv41epC', value: 1.0, currency: 'CAD' })}
             className="inline-flex items-center gap-2 bg-dark hover:bg-dark-700 text-white font-bold px-7 py-3.5 rounded-xl transition-all">
             {get('faq.callCta')}
           </a>

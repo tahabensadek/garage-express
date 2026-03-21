@@ -29,6 +29,7 @@ export default function Navbar() {
           <LanguageSwitcher />
           
           <a href={`tel:${get('nav.phone').replace(/-/g, '')}`}
+            onClick={() => (window as any).gtag?.('event', 'conversion', { send_to: 'AW-17940446235/AoXGCLDrhI0cEJv41epC', value: 1.0, currency: 'CAD' })}
             className="hidden sm:flex items-center gap-2 text-white/90 hover:text-white text-sm font-medium transition-colors">
             <Phone weight="duotone" size={16} color="#DC2626" />
             {get('nav.phone')}

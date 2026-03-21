@@ -74,6 +74,7 @@ export default function Hero() {
               <CaretRight weight="bold" size={20} className="group-hover:translate-x-1 transition-transform" />
             </a>
             <a href={`tel:${get('nav.phone').replace(/-/g, '')}`}
+              onClick={() => (window as any).gtag?.('event', 'conversion', { send_to: 'AW-17940446235/AoXGCLDrhI0cEJv41epC', value: 1.0, currency: 'CAD' })}
               className="group bg-white/8 hover:bg-white/15 border border-white/20 text-white font-semibold px-8 py-4 rounded-xl text-base transition-all duration-200 flex items-center justify-center gap-2 backdrop-blur-sm">
               <Phone weight="duotone" size={20} color="#DC2626" />
               {get('hero.ctaPhone')}

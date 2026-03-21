@@ -29,7 +29,7 @@ export default function Footer() {
             <h3 className="font-bold text-white mb-5 uppercase text-sm tracking-widest">{get('footer.contact')}</h3>
             <ul className="space-y-3">
               <li>
-                <a href="tel:5148248618" className="flex items-center gap-3 text-white/50 hover:text-white text-sm transition-colors">
+                <a href="tel:5148248618" onClick={() => (window as any).gtag?.('event', 'conversion', { send_to: 'AW-17940446235/AoXGCLDrhI0cEJv41epC', value: 1.0, currency: 'CAD' })} className="flex items-center gap-3 text-white/50 hover:text-white text-sm transition-colors">
                   <Phone weight="duotone" size={16} color="#DC2626" className="flex-shrink-0" />
                   514-824-8618
                 </a>

@@ -377,7 +377,7 @@ export default function LeadForm() {
           </div>
         </div>
 
-        <a href="tel:5148248618" className="inline-flex items-center gap-2 bg-white/10 hover:bg-white/20 border border-white/20 text-white font-bold px-8 py-4 rounded-xl transition-all">
+        <a href="tel:5148248618" onClick={() => (window as any).gtag?.('event', 'conversion', { send_to: 'AW-17940446235/AoXGCLDrhI0cEJv41epC', value: 1.0, currency: 'CAD' })} className="inline-flex items-center gap-2 bg-white/10 hover:bg-white/20 border border-white/20 text-white font-bold px-8 py-4 rounded-xl transition-all">
           <Phone weight="duotone" size={20} /> {get('leadForm.callNow')}
         </a>
       </div>
@@ -438,6 +438,7 @@ export default function LeadForm() {
             <div className="mb-6 bg-white/5 border border-white/10 rounded-2xl p-5 text-center">
               <div className="text-white/60 text-sm mb-3">{get('leadForm.callOption')}</div>
               <a href="tel:5148248618"
+                onClick={() => (window as any).gtag?.('event', 'conversion', { send_to: 'AW-17940446235/AoXGCLDrhI0cEJv41epC', value: 1.0, currency: 'CAD' })}
                 className="inline-flex items-center gap-2 bg-white text-dark hover:bg-gray-100 font-bold px-6 py-3 rounded-xl text-sm transition-all">
                 <Phone weight="duotone" size={16} /> {get('leadForm.callCta')}
               </a>
