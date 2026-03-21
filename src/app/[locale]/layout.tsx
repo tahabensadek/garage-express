@@ -2,6 +2,8 @@ import type { Metadata } from 'next'
 import '../globals.css'
 import { GoogleAnalytics } from '@next/third-parties/google'
 import Script from 'next/script'
+import LenisProvider from '@/components/LenisProvider'
+import MagneticCursor from '@/components/MagneticCursor'
 
 const SITE_URL = 'https://garagexpress.ca'
 
@@ -195,7 +197,11 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(schemas) }}
         />
       </head>
-      <body>{children}</body>
+      <body>
+        {children}
+        <LenisProvider />
+        <MagneticCursor />
+      </body>
       <GoogleAnalytics gaId="G-RF7B3D0RPS" />
       <Script async src="https://www.googletagmanager.com/gtag/js?id=AW-17940446235" strategy="afterInteractive" />
       <Script id="google-ads-config" strategy="afterInteractive">{`
