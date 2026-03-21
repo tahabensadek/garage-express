@@ -5,7 +5,7 @@
   },
   "hero": {
     "badge": "Prix fixes • Sans surprise",
-    "reviews": "+100 garages transformés sur la Rive-Sud & Montréal",
+    "reviews": "+100 garages transformés — Montréal, Rive-Sud & Laval",
     "title": "Votre garage",
     "titleHighlight": "mérite mieux",
     "titleEnd": "qu'un béton",
@@ -65,7 +65,7 @@
     "badge": "Résultats réels — Clients réels",
     "title": "Glissez pour voir",
     "titleHighlight": "la différence",
-    "subtitle": "Chaque photo est prise chez un vrai client Garage Express sur la Rive-Sud ou à Montréal. Glissez le curseur pour voir la transformation.",
+    "subtitle": "Chaque photo est prise chez un vrai client Garage Express à Montréal, Rive-Sud ou Laval. Glissez le curseur pour voir la transformation.",
     "before": "Avant",
     "after": "Après",
     "cta": "Obtenir ma soumission gratuite →"
@@ -147,7 +147,7 @@
     "verified": "",
     "title": "Ce que disent",
     "titleHighlight": "vos voisins.",
-    "subtitle": "Ces avis sont de vrais clients sur la Rive-Sud et à Montréal. Pas de témoignages inventés, pas de fausses étoiles.",
+    "subtitle": "Ces avis sont de vrais clients à Montréal, Rive-Sud et Laval. Pas de témoignages inventés, pas de fausses étoiles.",
     "review1Type": "Garage double",
     "review1Date": "Janvier 2025",
     "review1Title": "Exactement ce qui était promis. À la virgule près.",
@@ -384,11 +384,11 @@
     "nextStep3Desc": "Zéro pression. Aucun engagement de votre part."
   },
   "footer": {
-    "description": "Spécialiste en revêtement polyaspartique de plancher de garage. Installation professionnelle en 1 jour. Service Rive-Sud & Montréal depuis plusieurs années.",
+    "description": "Spécialiste en revêtement polyaspartique de plancher de garage. Installation professionnelle en 1 jour. Service Montréal, Rive-Sud & Laval depuis plusieurs années.",
     "contact": "Contact",
     "serviceZone": "Zone desservie",
     "copyright": "Tous droits réservés.",
     "madewith": "Fabriqué avec ❤ sur la Rive-Sud",
-    "address": "Rive-Sud & Montréal, Québec"
+    "address": "Montréal, Rive-Sud & Laval, Québec"
   }
 }

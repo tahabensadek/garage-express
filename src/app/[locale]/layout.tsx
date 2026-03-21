@@ -9,12 +9,12 @@ const SITE_URL = 'https://garagexpress.ca'
 
 const metaByLocale = {
   fr: {
-    title: 'Garage Express | Plancher Polyaspartique — Rive-Sud & Montréal | Dès 2 749$',
-    description: "Transformez votre garage en 1 seule journée. Revêtement polyaspartique professionnel, durable 15+ ans, résistant au sel et à l'huile. Prix fixe garanti dès 2 749$ tout inclus. Service Rive-Sud, Montréal. Estimation 100% gratuite.",
+    title: 'Garage Express | Plancher Polyaspartique — Montréal, Rive-Sud & Laval | Dès 2 749$',
+    description: "Transformez votre garage en 1 seule journée. Revêtement polyaspartique professionnel, durable 15+ ans, résistant au sel et à l'huile. Prix fixe garanti dès 2 749$ tout inclus. Service Montréal, Rive-Sud & Laval. Estimation 100% gratuite.",
   },
   en: {
-    title: 'Garage Express | Polyaspartic Flooring — South Shore & Montreal | From $2,749',
-    description: 'Transform your garage in just one day. Professional polyaspartic coating, 15+ year durability, resistant to salt and oil. Fixed price guaranteed from $2,749 all included. Serving South Shore & Montreal. 100% free estimate.',
+    title: 'Garage Express | Polyaspartic Flooring — Montreal, South Shore & Laval | From $2,749',
+    description: 'Transform your garage in just one day. Professional polyaspartic coating, 15+ year durability, resistant to salt and oil. Fixed price guaranteed from $2,749 all included. Serving Montreal, South Shore & Laval. 100% free estimate.',
   },
 }
 
@@ -55,8 +55,8 @@ function buildSchemas(locale: string) {
     telephone: '+15148248618',
     email: 'info@garageexpress.ca',
     description: isFr
-      ? "Spécialiste en revêtement polyaspartique de plancher de garage. Installation professionnelle en 1 jour. Service Rive-Sud & Montréal."
-      : "Garage floor polyaspartic coating specialist. Professional installation in 1 day. Serving South Shore & Montreal.",
+      ? "Spécialiste en revêtement polyaspartique de plancher de garage. Installation professionnelle en 1 jour. Service Montréal, Rive-Sud & Laval."
+      : "Garage floor polyaspartic coating specialist. Professional installation in 1 day. Serving Montreal, South Shore & Laval.",
     image: `${SITE_URL}/images/after-1.png`,
     logo: `${SITE_URL}/logo.svg`,
     address: {
@@ -153,8 +153,8 @@ export async function generateMetadata({ params }: { params: { locale: string } 
           width: 1200,
           height: 630,
           alt: locale === 'fr'
-            ? 'Garage Express — Plancher polyaspartique professionnel Rive-Sud & Montréal'
-            : 'Garage Express — Professional polyaspartic garage floor South Shore & Montreal',
+            ? 'Garage Express — Plancher polyaspartique professionnel Montréal, Rive-Sud & Laval'
+            : 'Garage Express — Professional polyaspartic garage floor Montreal, South Shore & Laval',
         },
       ],
       locale: locale === 'fr' ? 'fr_CA' : 'en_CA',

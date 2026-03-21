@@ -42,7 +42,7 @@ export default function Hero() {
       <motion.div className="absolute inset-0" style={{ y: imgY }}>
         <img
           src="/images/hero-car2.png"
-          alt="Garage avec plancher polyaspartique professionnel — Garage Express Rive-Sud & Laval"
+          alt="Garage avec plancher polyaspartique professionnel — Garage Express Montréal, Rive-Sud & Laval"
           className="w-full h-full object-cover scale-110"
           style={{ objectPosition: 'center center' }}
           fetchPriority="high"

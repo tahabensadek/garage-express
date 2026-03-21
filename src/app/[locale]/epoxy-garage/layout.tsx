@@ -4,14 +4,14 @@ const SITE_URL = 'https://garagexpress.ca'
 
 const meta = {
   fr: {
-    title: 'Époxy Garage Rive-Sud & Montréal — Garage Express | Dès 2 749$',
+    title: 'Époxy Garage Montréal, Rive-Sud & Laval — Garage Express | Dès 2 749$',
     description:
-      'Cherchez-vous un plancher époxy pour votre garage? Nos clients choisissent le polyaspartique — même look, 2× plus résistant, installé en 1 journée. Prix fixe 2 749$ tout inclus. Service Rive-Sud, Montréal, Laval.',
+      'Cherchez-vous un plancher époxy pour votre garage? Nos clients choisissent le polyaspartique — même look, 2× plus résistant, installé en 1 journée. Prix fixe 2 749$ tout inclus. Service Montréal, Rive-Sud & Laval.',
   },
   en: {
-    title: 'Epoxy Garage South Shore & Montreal — Garage Express | From $2,749',
+    title: 'Epoxy Garage Montreal, South Shore & Laval — Garage Express | From $2,749',
     description:
-      'Looking for garage epoxy on the South Shore or Montreal? Our clients choose polyaspartic — same look, 2× stronger, installed in 1 day. Fixed all-inclusive price from $2,749. Serving South Shore, Montreal, Laval.',
+      'Looking for garage epoxy in Montreal, South Shore or Laval? Our clients choose polyaspartic — same look, 2× stronger, installed in 1 day. Fixed all-inclusive price from $2,749. Serving Montreal, South Shore & Laval.',
   },
 }
 

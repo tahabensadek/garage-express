@@ -11,9 +11,9 @@ import LeadForm from '@/components/LeadForm'
 /* ── Bilingual copy ──────────────────────────────────────────── */
 const copy = {
   fr: {
-    badge: 'Époxy garage — Rive-Sud & Montréal',
+    badge: 'Époxy garage — Montréal, Rive-Sud & Laval',
     heroTitle: 'Époxy Garage',
-    heroHighlight: 'Rive-Sud.',
+    heroHighlight: 'Grand Montréal.',
     heroSub: 'Vous cherchez de l\'époxy pour votre garage\u00a0? On fait <strong>mieux que l\'époxy</strong>\u00a0— le polyaspartique nouvelle génération. Même look, 2× plus résistant, installé en 1 journée.',
     ctaPrimary: 'Obtenir ma soumission gratuite',
     ctaPhone: '514-824-8618',
@@ -92,9 +92,9 @@ const copy = {
     ],
   },
   en: {
-    badge: 'Epoxy garage — South Shore & Montreal',
+    badge: 'Epoxy garage — Montreal, South Shore & Laval',
     heroTitle: 'Epoxy Garage',
-    heroHighlight: 'South Shore.',
+    heroHighlight: 'Greater Montreal.',
     heroSub: 'Looking for garage epoxy? We do <strong>better than epoxy</strong>\u00a0— next-gen polyaspartic. Same look, 2× stronger, installed in 1 day.',
     ctaPrimary: 'Get my free quote',
     ctaPhone: '514-824-8618',
@@ -259,7 +259,7 @@ export default function EpoxyGaragePage({ params }: { params: { locale: string }
       {/* ─────────── Hero ─────────── */}
       <section className="relative min-h-[92vh] flex items-center overflow-hidden">
         <div className="absolute inset-0">
-          <Image src="/images/hero-car2.png" alt="Époxy garage Rive-Sud — Garage Express" fill className="object-cover" priority />
+          <Image src="/images/hero-car2.png" alt="Époxy garage Montréal, Rive-Sud & Laval — Garage Express" fill className="object-cover" priority />
           <div className="absolute inset-0 bg-gradient-to-r from-dark/97 via-dark/90 to-dark/50" />
           <div className="absolute inset-0 bg-gradient-to-t from-dark via-dark/20 to-transparent" />
         </div>

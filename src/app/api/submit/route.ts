@@ -138,7 +138,7 @@ export async function POST(req: Request) {
             <div style="text-align: center; margin-top: 24px;">
               <a href="tel:5148248618" style="background: #DC2626; color: white; padding: 14px 32px; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 16px;">${t.clientCta}</a>
             </div>
-            <p style="color: #999; font-size: 12px; margin-top: 32px; text-align: center;">Garage Express — Rive-Sud & Montréal</p>
+            <p style="color: #999; font-size: 12px; margin-top: 32px; text-align: center;">Garage Express — Montréal, Rive-Sud & Laval</p>
           </div>
         </div>
       `,
