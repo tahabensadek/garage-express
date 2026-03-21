@@ -232,6 +232,17 @@ export default function EpoxyGaragePage({ params }: { params: { locale: string }
         <div className="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between gap-4">
           <Image src="/images/logo-text.png" alt="Garage Express" width={160} height={40} className="h-9 w-auto flex-shrink-0" />
           <div className="flex items-center gap-3">
+            {/* Language switcher */}
+            <div className="flex rounded-lg border border-white/15 overflow-hidden text-xs font-bold">
+              <a href={`/fr/epoxy-garage`}
+                className={`px-3 py-2 transition-colors ${locale === 'fr' ? 'bg-white text-dark' : 'text-white/50 hover:text-white hover:bg-white/10'}`}>
+                FR
+              </a>
+              <a href={`/en/epoxy-garage`}
+                className={`px-3 py-2 transition-colors ${locale === 'en' ? 'bg-white text-dark' : 'text-white/50 hover:text-white hover:bg-white/10'}`}>
+                EN
+              </a>
+            </div>
             <a href="#soumission"
               className="hidden sm:flex items-center gap-2 bg-white/10 hover:bg-white/15 border border-white/20 text-white font-semibold px-4 py-2 rounded-xl text-sm transition-all">
               {c.ctaPrimary}
