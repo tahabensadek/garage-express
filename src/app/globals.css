@@ -129,6 +129,25 @@ body {
   pointer-events: none;
 }
 
+/* Ambient floating orbs — CSS only, no JS */
+@keyframes orb-1 {
+  0%,100% { transform: translate(0,0) scale(1); }
+  33%      { transform: translate(60px,-50px) scale(1.08); }
+  66%      { transform: translate(-35px,70px) scale(0.95); }
+}
+@keyframes orb-2 {
+  0%,100% { transform: translate(0,0) scale(1); }
+  33%      { transform: translate(-55px,65px) scale(1.1); }
+  66%      { transform: translate(45px,-35px) scale(0.92); }
+}
+@keyframes orb-3 {
+  0%,100% { transform: translate(0,0) scale(1); }
+  50%      { transform: translate(40px,-60px) scale(1.06); }
+}
+.orb-1 { animation: orb-1 14s ease-in-out infinite; }
+.orb-2 { animation: orb-2 18s ease-in-out infinite; }
+.orb-3 { animation: orb-3 12s ease-in-out infinite; }
+
 /* Noise texture overlay */
 .noise::after {
   content: '';

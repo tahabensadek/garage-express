@@ -1,52 +1,73 @@
 'use client'
-import { useRef } from 'react'
-import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion'
+import { useRef, useCallback } from 'react'
+import { motion } from 'framer-motion'
 import { useTranslations } from '@/hooks/useTranslations'
 import { Lightning, Shield, Drop, Thermometer, Sparkle, Clock } from '@phosphor-icons/react'
 
 function TiltCard({ children, highlight, delay }: { children: React.ReactNode; highlight: boolean; delay: number }) {
   const ref = useRef<HTMLDivElement>(null)
-  const x = useMotionValue(0)
-  const y = useMotionValue(0)
-  const rotateX = useSpring(useTransform(y, [-0.5, 0.5], [7, -7]), { stiffness: 300, damping: 30 })
-  const rotateY = useSpring(useTransform(x, [-0.5, 0.5], [-7, 7]), { stiffness: 300, damping: 30 })
-  const gx = useTransform(x, [-0.5, 0.5], ['20%', '80%'])
-  const gy = useTransform(y, [-0.5, 0.5], ['20%', '80%'])
+  const frameRef = useRef<number>(0)
+  const current = useRef({ rx: 0, ry: 0 })
+  const target = useRef({ rx: 0, ry: 0 })
 
-  const onMove = (e: React.MouseEvent) => {
+  const onMove = useCallback((e: React.MouseEvent) => {
     const r = ref.current!.getBoundingClientRect()
-    x.set((e.clientX - r.left) / r.width - 0.5)
-    y.set((e.clientY - r.top) / r.height - 0.5)
-  }
-  const onLeave = () => { x.set(0); y.set(0) }
+    target.current.rx = ((e.clientY - r.top) / r.height - 0.5) * 10
+    target.current.ry = ((e.clientX - r.left) / r.width - 0.5) * -10
+  }, [])
+
+  const onEnter = useCallback(() => {
+    const lerp = () => {
+      current.current.rx += (target.current.rx - current.current.rx) * 0.12
+      current.current.ry += (target.current.ry - current.current.ry) * 0.12
+      if (ref.current) {
+        ref.current.style.transform = `perspective(800px) rotateX(${current.current.rx}deg) rotateY(${current.current.ry}deg)`
+      }
+      frameRef.current = requestAnimationFrame(lerp)
+    }
+    frameRef.current = requestAnimationFrame(lerp)
+  }, [])
+
+  const onLeave = useCallback(() => {
+    cancelAnimationFrame(frameRef.current)
+    target.current = { rx: 0, ry: 0 }
+    const reset = () => {
+      current.current.rx += (0 - current.current.rx) * 0.12
+      current.current.ry += (0 - current.current.ry) * 0.12
+      if (ref.current) {
+        ref.current.style.transform = `perspective(800px) rotateX(${current.current.rx}deg) rotateY(${current.current.ry}deg)`
+      }
+      if (Math.abs(current.current.rx) > 0.01 || Math.abs(current.current.ry) > 0.01) {
+        frameRef.current = requestAnimationFrame(reset)
+      } else if (ref.current) {
+        ref.current.style.transform = ''
+      }
+    }
+    frameRef.current = requestAnimationFrame(reset)
+  }, [])
 
   return (
     <motion.div
-      ref={ref}
-      onMouseMove={onMove}
-      onMouseLeave={onLeave}
-      style={{ rotateX, rotateY, transformStyle: 'preserve-3d', '--shine-delay': `${delay}s` } as React.CSSProperties}
       initial={{ opacity: 0, y: 28 }}
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.55, delay }}
       viewport={{ once: true }}
-      className={`relative rounded-2xl p-7 border overflow-hidden cursor-default ${
-        highlight
-          ? 'bg-primary/10 border-primary/30 ring-1 ring-primary/20'
-          : 'bg-white/4 border-white/8'
-      }`}
     >
-      <motion.div
-        className="absolute inset-0 rounded-2xl pointer-events-none"
-        style={{
-          background: highlight
-            ? undefined
-            : `radial-gradient(circle at ${gx} ${gy}, rgba(220,38,38,0.08), transparent 60%)`,
-          opacity: 1,
-        }}
-      />
-      <span className="shine-sweep" />
-      {children}
+      <div
+        ref={ref}
+        onMouseMove={onMove}
+        onMouseEnter={onEnter}
+        onMouseLeave={onLeave}
+        className={`relative rounded-2xl p-7 border overflow-hidden cursor-default h-full ${
+          highlight
+            ? 'bg-primary/10 border-primary/30 ring-1 ring-primary/20'
+            : 'bg-white/4 border-white/8'
+        }`}
+        style={{ willChange: 'transform', '--shine-delay': `${delay}s` } as React.CSSProperties}
+      >
+        <span className="shine-sweep" />
+        {children}
+      </div>
     </motion.div>
   )
 }
@@ -65,19 +86,11 @@ export default function Benefits() {
 
   return (
     <section className="py-24 bg-dark noise relative overflow-hidden">
-      {/* Ambient gradient orbs */}
-      <motion.div
-        className="absolute -top-32 -right-32 w-[30rem] h-[30rem] rounded-full bg-primary/8 blur-3xl pointer-events-none"
-        animate={{ scale: [1, 1.1, 1], opacity: [0.5, 0.8, 0.5] }}
-        transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut' }}
-      />
-      <motion.div
-        className="absolute -bottom-32 -left-32 w-96 h-96 rounded-full bg-primary/6 blur-3xl pointer-events-none"
-        animate={{ scale: [1, 1.15, 1], opacity: [0.4, 0.7, 0.4] }}
-        transition={{ duration: 11, repeat: Infinity, ease: 'easeInOut', delay: 4 }}
-      />
+      {/* CSS-only ambient orbs — no JS */}
+      <div className="orb-1 absolute -top-32 -right-32 w-[30rem] h-[30rem] rounded-full bg-primary/8 blur-3xl pointer-events-none" />
+      <div className="orb-2 absolute -bottom-32 -left-32 w-96 h-96 rounded-full bg-primary/6 blur-3xl pointer-events-none" />
 
-      <div className="relative z-10 max-w-7xl mx-auto px-4" style={{ perspective: '1200px' }}>
+      <div className="relative z-10 max-w-7xl mx-auto px-4">
         <motion.div
           className="text-center mb-14"
           initial={{ opacity: 0, y: 24 }}
