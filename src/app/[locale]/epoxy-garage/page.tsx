@@ -65,6 +65,7 @@ const copy = {
     phonePlaceholder: 'Votre téléphone',
     emailPlaceholder: 'Votre courriel',
     cityPlaceholder: 'Votre ville',
+    garageSizePlaceholder: 'Taille du garage',
     garageSizes: ['Garage simple (≤300 pi²)', 'Garage double (450-600 pi²)', 'Je ne sais pas'],
     submitBtn: 'Recevoir ma soumission gratuite',
     submitNote: 'Réponse en moins de 24h · Aucun engagement',
@@ -129,6 +130,7 @@ const copy = {
     phonePlaceholder: 'Your phone',
     emailPlaceholder: 'Your email',
     cityPlaceholder: 'Your city',
+    garageSizePlaceholder: 'Garage size',
     garageSizes: ['Single garage (≤300 sq ft)', 'Double garage (450-600 sq ft)', 'I\'m not sure'],
     submitBtn: 'Get my free quote',
     submitNote: 'Reply within 24h · No commitment',
@@ -225,7 +227,7 @@ function LeadFormInline({ c, locale }: { c: typeof copy.fr; locale: string }) {
           className="bg-white/8 border border-white/15 text-white placeholder-white/30 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary" />
         <select required value={form.garageSize} onChange={set('garageSize')}
           className="bg-white/8 border border-white/15 text-white/70 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary">
-          <option value="">Taille du garage</option>
+          <option value="">{c.garageSizePlaceholder}</option>
           {c.garageSizes.map((s, i) => <option key={i} value={s} className="bg-dark text-white">{s}</option>)}
         </select>
       </div>
@@ -246,7 +248,7 @@ export default function EpoxyGaragePage({ params }: { params: { locale: string }
   const [openFaq, setOpenFaq] = useState<number | null>(null)
 
   return (
-    <div className="min-h-screen bg-dark font-body">
+    <div className="min-h-screen bg-dark">
 
       {/* ── Sticky header ── */}
       <header className="sticky top-0 z-50 bg-dark/95 backdrop-blur border-b border-white/8">

@@ -31,7 +31,7 @@ export async function POST(req: Request) {
   const resend = new Resend(process.env.RESEND_API_KEY)
   const sms = twilio(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TOKEN)
   const data = await req.json()
-  const { name, email, phone, garageSize, superficie, city, address, cracks, message, locale, colorName, colorFile, photoUrls = [] } = data
+  const { name, email, phone, garageSize, superficie, city, address, cracks, message, locale, colorName, colorFile, photoUrls = [], source } = data
   const t = locale === 'en' ? copy.en : copy.fr
 
   // GoHighLevel CRM — create contact then opportunity in "Nouveau Lead"
@@ -52,7 +52,7 @@ export async function POST(req: Request) {
         phone: `+1${phone.replace(/\D/g, '')}`,
         city,
         source: 'garagexpress.ca',
-        tags: ['lead-site', locale === 'en' ? 'en' : 'fr'],
+        tags: ['lead-site', locale === 'en' ? 'en' : 'fr', ...(source ? [source] : [])],
         customFields: [
           { id: 'LfxOSUhHkF717C4S1H7d', value: garageSize },
           { id: 'k262N1Qyf818poepQ17d', value: message || '' },
@@ -100,7 +100,7 @@ export async function POST(req: Request) {
               ${address ? `<tr><td style="padding: 10px 0; border-bottom: 1px solid #eee; font-weight: bold;">Adresse</td><td style="padding: 10px 0; border-bottom: 1px solid #eee;">${address}</td></tr>` : ''}
               <tr><td style="padding: 10px 0; border-bottom: 1px solid #eee; font-weight: bold;">Forfait</td><td style="padding: 10px 0; border-bottom: 1px solid #eee;">${garageSize}</td></tr>
               ${superficie ? `<tr><td style="padding: 10px 0; border-bottom: 1px solid #eee; font-weight: bold;">Superficie</td><td style="padding: 10px 0; border-bottom: 1px solid #eee;">${superficie}</td></tr>` : ''}
-              <tr><td style="padding: 10px 0; border-bottom: 1px solid #eee; font-weight: bold;">Fissures</td><td style="padding: 10px 0; border-bottom: 1px solid #eee;">${cracks}</td></tr>
+              ${cracks != null && cracks !== '' ? `<tr><td style="padding: 10px 0; border-bottom: 1px solid #eee; font-weight: bold;">Fissures</td><td style="padding: 10px 0; border-bottom: 1px solid #eee;">${cracks}</td></tr>` : ''}
               <tr><td style="padding: 10px 0; border-bottom: 1px solid #eee; font-weight: bold;">Langue</td><td style="padding: 10px 0; border-bottom: 1px solid #eee;">${locale === 'en' ? '🇬🇧 EN' : '🇫🇷 FR'}</td></tr>
               ${colorName ? `<tr><td style="padding: 10px 0; border-bottom: 1px solid #eee; font-weight: bold;">🎨 Couleur</td><td style="padding: 10px 0; border-bottom: 1px solid #eee; font-weight: bold; color: #DC2626;">${colorName}</td></tr>` : ''}
               ${message ? `<tr><td style="padding: 10px 0; border-bottom: 1px solid #eee; font-weight: bold;">Notes</td><td style="padding: 10px 0; border-bottom: 1px solid #eee;">${message}</td></tr>` : ''}
