@@ -423,37 +423,47 @@ export default function EpoxyGaragePage({ params }: { params: { locale: string }
             <h2 className="font-display text-4xl sm:text-5xl font-black text-white uppercase leading-tight mb-3">{c.compareTitle}</h2>
             <p className="text-white/50 text-lg">{c.compareSub}</p>
           </motion.div>
-          <motion.div
-            className="bg-white/4 border border-white/10 rounded-3xl overflow-hidden"
-            initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.1 }} viewport={{ once: true }}
-          >
-            <table className="w-full text-sm">
-              <thead>
-                <tr className="border-b border-white/10">
-                  <th className="text-left text-white/40 font-medium py-4 px-6">{c.compareFeature}</th>
-                  <th className="text-center text-white/40 font-medium py-4 px-6">{c.compareEpoxy}</th>
-                  <th className="text-center text-primary font-bold py-4 px-6 bg-primary/8">{c.comparePoly}</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-white/5">
-                {c.rows.map((row, i) => (
-                  <tr key={i} className={i % 2 === 0 ? '' : 'bg-white/2'}>
-                    <td className="text-white/70 font-medium py-4 px-6">{row.feature}</td>
-                    <td className="text-center py-4 px-6">
-                      <span className="inline-flex items-center gap-1.5 text-white/35">
-                        <X weight="bold" size={13} className="text-white/20" />
-                        {row.epoxy}
-                      </span>
-                    </td>
-                    <td className="text-center py-4 px-6 bg-primary/5">
-                      <span className="text-primary font-semibold">{row.poly}</span>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </motion.div>
+
+          {/* Column headers */}
+          <div className="grid grid-cols-[1fr_1fr_1fr] mb-3 px-2">
+            <div />
+            <div className="text-center text-white/35 text-xs font-bold uppercase tracking-widest">{c.compareEpoxy}</div>
+            <div className="text-center text-primary text-xs font-bold uppercase tracking-widest">{c.comparePoly}</div>
+          </div>
+
+          {/* Rows */}
+          <div className="space-y-2">
+            {c.rows.map((row, i) => (
+              <motion.div key={i}
+                className="grid grid-cols-[1fr_1fr_1fr] items-center bg-white/4 border border-white/8 rounded-2xl overflow-hidden"
+                initial={{ opacity: 0, x: -16 }} whileInView={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.4, delay: i * 0.06 }} viewport={{ once: true }}
+              >
+                {/* Feature */}
+                <div className="px-5 py-4 text-white/70 text-sm font-semibold">{row.feature}</div>
+
+                {/* Epoxy value */}
+                <div className="px-5 py-4 border-l border-white/8 text-center">
+                  <span className="inline-flex items-center gap-1.5 text-white/30 text-sm">
+                    <span className="w-4 h-4 rounded-full bg-white/8 flex items-center justify-center flex-shrink-0">
+                      <X weight="bold" size={9} />
+                    </span>
+                    {row.epoxy.replace(' ✓', '')}
+                  </span>
+                </div>
+
+                {/* Poly value */}
+                <div className="px-5 py-4 border-l border-primary/20 bg-primary/8 text-center">
+                  <span className="inline-flex items-center gap-1.5 text-sm font-bold text-primary">
+                    <span className="w-4 h-4 rounded-full bg-primary/20 flex items-center justify-center flex-shrink-0">
+                      <Check weight="bold" size={9} color="#DC2626" />
+                    </span>
+                    {row.poly.replace(' ✓', '')}
+                  </span>
+                </div>
+              </motion.div>
+            ))}
+          </div>
         </div>
       </section>
 
