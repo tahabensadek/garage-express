@@ -286,7 +286,9 @@ export default function LeadForm() {
   const step3ok = data.phone.trim()
 
   const formatPhone = (val: string) => {
-    const nums = val.replace(/\D/g, '').slice(0, 10)
+    let nums = val.replace(/\D/g, '')
+    if (nums.length === 11 && nums.startsWith('1')) nums = nums.slice(1)
+    nums = nums.slice(0, 10)
     if (nums.length <= 3) return nums
     if (nums.length <= 6) return `${nums.slice(0, 3)}-${nums.slice(3)}`
     return `${nums.slice(0, 3)}-${nums.slice(3, 6)}-${nums.slice(6)}`
