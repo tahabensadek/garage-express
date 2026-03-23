@@ -4,7 +4,7 @@ import { Star, Quotes } from '@phosphor-icons/react'
 import { useTranslations } from '@/hooks/useTranslations'
 
 // ── Update this to your Google Maps business profile URL ──────────────────────
-const GOOGLE_MAPS_URL = 'https://www.google.com/maps/place/Garage+Express'
+const GOOGLE_MAPS_URL = 'https://www.google.com/maps/place/Garage+Express/@51.9347489,-89.2811126,4z/data=!3m1!4b1!4m6!3m5!1s0x4cc90f9e8a358efb:0xfbfd4234c3fae71b!8m2!3d53.8011982!4d-68.4348824!16s%2Fg%2F11rtq_y4sl?entry=ttu&g_ep=EgoyMDI2MDMxOC4xIKXMDSoASAFQAw%3D%3D'
 // ─────────────────────────────────────────────────────────────────────────────
 
 function timeAgo(date: Date, locale: string): string {
