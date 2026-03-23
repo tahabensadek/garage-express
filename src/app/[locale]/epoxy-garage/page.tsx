@@ -1,12 +1,18 @@
 'use client'
-import { useState, useRef } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import Image from 'next/image'
-import { motion } from 'framer-motion'
+import { motion, AnimatePresence } from 'framer-motion'
 import {
   Phone, Check, X, Star, Shield, Clock, ArrowRight, CaretRight, Quotes,
   Lightning, Drop, Sparkle, Timer, Lock,
 } from '@phosphor-icons/react'
 import LeadForm from '@/components/LeadForm'
+
+/* ── helpers ─────────────────────────────────────────────────── */
+function formatPhone(raw: string) {
+  const digits = raw.replace(/\D/g, '')
+  return digits.startsWith('1') && digits.length === 11 ? digits.slice(1) : digits
+}
 
 /* ── Bilingual copy ──────────────────────────────────────────── */
 const copy = {
@@ -18,6 +24,17 @@ const copy = {
     ctaPrimary: 'Obtenir ma soumission gratuite',
     ctaPhone: '514-824-8618',
     fixedPrice: 'Prix fixe tout inclus\u00a0· Zéro surprise\u00a0· Garantie 15 ans',
+
+    urgency: '🌱 Saison printanière — Disponibilités limitées en avril. Réservez maintenant.',
+
+    heroFormName: 'Votre prénom',
+    heroFormPhone: 'Votre téléphone',
+    heroFormCta: 'Soumission gratuite →',
+    heroFormSuccess: '✓ On vous rappelle en moins de 15 min !',
+
+    floatCta: '📋 Soumission gratuite',
+    stickyCall: '📞 Appeler',
+    stickyCta: 'Soumission gratuite →',
 
     stat1: '127+', stat1Label: 'Garages transformés',
     stat2: '5★',  stat2Label: 'Note Google',
@@ -69,6 +86,7 @@ const copy = {
     pricingBadge: 'Prix fixe\u00a0— aucune surprise',
     pricingNote: 'Préparation de surface · Réparations fissures mineures · Application · Flocons Torginol · Topcoat · Nettoyage',
     pricingCta: 'Obtenir ma soumission',
+    pricingCtaInline: 'Obtenir ma soumission',
     plans: [
       { name: 'Garage simple',           size: '≤300 pi²',      price: '2\u00a0749', cents: ',99$', tag: null,       popular: false },
       { name: 'Simple + Rangement',      size: '300-450 pi²',   price: '3\u00a0449', cents: ',99$', tag: 'Populaire', popular: true  },
@@ -77,9 +95,21 @@ const copy = {
 
     reviewsTitle: 'Ce que disent nos clients',
     reviews: [
-      { name: 'Martin L.',       city: 'Longueuil',     stars: 5, text: 'J\'ai demandé un époxy, ils m\'ont expliqué la différence avec le polyaspartique. Vraiment content d\'avoir suivi leur conseil. Plancher impeccable, installé en une journée.' },
-      { name: 'Sophie B.',       city: 'Brossard',      stars: 5, text: 'Prix fixe, pas de surprise. L\'équipe était super professionnelle. Mon garage ressemble à une salle d\'exposition maintenant.' },
-      { name: 'Jean-François P.', city: 'Saint-Hubert', stars: 5, text: 'Troisième hiver et le plancher est encore parfait. Résiste au calcium et à l\'huile moteur. Je recommande à tous mes voisins.' },
+      { name: 'François Landry',           city: 'Il y a 3 semaines', stars: 5, text: 'Bravo ! Travaux bien exécutés, résultat final incroyable, les nuances dans le plancher ont l\'air naturel. C\'est de l\'art et un métier en même temps. Je donne un 5 étoiles bien mérités 👌🏼' },
+      { name: 'Sonia Boulianne',           city: 'Il y a 1 semaine',  stars: 5, text: 'Très beau service du début à la fin, entièrement satisfaite de mon plancher de garage ! Arrivé à l\'heure, parti à 17h comme convenu. Toutes les autres entreprises m\'ont estimé deux jours de travail, avec lui ça pris une journée et un produit supérieur garanti. Je recommande.' },
+      { name: 'Philippe-Alexandre Alarie', city: 'Il y a 6 jours',    stars: 5, text: 'Merci à Garage Express pour les travaux bien exécutés, service avant, pendant et après installation hors pair ! Je recommande !' },
+      { name: 'Richard Theriault',         city: 'Il y a 2 jours',    stars: 5, text: 'Belle job, bon service.' },
+    ],
+
+    reviewsCtaPhone: '514-824-8618',
+    reviewsCtaForm: 'Obtenir ma soumission',
+
+    trustTitle: 'Zéro risque — 100% confiance',
+    trustPills: [
+      '🛡 Garantie 15 ans matériaux + pose',
+      '🔒 Prix fixe — ce qu\'on dit = ce qu\'on facture',
+      '✅ Soumission 100% gratuite, sans engagement',
+      '⚡ On vous rappelle en moins de 15 min',
     ],
 
     faqTitle: 'Questions sur l\'époxy garage',
@@ -99,6 +129,17 @@ const copy = {
     ctaPrimary: 'Get my free quote',
     ctaPhone: '514-824-8618',
     fixedPrice: 'Fixed all-inclusive price\u00a0· No surprises\u00a0· 15-year warranty',
+
+    urgency: '🌱 Spring season — Limited availability in April. Book now.',
+
+    heroFormName: 'Your first name',
+    heroFormPhone: 'Your phone number',
+    heroFormCta: 'Free quote →',
+    heroFormSuccess: '✓ We\'ll call you back in under 15 min!',
+
+    floatCta: '📋 Free quote',
+    stickyCall: '📞 Call',
+    stickyCta: 'Free quote →',
 
     stat1: '127+', stat1Label: 'Garages transformed',
     stat2: '5★',  stat2Label: 'Google rating',
@@ -150,6 +191,7 @@ const copy = {
     pricingBadge: 'Fixed price — no surprises',
     pricingNote: 'Surface prep · Minor crack repairs · Application · Torginol flakes · Topcoat · Cleanup',
     pricingCta: 'Get my quote',
+    pricingCtaInline: 'Get my quote',
     plans: [
       { name: 'Single garage',         size: '≤300 sq ft',      price: '2,749', cents: '.99$', tag: null,       popular: false },
       { name: 'Single + Storage',      size: '300-450 sq ft',   price: '3,449', cents: '.99$', tag: 'Popular',  popular: true  },
@@ -158,9 +200,21 @@ const copy = {
 
     reviewsTitle: 'What our clients say',
     reviews: [
-      { name: 'Martin L.',       city: 'Longueuil',     stars: 5, text: 'I asked for epoxy, they explained the difference with polyaspartic. Really glad I followed their advice. Flawless floor, installed in one day.' },
-      { name: 'Sophie B.',       city: 'Brossard',      stars: 5, text: 'Fixed price, no surprises. The team was super professional. My garage looks like a showroom now.' },
-      { name: 'Jean-François P.', city: 'Saint-Hubert', stars: 5, text: 'Third winter and the floor is still perfect. Handles calcium and motor oil from my car. I recommend to all my neighbors.' },
+      { name: 'François Landry',           city: '3 weeks ago', stars: 5, text: 'Bravo! Work well done, incredible final result, the shades in the floor look natural. It\'s art and a craft at the same time. I give a well-deserved 5 stars 👌🏼' },
+      { name: 'Sonia Boulianne',           city: '1 week ago',  stars: 5, text: 'Very beautiful service from start to finish, completely satisfied with my garage floor! Arrived on time, left at 5pm as agreed. All other companies estimated two days of work, with him it took one day and a superior product guaranteed. I recommend.' },
+      { name: 'Philippe-Alexandre Alarie', city: '6 days ago',  stars: 5, text: 'Thank you to Garage Express for the work well done, service before, during and after installation is top notch! I recommend!' },
+      { name: 'Richard Theriault',         city: '2 days ago',  stars: 5, text: 'Great job, good service.' },
+    ],
+
+    reviewsCtaPhone: '514-824-8618',
+    reviewsCtaForm: 'Get my quote',
+
+    trustTitle: 'Zero risk — 100% confidence',
+    trustPills: [
+      '🛡 15-year warranty materials + labor',
+      '🔒 Fixed price — what we say = what we charge',
+      '✅ 100% free quote, no obligation',
+      '⚡ We call you back in under 15 min',
     ],
 
     faqTitle: 'Epoxy garage FAQ',
@@ -217,12 +271,56 @@ export default function EpoxyGaragePage({ params }: { params: { locale: string }
   const c = copy[locale]
   const [openFaq, setOpenFaq] = useState<number | null>(null)
 
+  /* Hero mini-form state */
+  const [heroName, setHeroName] = useState('')
+  const [heroPhone, setHeroPhone] = useState('')
+  const [heroSent, setHeroSent] = useState(false)
+  const [heroLoading, setHeroLoading] = useState(false)
+
+  /* Floating desktop CTA */
+  const [showFloat, setShowFloat] = useState(false)
+
+  useEffect(() => {
+    const onScroll = () => setShowFloat(window.scrollY > 600)
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
+
   const trackCall = () =>
     (window as any).gtag?.('event', 'conversion', {
       send_to: 'AW-17940446235/AoXGCLDrhI0cEJv41epC',
       value: 1.0,
       currency: 'CAD',
     })
+
+  const heroSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setHeroLoading(true)
+    const phone = formatPhone(heroPhone)
+    ;(window as any).gtag?.('event', 'conversion', {
+      send_to: 'AW-17940446235/AoXGCLDrhI0cEJv41epC',
+      value: 1.0,
+      currency: 'CAD',
+    })
+    try {
+      await fetch('/api/submit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: heroName,
+          phone,
+          locale,
+          source: 'epoxy-hero',
+          garageSize: '',
+          email: '',
+          city: '',
+          cracks: '',
+        }),
+      })
+    } catch (_) { /* silent */ }
+    setHeroLoading(false)
+    setHeroSent(true)
+  }
 
   return (
     <div className="min-h-screen bg-dark">
@@ -255,6 +353,11 @@ export default function EpoxyGaragePage({ params }: { params: { locale: string }
           </div>
         </div>
       </header>
+
+      {/* ─────────── Urgency banner ─────────── */}
+      <div className="bg-red-600 text-white text-xs font-bold text-center px-4 py-2.5 tracking-wide">
+        {c.urgency}
+      </div>
 
       {/* ─────────── Hero ─────────── */}
       <section className="relative min-h-[92vh] flex items-center overflow-hidden">
@@ -295,17 +398,44 @@ export default function EpoxyGaragePage({ params }: { params: { locale: string }
               <span className="text-white/55 text-sm ml-1">127+ garages transformés · 5★ Google</span>
             </motion.div>
 
+            {/* ── Mini hero form ── */}
             <motion.div
-              className="flex flex-col sm:flex-row gap-3"
               initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.55, delay: 0.3 }}
             >
-              <a href="#soumission"
-                className="group relative overflow-hidden bg-primary hover:bg-red-700 text-white font-black px-8 py-4 rounded-xl text-base transition-all flex items-center justify-center gap-2 shadow-2xl shadow-primary/40 btn-shimmer">
-                {c.ctaPrimary}
-                <CaretRight weight="bold" size={20} className="group-hover:translate-x-1 transition-transform" />
-              </a>
+              {heroSent ? (
+                <div className="inline-flex items-center gap-3 bg-green-500/15 border border-green-500/30 text-green-400 font-bold px-6 py-4 rounded-xl text-base mb-4">
+                  {c.heroFormSuccess}
+                </div>
+              ) : (
+                <form onSubmit={heroSubmit} className="flex flex-col sm:flex-row gap-2 mb-4 max-w-xl">
+                  <input
+                    type="text"
+                    required
+                    placeholder={c.heroFormName}
+                    value={heroName}
+                    onChange={e => setHeroName(e.target.value)}
+                    className="flex-1 bg-white/10 border border-white/20 text-white placeholder-white/40 rounded-xl px-4 py-3.5 text-sm focus:outline-none focus:border-white/40 focus:bg-white/15 transition-all"
+                  />
+                  <input
+                    type="tel"
+                    required
+                    placeholder={c.heroFormPhone}
+                    value={heroPhone}
+                    onChange={e => setHeroPhone(e.target.value)}
+                    className="flex-1 bg-white/10 border border-white/20 text-white placeholder-white/40 rounded-xl px-4 py-3.5 text-sm focus:outline-none focus:border-white/40 focus:bg-white/15 transition-all"
+                  />
+                  <button
+                    type="submit"
+                    disabled={heroLoading}
+                    className="group relative overflow-hidden bg-primary hover:bg-red-700 disabled:opacity-70 text-white font-black px-6 py-3.5 rounded-xl text-sm transition-all shadow-2xl shadow-primary/40 btn-shimmer whitespace-nowrap"
+                  >
+                    {heroLoading ? '...' : c.heroFormCta}
+                  </button>
+                </form>
+              )}
+
               <a href="tel:5148248618" onClick={trackCall}
-                className="bg-white/8 hover:bg-white/15 border border-white/20 text-white font-semibold px-8 py-4 rounded-xl text-base transition-all flex items-center justify-center gap-2">
+                className="bg-white/8 hover:bg-white/15 border border-white/20 text-white font-semibold px-8 py-4 rounded-xl text-base transition-all inline-flex items-center justify-center gap-2">
                 <Phone weight="duotone" size={20} color="#DC2626" />
                 {c.ctaPhone}
               </a>
@@ -555,7 +685,15 @@ export default function EpoxyGaragePage({ params }: { params: { locale: string }
               </motion.div>
             ))}
           </div>
-          <p className="text-center text-gray-400 text-xs">{c.pricingNote}</p>
+          <p className="text-center text-gray-400 text-xs mb-6">{c.pricingNote}</p>
+          {/* Inline CTA after pricing note */}
+          <div className="text-center">
+            <a href="#soumission"
+              className="inline-flex items-center gap-2 bg-primary hover:bg-red-700 text-white font-black px-8 py-4 rounded-xl text-sm transition-all shadow-lg shadow-primary/20">
+              {c.pricingCtaInline}
+              <ArrowRight weight="bold" size={18} />
+            </a>
+          </div>
         </div>
       </section>
 
@@ -569,7 +707,7 @@ export default function EpoxyGaragePage({ params }: { params: { locale: string }
           >
             {c.reviewsTitle}
           </motion.h2>
-          <div className="grid md:grid-cols-3 gap-5">
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-5">
             {c.reviews.map((r, i) => (
               <motion.div key={i}
                 className="bg-gray-50 border border-gray-100 rounded-2xl p-7 relative"
@@ -595,6 +733,19 @@ export default function EpoxyGaragePage({ params }: { params: { locale: string }
                 </div>
               </motion.div>
             ))}
+          </div>
+          {/* Inline CTA after reviews */}
+          <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-3">
+            <a href="#soumission"
+              className="inline-flex items-center gap-2 bg-primary hover:bg-red-700 text-white font-black px-8 py-4 rounded-xl text-sm transition-all shadow-lg shadow-primary/20">
+              {c.reviewsCtaForm}
+              <ArrowRight weight="bold" size={18} />
+            </a>
+            <a href="tel:5148248618" onClick={trackCall}
+              className="inline-flex items-center gap-2 bg-gray-100 hover:bg-gray-200 text-dark font-bold px-8 py-4 rounded-xl text-sm transition-all">
+              <Phone weight="duotone" size={18} color="#DC2626" />
+              {c.reviewsCtaPhone}
+            </a>
           </div>
         </div>
       </section>
@@ -653,11 +804,36 @@ export default function EpoxyGaragePage({ params }: { params: { locale: string }
         </div>
       </section>
 
+      {/* ─────────── Zéro risque ─────────── */}
+      <section className="py-16 bg-dark noise relative overflow-hidden">
+        <div className="orb-1 absolute -bottom-32 -left-32 w-96 h-96 rounded-full bg-primary/8 blur-3xl pointer-events-none" />
+        <div className="max-w-5xl mx-auto px-4 relative z-10">
+          <motion.h2
+            className="font-display text-3xl sm:text-4xl font-black text-white uppercase text-center mb-8"
+            initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }} viewport={{ once: true }}
+          >
+            {c.trustTitle}
+          </motion.h2>
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            {c.trustPills.map((pill, i) => (
+              <motion.div key={i}
+                className="bg-white/6 border border-white/12 rounded-2xl px-5 py-5 text-white/85 text-sm font-semibold leading-snug text-center"
+                initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.4, delay: i * 0.08 }} viewport={{ once: true }}
+              >
+                {pill}
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* ─────────── Lead form (full — identical to main page) ─────────── */}
       <LeadForm />
 
       {/* ─────────── Footer minimal ─────────── */}
-      <footer className="py-8 bg-dark border-t border-white/8">
+      <footer className="py-8 bg-dark border-t border-white/8 pb-20 sm:pb-8">
         <div className="max-w-6xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-4">
           <Image src="/images/logo-text.png" alt="Garage Express" width={140} height={35} className="h-8 w-auto opacity-50" />
           <p className="text-white/25 text-xs text-center">
@@ -670,6 +846,35 @@ export default function EpoxyGaragePage({ params }: { params: { locale: string }
           </a>
         </div>
       </footer>
+
+      {/* ─────────── Floating desktop CTA ─────────── */}
+      <AnimatePresence>
+        {showFloat && (
+          <motion.a
+            href="#soumission"
+            initial={{ opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 24 }}
+            transition={{ duration: 0.3 }}
+            className="hidden sm:flex fixed bottom-6 right-6 z-50 items-center gap-2 bg-primary hover:bg-red-700 text-white font-black px-6 py-4 rounded-2xl shadow-2xl shadow-primary/40 text-sm transition-colors"
+          >
+            {c.floatCta}
+          </motion.a>
+        )}
+      </AnimatePresence>
+
+      {/* ─────────── Sticky mobile bottom bar ─────────── */}
+      <div className="sm:hidden fixed bottom-0 inset-x-0 z-50 bg-dark/97 backdrop-blur-md border-t border-white/12 px-4 py-3 flex gap-3 safe-area-inset-bottom">
+        <a href="tel:5148248618" onClick={trackCall}
+          className="flex-1 flex items-center justify-center gap-2 bg-white/10 border border-white/20 text-white font-bold py-3.5 rounded-xl text-sm transition-all active:bg-white/20">
+          {c.stickyCall}
+        </a>
+        <a href="#soumission"
+          className="flex-2 flex items-center justify-center gap-2 bg-primary text-white font-black py-3.5 px-6 rounded-xl text-sm transition-all active:bg-red-700 shadow-lg shadow-primary/30" style={{ flex: 2 }}>
+          {c.stickyCta}
+        </a>
+      </div>
+
     </div>
   )
 }
