@@ -870,7 +870,7 @@ export default function EpoxyGaragePage({ params }: { params: { locale: string }
           {c.stickyCall}
         </a>
         <a href="#soumission"
-          className="flex-2 flex items-center justify-center gap-2 bg-primary text-white font-black py-3.5 px-6 rounded-xl text-sm transition-all active:bg-red-700 shadow-lg shadow-primary/30" style={{ flex: 2 }}>
+          className="flex-1 flex items-center justify-center gap-2 bg-primary text-white font-black py-3.5 rounded-xl text-sm transition-all active:bg-red-700 shadow-lg shadow-primary/30" style={{ flex: 2 }}>
           {c.stickyCta}
         </a>
       </div>
