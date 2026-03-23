@@ -14,6 +14,9 @@ import About from '@/components/About'
 import FAQ from '@/components/FAQ'
 import FinalCTA from '@/components/FinalCTA'
 import Footer from '@/components/Footer'
+import UrgencyBanner from '@/components/UrgencyBanner'
+import StickyMobileBar from '@/components/StickyMobileBar'
+import FloatingCTA from '@/components/FloatingCTA'
 
 function WaveDivider({ flip = false, from = '#ffffff', to = '#0C0C0C' }: { flip?: boolean; from?: string; to?: string }) {
   return (
@@ -40,6 +43,7 @@ export default function Home() {
   return (
     <main>
       <Navbar />
+      <UrgencyBanner />
       <Hero />
       <SocialProofBar />
       <Problem />
@@ -67,6 +71,8 @@ export default function Home() {
       <DiagDivider from="#0C0C0C" to="#DC2626" />
       <FinalCTA />
       <Footer />
+      <StickyMobileBar />
+      <FloatingCTA />
     </main>
   )
 }

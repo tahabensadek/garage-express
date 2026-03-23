@@ -7,7 +7,7 @@ export default function Footer() {
   const { get } = useTranslations()
 
   return (
-    <footer className="bg-dark border-t border-white/5">
+    <footer className="bg-dark border-t border-white/5 pb-20 sm:pb-0">
       <div className="max-w-7xl mx-auto px-4 py-16">
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-10 mb-12">
           <div className="lg:col-span-2">

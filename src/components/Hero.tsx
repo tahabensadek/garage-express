@@ -1,8 +1,28 @@
 'use client'
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { motion, useScroll, useTransform, useSpring } from 'framer-motion'
 import { Phone, ArrowDown, Shield, Clock, Star, CaretRight } from '@phosphor-icons/react'
 import { useTranslations } from '@/hooks/useTranslations'
+
+function formatPhone(raw: string) {
+  const digits = raw.replace(/\D/g, '')
+  return digits.startsWith('1') && digits.length === 11 ? digits.slice(1) : digits
+}
+
+const heroCopy = {
+  fr: {
+    namePlaceholder: 'Votre prénom',
+    phonePlaceholder: 'Votre téléphone',
+    submitCta: 'Soumission gratuite →',
+    success: '✓ On vous rappelle en moins de 15 min !',
+  },
+  en: {
+    namePlaceholder: 'Your first name',
+    phonePlaceholder: 'Your phone number',
+    submitCta: 'Free quote →',
+    success: '✓ We\'ll call you back in under 15 min!',
+  },
+}
 
 function SplitReveal({ text, className, delay = 0 }: { text: string; className?: string; delay?: number }) {
   const words = text.split(' ')
@@ -25,8 +45,42 @@ function SplitReveal({ text, className, delay = 0 }: { text: string; className?:
 }
 
 export default function Hero() {
-  const { get } = useTranslations()
+  const { get, locale } = useTranslations()
+  const hc = heroCopy[locale as 'fr' | 'en'] ?? heroCopy.fr
   const containerRef = useRef<HTMLElement>(null)
+
+  const [heroName, setHeroName] = useState('')
+  const [heroPhone, setHeroPhone] = useState('')
+  const [heroSent, setHeroSent] = useState(false)
+  const [heroLoading, setHeroLoading] = useState(false)
+
+  const heroSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setHeroLoading(true)
+    ;(window as any).gtag?.('event', 'conversion', {
+      send_to: 'AW-17940446235/AoXGCLDrhI0cEJv41epC',
+      value: 1.0,
+      currency: 'CAD',
+    })
+    try {
+      await fetch('/api/submit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: heroName,
+          phone: formatPhone(heroPhone),
+          locale,
+          source: 'hero-mini',
+          garageSize: '',
+          email: '',
+          city: '',
+          cracks: '',
+        }),
+      })
+    } catch (_) { /* silent */ }
+    setHeroLoading(false)
+    setHeroSent(true)
+  }
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -132,19 +186,45 @@ export default function Hero() {
           </motion.div>
 
           <motion.div
-            className="flex flex-col sm:flex-row gap-3 mb-10"
+            className="mb-10"
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.8 }}
           >
-            <a href="#soumission"
-              className="relative overflow-hidden group bg-primary hover:bg-primary-dark text-white font-bold px-8 py-4 rounded-xl text-base transition-all duration-200 flex items-center justify-center gap-2 shadow-2xl shadow-primary/30 btn-shimmer">
-              {get('hero.ctaPrimary')}
-              <CaretRight weight="bold" size={20} className="group-hover:translate-x-1 transition-transform" />
-            </a>
+            {heroSent ? (
+              <div className="inline-flex items-center gap-3 bg-green-500/15 border border-green-500/30 text-green-400 font-bold px-6 py-4 rounded-xl text-base mb-4">
+                {hc.success}
+              </div>
+            ) : (
+              <form onSubmit={heroSubmit} className="flex flex-col sm:flex-row gap-2 mb-3 max-w-xl">
+                <input
+                  type="text"
+                  required
+                  placeholder={hc.namePlaceholder}
+                  value={heroName}
+                  onChange={e => setHeroName(e.target.value)}
+                  className="flex-1 bg-white/10 border border-white/20 text-white placeholder-white/40 rounded-xl px-4 py-3.5 text-sm focus:outline-none focus:border-white/40 focus:bg-white/15 transition-all backdrop-blur-sm"
+                />
+                <input
+                  type="tel"
+                  required
+                  placeholder={hc.phonePlaceholder}
+                  value={heroPhone}
+                  onChange={e => setHeroPhone(e.target.value)}
+                  className="flex-1 bg-white/10 border border-white/20 text-white placeholder-white/40 rounded-xl px-4 py-3.5 text-sm focus:outline-none focus:border-white/40 focus:bg-white/15 transition-all backdrop-blur-sm"
+                />
+                <button
+                  type="submit"
+                  disabled={heroLoading}
+                  className="relative overflow-hidden bg-primary hover:bg-red-700 disabled:opacity-70 text-white font-black px-6 py-3.5 rounded-xl text-sm transition-all shadow-2xl shadow-primary/30 btn-shimmer whitespace-nowrap"
+                >
+                  {heroLoading ? '...' : hc.submitCta}
+                </button>
+              </form>
+            )}
             <a href={`tel:${get('nav.phone').replace(/-/g, '')}`}
               onClick={() => (window as any).gtag?.('event', 'conversion', { send_to: 'AW-17940446235/AoXGCLDrhI0cEJv41epC', value: 1.0, currency: 'CAD' })}
-              className="group bg-white/8 hover:bg-white/15 border border-white/20 text-white font-semibold px-8 py-4 rounded-xl text-base transition-all duration-200 flex items-center justify-center gap-2 backdrop-blur-sm">
+              className="group bg-white/8 hover:bg-white/15 border border-white/20 text-white font-semibold px-8 py-4 rounded-xl text-base transition-all duration-200 inline-flex items-center justify-center gap-2 backdrop-blur-sm">
               <Phone weight="duotone" size={20} color="#DC2626" />
               {get('hero.ctaPhone')}
             </a>
