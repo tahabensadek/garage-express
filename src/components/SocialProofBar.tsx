@@ -19,7 +19,7 @@ export default function SocialProofBar() {
             <div key={i} className="px-6 py-6 text-center">
               <div className="font-display text-4xl font-black text-primary leading-none mb-1">{s.value}</div>
               <div className="text-white font-semibold text-sm mb-0.5">{s.label}</div>
-              <div className="text-white/40 text-xs">{s.sub}</div>
+              <div className="text-white/60 text-xs font-medium">{s.sub}</div>
             </div>
           ))}
         </div>

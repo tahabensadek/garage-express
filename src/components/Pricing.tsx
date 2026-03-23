@@ -66,7 +66,7 @@ export default function Pricing() {
             {get('pricing.title')}
             <span className="block text-gradient">{get('pricing.titleHighlight')}</span>
           </h2>
-          <p className="text-gray-500 text-lg max-w-2xl mx-auto">
+          <p className="text-gray-600 text-lg max-w-2xl mx-auto">
             {get('pricing.subtitle')}
           </p>
         </div>
@@ -76,7 +76,7 @@ export default function Pricing() {
             <div key={i} className={`reveal reveal-delay-${i + 1} relative rounded-3xl overflow-hidden card-lift ${
               plan.popular
                 ? 'shadow-2xl shadow-primary/20 ring-2 ring-primary'
-                : 'border-2 border-gray-100 shadow-lg'
+                : 'border-2 border-gray-200 shadow-lg'
             }`}>
               {plan.badge && (
                 <div className="bg-gradient-to-r from-primary to-red-500 text-white text-center py-3 text-sm font-bold tracking-wide">
@@ -89,23 +89,23 @@ export default function Pricing() {
                   <div className="flex items-start justify-between mb-3">
                     <div>
                       <h3 className="font-display text-2xl font-black text-dark uppercase">{plan.name}</h3>
-                      <p className="text-gray-400 text-sm mt-1">{plan.tagline}</p>
+                      <p className="text-gray-500 text-sm mt-1">{plan.tagline}</p>
                     </div>
-                    <div className="bg-gray-50 border border-gray-100 text-gray-600 text-xs font-bold px-3 py-1.5 rounded-lg whitespace-nowrap">{plan.size}</div>
+                    <div className="bg-gray-100 border border-gray-200 text-gray-700 text-xs font-bold px-3 py-1.5 rounded-lg whitespace-nowrap">{plan.size}</div>
                   </div>
 
                   <div className="flex items-baseline gap-1 mt-4">
                     <span className="font-display text-6xl font-black text-dark leading-none">{plan.price}</span>
-                    <span className="font-display text-3xl font-black text-gray-400">,99$</span>
+                    <span className="font-display text-3xl font-black text-gray-500">,99$</span>
                   </div>
                   <div className="mt-2 flex gap-3 flex-wrap">
-                    <span className="text-xs text-gray-400 bg-gray-50 border border-gray-100 px-2.5 py-1 rounded-lg">{get('pricing.fixedPrice')}</span>
-                    <span className="text-xs text-gray-400 bg-gray-50 border border-gray-100 px-2.5 py-1 rounded-lg">{get('pricing.install1Day')}</span>
+                    <span className="text-xs text-gray-600 bg-gray-100 border border-gray-200 px-2.5 py-1 rounded-lg font-medium">{get('pricing.fixedPrice')}</span>
+                    <span className="text-xs text-gray-600 bg-gray-100 border border-gray-200 px-2.5 py-1 rounded-lg font-medium">{get('pricing.install1Day')}</span>
                   </div>
                 </div>
 
                 <div className="mb-5">
-                  <div className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-3">{get('pricing.included')}</div>
+                  <div className="text-xs font-bold text-gray-500 uppercase tracking-widest mb-3">{get('pricing.included')}</div>
                   <ul className="space-y-2.5">
                     {plan.includes.map((item, j) => (
                       <li key={j} className="flex gap-3 items-start">
@@ -118,7 +118,7 @@ export default function Pricing() {
 
                 {plan.excludes.length > 0 && (
                   <div className="mb-6 pt-4 border-t border-dashed border-gray-100">
-                    <div className="text-xs font-bold text-gray-300 uppercase tracking-widest mb-3">{get('pricing.notIncluded')}</div>
+                    <div className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-3">{get('pricing.notIncluded')}</div>
                     <ul className="space-y-2">
                       {plan.excludes.map((item, j) => (
                         <li key={j} className="flex gap-3 items-start">
@@ -139,7 +139,7 @@ export default function Pricing() {
                   {plan.cta}
                   <ArrowRight weight="bold" size={20} />
                 </a>
-                <p className="text-center text-xs text-gray-400 mt-3">{get('pricing.responseNote')}</p>
+                <p className="text-center text-xs text-gray-500 font-medium mt-3">{get('pricing.responseNote')}</p>
               </div>
             </div>
           ))}
@@ -162,7 +162,7 @@ export default function Pricing() {
                 <div key={i} className="flex items-start justify-between gap-4 pb-4 border-b border-gray-200 last:border-0 last:pb-0">
                   <div>
                     <div className="font-semibold text-dark text-sm">{addon.name}</div>
-                    <div className="text-gray-400 text-xs mt-0.5">{addon.note}</div>
+                    <div className="text-gray-500 text-xs mt-0.5">{addon.note}</div>
                   </div>
                   <div className="font-display text-xl font-black text-primary whitespace-nowrap">{addon.price}</div>
                 </div>

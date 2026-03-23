@@ -36,20 +36,20 @@ export default function Problem() {
             <span className="block text-gradient">{get('problem.titleHighlight')}</span>
             <span className="block text-dark">{get('problem.titleEnd')}</span>
           </h2>
-          <p className="text-lg text-gray-600 leading-relaxed">
+          <p className="text-lg text-gray-700 leading-relaxed">
             {get('problem.subtitle')}
           </p>
         </div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5 mb-16">
           {problems.map((p, i) => (
-            <div key={i} className={`reveal reveal-delay-${(i % 4) + 1} bg-gray-50 border border-gray-100 rounded-2xl p-6 flex gap-4`}>
+            <div key={i} className={`reveal reveal-delay-${(i % 4) + 1} bg-gray-50 border border-gray-200 rounded-2xl p-6 flex gap-4`}>
               <div className="w-8 h-8 bg-red-100 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
                 <X weight="bold" size={16} color="#DC2626" />
               </div>
               <div>
                 <h3 className="font-bold text-dark mb-2 text-base">{p.title}</h3>
-                <p className="text-gray-500 text-sm leading-relaxed">{p.desc}</p>
+                <p className="text-gray-600 text-sm leading-relaxed">{p.desc}</p>
               </div>
             </div>
           ))}
@@ -60,7 +60,7 @@ export default function Problem() {
             {get('problem.bridgeTitle')}<br />
             <span className="text-gradient">{get('problem.bridgeHighlight')}</span>
           </div>
-          <p className="text-white/60 text-lg mb-6">
+          <p className="text-white/80 text-lg mb-6">
             {get('problem.bridgeText')}
           </p>
           <a href="#soumission" className="relative overflow-hidden inline-flex items-center gap-2 bg-primary hover:bg-primary-dark text-white font-bold px-8 py-4 rounded-xl text-base transition-all btn-shimmer">

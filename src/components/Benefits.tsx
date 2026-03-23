@@ -105,7 +105,7 @@ export default function Benefits() {
             {get('benefits.title')}
             <span className="block text-gradient">{get('benefits.titleHighlight')}</span>
           </h2>
-          <p className="text-white/50 text-lg max-w-2xl mx-auto">
+          <p className="text-white/70 text-lg max-w-2xl mx-auto">
             {get('benefits.subtitle')}
           </p>
         </motion.div>
@@ -119,7 +119,7 @@ export default function Benefits() {
                 <b.icon weight="duotone" size={24} color={b.highlight ? '#ffffff' : '#DC2626'} />
               </div>
               <h3 className="font-display text-xl font-bold text-white uppercase leading-tight mb-3">{b.title}</h3>
-              <p className="text-white/50 text-sm leading-relaxed">{b.desc}</p>
+              <p className="text-white/75 text-sm leading-relaxed">{b.desc}</p>
             </TiltCard>
           ))}
         </div>
@@ -138,8 +138,8 @@ export default function Benefits() {
             <table className="w-full text-sm">
               <thead>
                 <tr className="border-b border-white/10">
-                  <th className="text-left text-white/40 font-medium py-3 pr-6">{get('benefits.comparisonFeature')}</th>
-                  <th className="text-center text-white/40 font-medium py-3 px-4">{get('benefits.comparisonEpoxy')}</th>
+                  <th className="text-left text-white/65 font-semibold py-3 pr-6">{get('benefits.comparisonFeature')}</th>
+                  <th className="text-center text-white/55 font-semibold py-3 px-4">{get('benefits.comparisonEpoxy')}</th>
                   <th className="text-center text-primary font-bold py-3 px-4">{get('benefits.comparisonPoly')}</th>
                 </tr>
               </thead>
@@ -147,7 +147,7 @@ export default function Benefits() {
                 {([1,2,3,4,5,6] as const).map((n, i) => (
                   <tr key={i}>
                     <td className="text-white/70 py-3 pr-6">{get(`benefits.comparisonRow${n}`)}</td>
-                    <td className="text-center text-white/30 py-3 px-4">{get(`benefits.comparisonEpoxy${n}`)}</td>
+                    <td className="text-center text-white/50 py-3 px-4">{get(`benefits.comparisonEpoxy${n}`)}</td>
                     <td className="text-center text-primary font-semibold py-3 px-4">{get(`benefits.comparisonPoly${n}`)}</td>
                   </tr>
                 ))}

@@ -64,7 +64,7 @@ export default function Stats() {
               viewport={{ once: true }}
             >
               <Counter target={s.value} suffix={s.suffix} decimal={s.decimal} />
-              <div className="text-white/40 text-xs uppercase tracking-widest mt-3 leading-relaxed">{s.label}</div>
+              <div className="text-white/70 text-sm font-semibold uppercase tracking-widest mt-3 leading-relaxed">{s.label}</div>
             </motion.div>
           ))}
         </div>

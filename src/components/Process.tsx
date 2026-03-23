@@ -33,7 +33,7 @@ export default function Process() {
             {get('process.title')}
             <span className="block text-gradient">{get('process.titleHighlight')}</span>
           </h2>
-          <p className="text-gray-500 text-lg max-w-2xl mx-auto">
+          <p className="text-gray-600 text-lg max-w-2xl mx-auto">
             {get('process.subtitle')}
           </p>
         </div>
@@ -41,7 +41,7 @@ export default function Process() {
         {/* Timeline */}
         <div className="relative max-w-4xl mx-auto">
           {/* Vertical line */}
-          <div className="absolute left-8 top-0 bottom-0 w-0.5 bg-gray-200 hidden md:block" />
+          <div className="absolute left-8 top-0 bottom-0 w-0.5 bg-primary/25 hidden md:block" />
 
           <div className="space-y-6">
             {steps.map((step, i) => (
@@ -49,18 +49,18 @@ export default function Process() {
                 {/* Circle + number */}
                 <div className="flex-shrink-0 relative z-10">
                   <div className={`w-16 h-16 rounded-2xl flex flex-col items-center justify-center font-display font-black ${
-                    i === 0 ? 'bg-primary text-white' : 'bg-white border-2 border-gray-200 text-dark'
+                    i === 0 ? 'bg-primary text-white' : 'bg-white border-2 border-primary/30 text-primary'
                   }`}>
-                    <div className="text-xs opacity-60">{step.time}</div>
+                    <div className={`text-xs font-semibold ${i === 0 ? 'text-white/80' : 'text-primary/70'}`}>{step.time}</div>
                     <div className="text-lg leading-none">{step.num}</div>
                   </div>
                 </div>
 
                 {/* Content */}
-                <div className="flex-1 bg-white rounded-2xl p-6 border border-gray-100 shadow-sm mb-2">
+                <div className="flex-1 bg-white rounded-2xl p-6 border border-gray-200 shadow-sm mb-2">
                   <h3 className="font-display text-xl font-black text-dark uppercase mb-2">{step.title}</h3>
-                  <p className="text-gray-600 text-sm leading-relaxed mb-3">{step.desc}</p>
-                  <div className="bg-primary/5 border-l-2 border-primary text-primary/80 text-xs px-4 py-2.5 rounded-r-lg leading-relaxed">
+                  <p className="text-gray-700 text-sm leading-relaxed mb-3">{step.desc}</p>
+                  <div className="bg-primary/8 border-l-4 border-primary text-primary text-xs font-medium px-4 py-2.5 rounded-r-lg leading-relaxed">
                     💡 {step.detail}
                   </div>
                 </div>
@@ -73,7 +73,7 @@ export default function Process() {
             <div className="font-display text-3xl font-black uppercase mb-2">
               {get('process.endBadge')}
             </div>
-            <div className="text-white/50 text-sm">
+            <div className="text-white/75 text-sm">
               {get('process.endText')}
             </div>
           </div>

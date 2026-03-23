@@ -30,12 +30,12 @@ export default function FAQ() {
             {get('faq.title')}
             <span className="block text-gradient">{get('faq.titleHighlight')}</span>
           </h2>
-          <p className="text-gray-500 text-lg">{get('faq.subtitle')}</p>
+          <p className="text-gray-600 text-lg">{get('faq.subtitle')}</p>
         </div>
 
         <div className="space-y-3 reveal">
           {faqs.map((faq, i) => (
-            <div key={i} className="border-2 border-gray-100 rounded-2xl overflow-hidden">
+            <div key={i} className="border-2 border-gray-200 rounded-2xl overflow-hidden hover:border-primary/20 transition-colors">
               <button
                 onClick={() => setOpen(open === i ? null : i)}
                 className="w-full flex items-center justify-between px-6 py-5 text-left hover:bg-gray-50 transition-colors">
@@ -43,7 +43,7 @@ export default function FAQ() {
                 <CaretDown weight="bold" size={20} color="#DC2626" className={`flex-shrink-0 transition-transform duration-300 ${open === i ? 'rotate-180' : ''}`} />
               </button>
               {open === i && (
-                <div className="px-6 pb-5 text-gray-600 leading-relaxed text-sm border-t border-gray-100 pt-4">
+                <div className="px-6 pb-5 text-gray-700 leading-relaxed text-sm border-t border-gray-200 pt-4">
                   {faq.a}
                 </div>
               )}
@@ -51,11 +51,11 @@ export default function FAQ() {
           ))}
         </div>
 
-        <div className="reveal mt-10 text-center bg-gray-50 border border-gray-200 rounded-2xl p-7">
-          <p className="text-gray-600 mb-4">{get('faq.callQuestion')}</p>
+        <div className="reveal mt-10 text-center bg-dark border border-white/8 rounded-2xl p-7">
+          <p className="text-white/75 mb-4 font-medium">{get('faq.callQuestion')}</p>
           <a href="tel:5148248618"
             onClick={() => (window as any).gtag?.('event', 'conversion', { send_to: 'AW-17940446235/AoXGCLDrhI0cEJv41epC', value: 1.0, currency: 'CAD' })}
-            className="inline-flex items-center gap-2 bg-dark hover:bg-dark-700 text-white font-bold px-7 py-3.5 rounded-xl transition-all">
+            className="inline-flex items-center gap-2 bg-primary hover:bg-red-700 text-white font-bold px-7 py-3.5 rounded-xl transition-all shadow-lg shadow-primary/25">
             {get('faq.callCta')}
           </a>
         </div>

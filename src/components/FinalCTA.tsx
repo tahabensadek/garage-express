@@ -28,9 +28,9 @@ export default function FinalCTA() {
           <h2 className="font-display text-6xl sm:text-7xl lg:text-8xl font-black text-white uppercase leading-none mb-6">
             {get('finalCta.title')}
             <span className="block italic">{get('finalCta.titleHighlight')}</span>
-            <span className="block text-white/30">{get('finalCta.titleEnd')}</span>
+            <span className="block text-white/60">{get('finalCta.titleEnd')}</span>
           </h2>
-          <p className="text-white/75 text-xl leading-relaxed mb-10 max-w-2xl mx-auto">
+          <p className="text-white/90 text-xl leading-relaxed mb-10 max-w-2xl mx-auto">
             {get('finalCta.subtitle')}
           </p>
 
@@ -45,14 +45,14 @@ export default function FinalCTA() {
             <a
               href={`tel:${get('finalCta.ctaPhone').replace(/-/g, '')}`}
               onClick={() => (window as any).gtag?.('event', 'conversion', { send_to: 'AW-17940446235/AoXGCLDrhI0cEJv41epC', value: 1.0, currency: 'CAD' })}
-              className="bg-white/15 hover:bg-white/25 border-2 border-white/40 text-white font-bold px-10 py-5 rounded-xl text-lg transition-all flex items-center justify-center gap-2 backdrop-blur-sm"
+              className="bg-white/20 hover:bg-white/30 border-2 border-white/70 text-white font-bold px-10 py-5 rounded-xl text-lg transition-all flex items-center justify-center gap-2 backdrop-blur-sm"
             >
               <Phone weight="duotone" size={24} />
               {get('finalCta.ctaPhone')}
             </a>
           </div>
 
-          <div className="flex flex-wrap justify-center gap-6 text-white/60 text-sm">
+          <div className="flex flex-wrap justify-center gap-6 text-white/85 text-sm font-medium">
             <span>✓ {get('finalCta.trust1')}</span>
             <span>✓ {get('finalCta.trust2')}</span>
             <span>✓ {get('finalCta.trust3')}</span>
