@@ -328,7 +328,8 @@ export default function EpoxyGaragePage({ params }: { params: { locale: string }
       {/* ─────────── Sticky header ─────────── */}
       <header className="sticky top-0 z-50 bg-dark/95 backdrop-blur-md border-b border-white/8">
         <div className="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between gap-4">
-          <Image src="/images/logo-text.png" alt="Garage Express" width={160} height={40} className="h-9 w-auto flex-shrink-0" />
+          <Image src="/images/logo-icon.png" alt="Garage Express" width={36} height={36} className="h-9 w-auto flex-shrink-0 sm:hidden" />
+          <Image src="/images/logo-text.png" alt="Garage Express" width={160} height={40} className="h-9 w-auto flex-shrink-0 hidden sm:block" />
           <div className="flex items-center gap-3">
             {/* Language switcher */}
             <div className="flex rounded-lg border border-white/15 overflow-hidden text-xs font-bold">
