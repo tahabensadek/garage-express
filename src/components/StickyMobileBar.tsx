@@ -22,7 +22,7 @@ export default function StickyMobileBar() {
       <a
         href="tel:5148248618"
         onClick={trackCall}
-        className="flex-1 flex items-center justify-center gap-2 bg-white/10 border border-white/20 text-white font-bold py-3.5 rounded-xl text-sm transition-all active:bg-white/20"
+        className="flex-1 flex items-center justify-center gap-2 bg-white/20 border border-white/40 text-white font-bold py-3.5 rounded-xl text-sm transition-all active:bg-white/30"
       >
         {c.call}
       </a>

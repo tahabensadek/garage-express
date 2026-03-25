@@ -866,7 +866,7 @@ export default function EpoxyGaragePage({ params }: { params: { locale: string }
       {/* ─────────── Sticky mobile bottom bar ─────────── */}
       <div className="sm:hidden fixed bottom-0 inset-x-0 z-50 bg-dark/97 backdrop-blur-md border-t border-white/12 px-4 py-3 flex gap-3 safe-area-inset-bottom">
         <a href="tel:5148248618" onClick={trackCall}
-          className="flex-1 flex items-center justify-center gap-2 bg-white/10 border border-white/20 text-white font-bold py-3.5 rounded-xl text-sm transition-all active:bg-white/20">
+          className="flex-1 flex items-center justify-center gap-2 bg-white/20 border border-white/40 text-white font-bold py-3.5 rounded-xl text-sm transition-all active:bg-white/30">
           {c.stickyCall}
         </a>
         <a href="#soumission"
