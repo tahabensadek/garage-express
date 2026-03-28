@@ -4,7 +4,7 @@ import { useTranslations } from '@/hooks/useTranslations'
 import { X, Warning } from '@phosphor-icons/react'
 
 export default function Problem() {
-  const { get } = useTranslations()
+  const { get, locale } = useTranslations()
 
   const problems = [
     { title: get('problem.problem1Title'), desc: get('problem.problem1Desc') },
@@ -66,6 +66,11 @@ export default function Problem() {
           <a href="#soumission" className="relative overflow-hidden inline-flex items-center gap-2 bg-primary hover:bg-primary-dark text-white font-bold px-8 py-4 rounded-xl text-base transition-all btn-shimmer">
             {get('problem.bridgeCta')}
           </a>
+          <div className="mt-5">
+            <a href={`/${locale}/polyaspartique`} className="text-white/50 text-sm hover:text-white/80 transition-colors underline underline-offset-4">
+              {get('common.learnMoreSystem')}
+            </a>
+          </div>
         </div>
       </div>
     </section>

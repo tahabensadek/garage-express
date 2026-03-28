@@ -108,7 +108,8 @@
     "comparisonPoly3": "Superior",
     "comparisonPoly4": "✓ Flexible",
     "comparisonPoly5": "15–20 years",
-    "comparisonPoly6": "✓ Standard"
+    "comparisonPoly6": "✓ Standard",
+    "uvNote": "Polyaspartic is aliphatic — unlike aromatic epoxy, it never yellows under UV exposure."
   },
   "process": {
     "badge": "Total transparency",
@@ -437,7 +438,7 @@
     "ourSystem": "Garage Express system",
     "specsTitle": "Technical specs (ASTM)",
     "concreteLabel": "Concrete slab",
-    "concreteSub": "Prepared with mechanical shot blasting (CSP-2+)",
+    "concreteSub": "Mechanical shot blasting (CSP-2+) — opens concrete pores for permanent adhesion",
     "spec1Val": "6,700 psi",
     "spec1Label": "Tensile strength",
     "spec1Sub": "Stronger than most residential concrete",
@@ -469,5 +470,8 @@
     "step4Desc": "Maximum resistance to chemicals, motor oil, salt, and calcium.",
     "vsNote": "For comparison — traditional epoxy: <strong>3 to 5 days</strong> before you can walk on it.",
     "cta": "Get my free quote →"
+  },
+  "common": {
+    "learnMoreSystem": "Learn everything about our polyaspartic system →"
   }
 }

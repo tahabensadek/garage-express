@@ -10,7 +10,7 @@ const layers = [
 ]
 
 export default function SystemLayers() {
-  const { get } = useTranslations()
+  const { get, locale } = useTranslations()
 
   return (
     <section className="py-24 bg-dark noise relative overflow-hidden">
@@ -145,6 +145,11 @@ export default function SystemLayers() {
                 className="flex items-center justify-center gap-2 w-full bg-primary hover:bg-red-700 text-white font-black px-6 py-4 rounded-xl text-sm transition-all shadow-lg shadow-primary/25">
                 {get('systemLayers.cta')} →
               </a>
+              <p className="text-center mt-3">
+                <a href={`/${locale}/polyaspartique`} className="text-white/40 text-xs hover:text-white/65 transition-colors underline underline-offset-4">
+                  {get('common.learnMoreSystem')}
+                </a>
+              </p>
             </motion.div>
           </div>
         </div>

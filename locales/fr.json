@@ -108,7 +108,8 @@
     "comparisonPoly3": "Supérieure",
     "comparisonPoly4": "✓ Flexible",
     "comparisonPoly5": "15–20 ans",
-    "comparisonPoly6": "✓ Standard"
+    "comparisonPoly6": "✓ Standard",
+    "uvNote": "Le polyaspartique est aliphatique — contrairement à l'époxy aromatique, il ne jaunit jamais sous les UV."
   },
   "process": {
     "badge": "Transparence totale",
@@ -437,7 +438,7 @@
     "ourSystem": "Système Garage Express",
     "specsTitle": "Specs techniques (ASTM)",
     "concreteLabel": "Dalle de béton",
-    "concreteSub": "Préparée au grenaillage mécanique (CSP-2+)",
+    "concreteSub": "Grenaillage mécanique (CSP-2+) — ouvre les pores du béton pour une adhérence permanente",
     "spec1Val": "6 700 psi",
     "spec1Label": "Résistance à la traction",
     "spec1Sub": "Plus fort que la plupart des bétons",
@@ -469,5 +470,8 @@
     "step4Desc": "Résistance maximale aux produits chimiques, huile moteur, sel et calcium.",
     "vsNote": "À titre de comparaison — l'époxy traditionnel : <strong>3 à 5 jours</strong> avant de pouvoir marcher dessus.",
     "cta": "Obtenir ma soumission →"
+  },
+  "common": {
+    "learnMoreSystem": "Tout savoir sur notre système polyaspartique →"
   }
 }
