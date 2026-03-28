@@ -1,5 +1,5 @@
 'use client'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useTranslations } from '@/hooks/useTranslations'
 
@@ -11,9 +11,16 @@ const copy = {
 export default function UrgencyBanner() {
   const { locale } = useTranslations()
   const [visible, setVisible] = useState(false)
+  const shown = useRef(false)
 
   useEffect(() => {
-    const onScroll = () => setVisible(window.scrollY > 400)
+    const onScroll = () => {
+      if (!shown.current && window.scrollY > 400) {
+        shown.current = true
+        setVisible(true)
+        setTimeout(() => setVisible(false), 5000)
+      }
+    }
     window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)
   }, [])

@@ -280,11 +280,16 @@ export default function EpoxyGaragePage({ params }: { params: { locale: string }
   /* Floating desktop CTA + urgency banner */
   const [showFloat, setShowFloat] = useState(false)
   const [showBanner, setShowBanner] = useState(false)
+  const bannerShown = useRef(false)
 
   useEffect(() => {
     const onScroll = () => {
       setShowFloat(window.scrollY > 600)
-      setShowBanner(window.scrollY > 400)
+      if (!bannerShown.current && window.scrollY > 400) {
+        bannerShown.current = true
+        setShowBanner(true)
+        setTimeout(() => setShowBanner(false), 5000)
+      }
     }
     window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)
