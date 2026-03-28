@@ -432,7 +432,24 @@
     "totalLabel": "Total system thickness",
     "diyThickness": "3–4 mils",
     "diyLabel": "Hardware store epoxy kit",
-    "cta": "View pricing"
+    "cta": "View pricing",
+    "thicknessTitle": "System thickness",
+    "ourSystem": "Garage Express system",
+    "specsTitle": "Technical specs (ASTM)",
+    "concreteLabel": "Concrete slab",
+    "concreteSub": "Prepared with mechanical shot blasting (CSP-2+)",
+    "spec1Val": "6,700 psi",
+    "spec1Label": "Tensile strength",
+    "spec1Sub": "Stronger than most residential concrete",
+    "spec2Val": "57 MPa",
+    "spec2Label": "Compressive strength",
+    "spec2Sub": "Industrial grade",
+    "spec3Val": "Shore D 70",
+    "spec3Label": "Surface hardness",
+    "spec3Sub": "Residential concrete: ~25",
+    "spec4Val": "25 mg",
+    "spec4Label": "Taber abrasion loss",
+    "spec4Sub": "1000 cycles, 1000g — excellent"
   },
   "returnToService": {
     "badge": "After installation",
@@ -449,6 +466,8 @@
     "step3Desc": "Wait 7 days before the first water cleaning for optimal cure.",
     "step4Time": "2 weeks",
     "step4Label": "Full chemical resistance",
-    "step4Desc": "Maximum resistance to chemicals, motor oil, salt, and calcium."
+    "step4Desc": "Maximum resistance to chemicals, motor oil, salt, and calcium.",
+    "vsNote": "For comparison — traditional epoxy: <strong>3 to 5 days</strong> before you can walk on it.",
+    "cta": "Get my free quote →"
   }
 }

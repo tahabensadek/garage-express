@@ -70,12 +70,11 @@ export default function ReturnToService() {
           transition={{ duration: 0.5, delay: 0.4 }}
           viewport={{ once: true }}
         >
-          <p className="text-white/70 text-sm text-center sm:text-left">
-            À titre de comparaison — l'époxy traditionnel : <strong className="text-white">3 à 5 jours</strong> avant de pouvoir marcher dessus.
-          </p>
+          <p className="text-white/70 text-sm text-center sm:text-left"
+            dangerouslySetInnerHTML={{ __html: get('returnToService.vsNote') }} />
           <a href="#soumission"
             className="flex-shrink-0 bg-primary hover:bg-red-700 text-white font-black px-6 py-3 rounded-xl text-sm transition-all whitespace-nowrap">
-            Obtenir ma soumission →
+            {get('returnToService.cta')}
           </a>
         </motion.div>
       </div>

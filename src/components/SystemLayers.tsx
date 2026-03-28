@@ -74,8 +74,8 @@ export default function SystemLayers() {
                 <div className="w-5 h-5 rounded bg-white/20" />
               </div>
               <div>
-                <p className="text-white/40 text-sm font-semibold uppercase tracking-wide">Dalle de béton</p>
-                <p className="text-white/25 text-xs">Préparée au grenaillage mécanique (CSP-2+)</p>
+                <p className="text-white/40 text-sm font-semibold uppercase tracking-wide">{get('systemLayers.concreteLabel')}</p>
+                <p className="text-white/25 text-xs">{get('systemLayers.concreteSub')}</p>
               </div>
             </div>
           </div>
@@ -90,12 +90,12 @@ export default function SystemLayers() {
               viewport={{ once: true }}
               className="bg-white/4 border border-white/8 rounded-2xl p-6"
             >
-              <h3 className="text-white/60 text-xs font-bold uppercase tracking-widest mb-5">Épaisseur du système</h3>
+              <h3 className="text-white/60 text-xs font-bold uppercase tracking-widest mb-5">{get('systemLayers.thicknessTitle')}</h3>
 
               {/* Our system bar */}
               <div className="mb-4">
                 <div className="flex justify-between items-center mb-2">
-                  <span className="text-white font-bold text-sm">Système Garage Express</span>
+                  <span className="text-white font-bold text-sm">{get('systemLayers.ourSystem')}</span>
                   <span className="text-primary font-black text-lg">{get('systemLayers.totalThickness')}</span>
                 </div>
                 <div className="h-7 bg-gradient-to-r from-primary to-red-700 rounded-lg relative overflow-hidden">
@@ -123,18 +123,13 @@ export default function SystemLayers() {
               viewport={{ once: true }}
               className="bg-white/4 border border-white/8 rounded-2xl p-6"
             >
-              <h3 className="text-white/60 text-xs font-bold uppercase tracking-widest mb-5">Specs techniques (ASTM)</h3>
+              <h3 className="text-white/60 text-xs font-bold uppercase tracking-widest mb-5">{get('systemLayers.specsTitle')}</h3>
               <div className="grid grid-cols-2 gap-4">
-                {[
-                  { val: '6 700 psi', label: 'Résistance à la traction', sub: 'Plus fort que la plupart des bétons' },
-                  { val: '57 MPa', label: 'Résistance compression', sub: 'Grade industriel' },
-                  { val: 'Shore D 70', label: 'Dureté de surface', sub: 'Béton résidentiel : ~25' },
-                  { val: '25 mg', label: 'Perte abrasion Taber', sub: '1000 cycles, 1000g — excellente' },
-                ].map((s, i) => (
-                  <div key={i} className="bg-white/4 rounded-xl p-4 border border-white/6">
-                    <div className="font-display text-2xl font-black text-primary leading-none mb-1">{s.val}</div>
-                    <div className="text-white/80 text-xs font-semibold mb-1">{s.label}</div>
-                    <div className="text-white/35 text-xs">{s.sub}</div>
+                {[1, 2, 3, 4].map((n) => (
+                  <div key={n} className="bg-white/4 rounded-xl p-4 border border-white/6">
+                    <div className="font-display text-2xl font-black text-primary leading-none mb-1">{get(`systemLayers.spec${n}Val`)}</div>
+                    <div className="text-white/80 text-xs font-semibold mb-1">{get(`systemLayers.spec${n}Label`)}</div>
+                    <div className="text-white/35 text-xs">{get(`systemLayers.spec${n}Sub`)}</div>
                   </div>
                 ))}
               </div>

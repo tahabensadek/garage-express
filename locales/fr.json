@@ -432,7 +432,24 @@
     "totalLabel": "Épaisseur totale",
     "diyThickness": "3–4 mils",
     "diyLabel": "Kit époxy quincaillerie",
-    "cta": "Voir les forfaits"
+    "cta": "Voir les forfaits",
+    "thicknessTitle": "Épaisseur du système",
+    "ourSystem": "Système Garage Express",
+    "specsTitle": "Specs techniques (ASTM)",
+    "concreteLabel": "Dalle de béton",
+    "concreteSub": "Préparée au grenaillage mécanique (CSP-2+)",
+    "spec1Val": "6 700 psi",
+    "spec1Label": "Résistance à la traction",
+    "spec1Sub": "Plus fort que la plupart des bétons",
+    "spec2Val": "57 MPa",
+    "spec2Label": "Résistance à la compression",
+    "spec2Sub": "Grade industriel",
+    "spec3Val": "Shore D 70",
+    "spec3Label": "Dureté de surface",
+    "spec3Sub": "Béton résidentiel : ~25",
+    "spec4Val": "25 mg",
+    "spec4Label": "Perte abrasion Taber",
+    "spec4Sub": "1000 cycles, 1000g — excellente"
   },
   "returnToService": {
     "badge": "Après l'installation",
@@ -449,6 +466,8 @@
     "step3Desc": "Attendez 7 jours avant le premier nettoyage à l'eau pour une cure optimale.",
     "step4Time": "2 semaines",
     "step4Label": "Pleine résistance chimique",
-    "step4Desc": "Résistance maximale aux produits chimiques, huile moteur, sel et calcium."
+    "step4Desc": "Résistance maximale aux produits chimiques, huile moteur, sel et calcium.",
+    "vsNote": "À titre de comparaison — l'époxy traditionnel : <strong>3 à 5 jours</strong> avant de pouvoir marcher dessus.",
+    "cta": "Obtenir ma soumission →"
   }
 }
