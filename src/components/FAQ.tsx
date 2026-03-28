@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react'
 import { CaretDown } from '@phosphor-icons/react'
 import { useTranslations } from '@/hooks/useTranslations'
 
-const FAQ_COUNT = 8
+const FAQ_COUNT = 14
 
 export default function FAQ() {
   const { get } = useTranslations()
