@@ -362,28 +362,26 @@ export default function EpoxyGaragePage({ params }: { params: { locale: string }
             </a>
           </div>
         </div>
-      </header>
-
-      {/* ─────────── Urgency banner ─────────── */}
-      <AnimatePresence>
-        {showBanner && (
-          <motion.div
-            initial={{ y: -48, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            exit={{ y: -48, opacity: 0 }}
-            transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
-            className="fixed top-[60px] left-0 right-0 z-40 bg-amber-400 text-dark font-body text-sm font-semibold text-center px-4 py-2.5"
-          >
-            <span className="inline-flex items-center gap-2 justify-center flex-wrap">
-              <span className="relative flex h-2 w-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-dark/30 opacity-75" />
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-dark/50" />
+        <AnimatePresence>
+          {showBanner && (
+            <motion.div
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: 'auto', opacity: 1 }}
+              exit={{ height: 0, opacity: 0 }}
+              transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+              className="overflow-hidden bg-amber-400 text-dark font-body text-sm font-semibold text-center px-4 py-2.5"
+            >
+              <span className="inline-flex items-center gap-2 justify-center flex-wrap">
+                <span className="relative flex h-2 w-2">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-dark/30 opacity-75" />
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-dark/50" />
+                </span>
+                {c.urgency}
               </span>
-              {c.urgency}
-            </span>
-          </motion.div>
-        )}
-      </AnimatePresence>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </header>
 
       {/* ─────────── Hero ─────────── */}
       <section className="relative min-h-[92vh] flex items-center overflow-hidden">
