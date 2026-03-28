@@ -20,12 +20,12 @@ const copy = {
     badge: 'Époxy garage — Montréal, Rive-Sud & Laval',
     heroTitle: 'Époxy Garage',
     heroHighlight: 'Grand Montréal.',
-    heroSub: 'Vous cherchez de l\'époxy pour votre garage\u00a0? On fait <strong>mieux que l\'époxy</strong>\u00a0— le polyaspartique nouvelle génération. Même look, 2× plus résistant, installé en 1 journée.',
+    heroSub: 'Plancher de garage professionnel installé en <strong>1 journée</strong>. Polyaspartique nouvelle génération — 2× plus résistant que l\'époxy, ne jaunit pas, garanti 15 ans.',
     ctaPrimary: 'Obtenir ma soumission gratuite',
     ctaPhone: '514-824-8618',
     fixedPrice: 'Prix fixe tout inclus\u00a0· Zéro surprise\u00a0· Garantie 15 ans',
 
-    urgency: '🌱 Saison printanière — Disponibilités limitées en avril. Réservez maintenant.',
+    urgency: 'Places limitées — Réservez votre estimé gratuit dès maintenant',
 
     heroFormName: 'Votre prénom',
     heroFormPhone: 'Votre téléphone',
@@ -125,12 +125,12 @@ const copy = {
     badge: 'Epoxy garage — Montreal, South Shore & Laval',
     heroTitle: 'Epoxy Garage',
     heroHighlight: 'Greater Montreal.',
-    heroSub: 'Looking for garage epoxy? We do <strong>better than epoxy</strong>\u00a0— next-gen polyaspartic. Same look, 2× stronger, installed in 1 day.',
+    heroSub: 'Professional garage floor installed in <strong>1 day</strong>. Next-gen polyaspartic coating — 2× stronger than epoxy, no yellowing, 15-year warranty.',
     ctaPrimary: 'Get my free quote',
     ctaPhone: '514-824-8618',
     fixedPrice: 'Fixed all-inclusive price\u00a0· No surprises\u00a0· 15-year warranty',
 
-    urgency: '🌱 Spring season — Limited availability in April. Book now.',
+    urgency: 'Limited availability — Book your free estimate now',
 
     heroFormName: 'Your first name',
     heroFormPhone: 'Your phone number',
@@ -356,14 +356,20 @@ export default function EpoxyGaragePage({ params }: { params: { locale: string }
       </header>
 
       {/* ─────────── Urgency banner ─────────── */}
-      <div className="bg-red-600 text-white text-xs font-bold text-center px-4 py-2.5 tracking-wide">
-        {c.urgency}
+      <div className="bg-amber-400 text-dark text-xs font-bold text-center px-4 py-3 tracking-wide">
+        <span className="inline-flex items-center gap-2 justify-center flex-wrap">
+          <span className="relative flex h-2 w-2">
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-dark/50 opacity-75" />
+            <span className="relative inline-flex rounded-full h-2 w-2 bg-dark/70" />
+          </span>
+          {c.urgency}
+        </span>
       </div>
 
       {/* ─────────── Hero ─────────── */}
       <section className="relative min-h-[92vh] flex items-center overflow-hidden">
         <div className="absolute inset-0">
-          <Image src="/images/hero-car2.png" alt="Époxy garage Montréal, Rive-Sud & Laval — Garage Express" fill className="object-cover" priority />
+          <Image src="/images/hero-car3.png" alt="Époxy garage Montréal, Rive-Sud & Laval — Garage Express" fill className="object-cover" priority />
           <div className="absolute inset-0 bg-gradient-to-r from-dark/97 via-dark/90 to-dark/50" />
           <div className="absolute inset-0 bg-gradient-to-t from-dark via-dark/20 to-transparent" />
         </div>
@@ -408,15 +414,7 @@ export default function EpoxyGaragePage({ params }: { params: { locale: string }
                   {c.heroFormSuccess}
                 </div>
               ) : (
-                <form onSubmit={heroSubmit} className="flex flex-col sm:flex-row gap-2 mb-4 max-w-xl">
-                  <input
-                    type="text"
-                    required
-                    placeholder={c.heroFormName}
-                    value={heroName}
-                    onChange={e => setHeroName(e.target.value)}
-                    className="flex-1 bg-white/10 border border-white/20 text-white placeholder-white/40 rounded-xl px-4 py-3.5 text-sm focus:outline-none focus:border-white/40 focus:bg-white/15 transition-all"
-                  />
+                <form onSubmit={heroSubmit} className="flex flex-col sm:flex-row gap-2 mb-4 max-w-lg">
                   <input
                     type="tel"
                     required
