@@ -95,7 +95,7 @@ export default function Hero() {
       {/* Parallax background */}
       <motion.div className="absolute inset-0" style={{ y: imgY }}>
         <img
-          src="/images/hero-car2.png"
+          src="/images/hero-car3.png"
           alt="Garage avec plancher polyaspartique professionnel — Garage Express Montréal, Rive-Sud & Laval"
           className="w-full h-full object-cover scale-110"
           style={{ objectPosition: 'center center' }}
@@ -196,15 +196,7 @@ export default function Hero() {
                 {hc.success}
               </div>
             ) : (
-              <form onSubmit={heroSubmit} className="flex flex-col sm:flex-row gap-2 mb-3 max-w-xl">
-                <input
-                  type="text"
-                  required
-                  placeholder={hc.namePlaceholder}
-                  value={heroName}
-                  onChange={e => setHeroName(e.target.value)}
-                  className="flex-1 bg-white/10 border border-white/20 text-white placeholder-white/40 rounded-xl px-4 py-3.5 text-sm focus:outline-none focus:border-white/40 focus:bg-white/15 transition-all backdrop-blur-sm"
-                />
+              <form onSubmit={heroSubmit} className="flex flex-col sm:flex-row gap-2 mb-3 max-w-lg">
                 <input
                   type="tel"
                   required
