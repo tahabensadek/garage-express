@@ -73,7 +73,7 @@ function TiltCard({ children, highlight, delay }: { children: React.ReactNode; h
 }
 
 export default function Benefits() {
-  const { get } = useTranslations()
+  const { get, locale } = useTranslations()
 
   const benefits = [
     { icon: Clock,       title: get('benefits.benefit1Title'), desc: get('benefits.benefit1Desc'), highlight: true  },
@@ -153,6 +153,14 @@ export default function Benefits() {
                 ))}
               </tbody>
             </table>
+          </div>
+          <div className="mt-6 flex flex-col sm:flex-row items-center justify-between gap-4 pt-5 border-t border-white/8">
+            <p className="text-white/40 text-xs italic text-center sm:text-left">
+              {get('benefits.uvNote')}
+            </p>
+            <a href={`/${locale}/polyaspartique`} className="flex-shrink-0 text-primary text-sm font-semibold hover:text-red-400 transition-colors underline underline-offset-4">
+              {get('common.learnMoreSystem')}
+            </a>
           </div>
         </motion.div>
       </div>

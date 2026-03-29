@@ -17,6 +17,8 @@ import Footer from '@/components/Footer'
 import UrgencyBanner from '@/components/UrgencyBanner'
 import StickyMobileBar from '@/components/StickyMobileBar'
 import FloatingCTA from '@/components/FloatingCTA'
+import SystemLayers from '@/components/SystemLayers'
+import ReturnToService from '@/components/ReturnToService'
 
 function WaveDivider({ flip = false, from = '#ffffff', to = '#0C0C0C' }: { flip?: boolean; from?: string; to?: string }) {
   return (
@@ -50,6 +52,8 @@ export default function Home() {
       <Gallery />
 
       <Benefits />
+      <ReturnToService />
+      <SystemLayers />
       <Stats />
 
       <ColorSelector />
