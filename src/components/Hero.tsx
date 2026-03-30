@@ -242,61 +242,6 @@ export default function Hero() {
         </div>
       </motion.div>
 
-      {/* Floating proof cards — desktop only */}
-      <div className="absolute right-6 xl:right-14 top-1/2 -translate-y-1/2 z-20 hidden lg:flex flex-col gap-3 pointer-events-none">
-        {[
-          {
-            icon: Shield,
-            iconColor: '#DC2626',
-            iconBg: 'bg-primary/20 border-primary/30',
-            value: '15',
-            suffix: locale === 'fr' ? ' ans' : ' yrs',
-            label: locale === 'fr' ? 'Garantie complète' : 'Full warranty',
-            sub: locale === 'fr' ? 'Matériaux & main-d\'œuvre' : 'Materials & labor',
-            delay: 0.75,
-          },
-          {
-            icon: Clock,
-            iconColor: '#60a5fa',
-            iconBg: 'bg-blue-500/20 border-blue-400/30',
-            value: '1',
-            suffix: locale === 'fr' ? ' jour' : ' day',
-            label: locale === 'fr' ? 'Installation' : 'Installation',
-            sub: locale === 'fr' ? 'Arrivée 8h — départ 17h' : 'Arrive 8am — done 5pm',
-            delay: 0.92,
-          },
-          {
-            icon: Star,
-            iconColor: '#fbbf24',
-            iconBg: 'bg-amber-400/20 border-amber-400/30',
-            value: '5★',
-            suffix: '',
-            label: locale === 'fr' ? 'Note Google' : 'Google rating',
-            sub: locale === 'fr' ? '47 avis vérifiés' : '47 verified reviews',
-            delay: 1.08,
-          },
-        ].map((card, i) => (
-          <motion.div
-            key={i}
-            initial={{ opacity: 0, x: 48 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.65, delay: card.delay, ease: [0.22, 1, 0.36, 1] }}
-            className="bg-dark/80 backdrop-blur-xl border border-white/10 rounded-2xl p-5 min-w-[210px] shadow-2xl shadow-black/60"
-          >
-            <div className="flex items-center gap-3 mb-2.5">
-              <div className={`w-9 h-9 rounded-xl border flex items-center justify-center flex-shrink-0 ${card.iconBg}`}>
-                <card.icon weight="duotone" size={18} color={card.iconColor} />
-              </div>
-              <div className="font-display text-2xl font-black text-white leading-none tabular-nums">
-                {card.value}{card.suffix}
-              </div>
-            </div>
-            <div className="text-white text-sm font-semibold leading-tight">{card.label}</div>
-            <div className="text-white/40 text-xs mt-0.5">{card.sub}</div>
-          </motion.div>
-        ))}
-      </div>
-
       <a href="#pourquoi" className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-2 text-white/30 hover:text-white/60 transition-colors group">
         <span className="text-xs uppercase tracking-widest">{get('hero.scroll')}</span>
         <ArrowDown weight="bold" size={20} className="animate-bounce" />
