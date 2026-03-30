@@ -54,7 +54,7 @@ const copy = {
     processTitle: 'Simple comme 1-2-3',
     processSteps: [
       { num: '01', title: 'Soumission gratuite', desc: 'Remplissez le formulaire. On vous rappelle dans les 24h pour confirmer les détails et fixer une date.' },
-      { num: '02', title: 'Installation en 1 journée', desc: 'L\'équipe arrive à 8h. Ponçage, application, flocons, topcoat. Terminé en fin d\'après-midi.' },
+      { num: '02', title: 'Installation en 1 journée', desc: 'L\'équipe arrive à 8h. Grenaillage mécanique (CSP-2+) pour une adhérence permanente, application du système 4 couches, flocons Torginol, topcoat protecteur. Terminé en fin d\'après-midi.' },
       { num: '03', title: 'Profitez de votre garage', desc: 'Plancher accessible dès le soir même. Véhicules après 24h. Garantie 15 ans en main.' },
     ],
 
@@ -119,6 +119,9 @@ const copy = {
       { q: 'Combien de temps ça prend\u00a0?', a: '1 journée. L\'équipe arrive vers 8h et repart en fin d\'après-midi. Vous pouvez marcher dessus le soir même. Les véhicules peuvent rentrer après 24h.' },
       { q: 'Servez-vous Laval\u00a0?', a: 'Oui — Rive-Sud, Montréal, Laval et les environs. Appelez-nous pour confirmer votre secteur.' },
       { q: 'Est-ce que ça résiste vraiment aux hivers québécois\u00a0?', a: 'Absolument. Le polyaspartique est flexible — il suit la contraction/dilatation du béton lors des cycles gel/dégel. Résistant au sel de déglaçage, calcium, huile moteur, et aux températures de -30°C à +40°C.' },
+      { q: 'Mon béton est fissuré — est-ce un problème\u00a0?', a: 'Non. On répare les fissures mineures (moins de 3 mm) dans le cadre de la préparation de surface, sans frais supplémentaires. Pour les fissures plus importantes, on vous en avise lors de la soumission et on trouve une solution.' },
+      { q: 'Quelle est la différence entre votre préparation de surface et un simple ponçage\u00a0?', a: 'On utilise le grenaillage mécanique (shot blasting, profil CSP-2+) — pas simplement un ponçage. Le grenaillage ouvre les pores du béton en profondeur, ce qui crée une adhérence mécanique permanente. C\'est la principale raison pour laquelle notre plancher ne se décolle jamais, contrairement aux kits époxy DIY.' },
+      { q: 'Que couvre exactement la garantie 15 ans\u00a0?', a: 'La garantie couvre le décollement, les bulles, la délamination et la décoloration anormale — matériaux ET main-d\'œuvre. Elle ne couvre pas les dommages causés par une mauvaise utilisation (ex\u00a0: chemicals industriels concentrés, impacts extrêmes). Si votre plancher présente un problème couvert, on revient sans frais.' },
     ],
   },
   en: {
@@ -159,7 +162,7 @@ const copy = {
     processTitle: 'Simple as 1-2-3',
     processSteps: [
       { num: '01', title: 'Free quote', desc: 'Fill out the form. We call you back within 24h to confirm details and schedule a date.' },
-      { num: '02', title: 'Installed in 1 day', desc: 'Team arrives at 8am. Grinding, application, flakes, topcoat. Done by afternoon.' },
+      { num: '02', title: 'Installed in 1 day', desc: 'Team arrives at 8am. Mechanical shot blasting (CSP-2+) for permanent adhesion, 4-layer system application, Torginol flakes, protective topcoat. Done by afternoon.' },
       { num: '03', title: 'Enjoy your garage', desc: 'Walk on it the same evening. Vehicles after 24h. 15-year warranty in hand.' },
     ],
 
@@ -224,6 +227,9 @@ const copy = {
       { q: 'How long does it take?', a: '1 day. Team arrives around 8am and leaves late afternoon. Walk on it that evening. Vehicles can enter after 24h.' },
       { q: 'Do you serve Laval?', a: 'Yes — South Shore, Montreal, Laval and surrounding areas. Call us to confirm your area.' },
       { q: 'Does it really hold up to Quebec winters?', a: 'Absolutely. Polyaspartic is flexible — it follows concrete\'s expansion and contraction during freeze/thaw cycles. Resistant to de-icing salt, calcium, motor oil, and temperatures from -30°C to +40°C.' },
+      { q: 'My concrete is cracked — is that a problem?', a: 'No. We repair minor cracks (less than 3mm) as part of surface prep at no extra charge. For larger cracks, we\'ll let you know during the quote and find a solution together.' },
+      { q: 'What\'s different about your surface prep vs a basic grind?', a: 'We use mechanical shot blasting (CSP-2+ profile) — not just sanding. Shot blasting opens concrete pores deeply, creating a permanent mechanical bond. That\'s the main reason our floors never peel, unlike DIY epoxy kits.' },
+      { q: 'What exactly does the 15-year warranty cover?', a: 'The warranty covers peeling, bubbling, delamination, and abnormal discoloration — materials AND labor. It doesn\'t cover damage from misuse (e.g. concentrated industrial chemicals, extreme impacts). If your floor has a covered issue, we come back at no charge.' },
     ],
   },
 }
@@ -520,9 +526,28 @@ export default function EpoxyGaragePage({ params }: { params: { locale: string }
               transition={{ duration: 0.6 }} viewport={{ once: true }}
             >
               <BASlider />
-              <p className="text-center text-gray-400 text-xs mt-3">
+              <p className="text-center text-gray-400 text-xs mt-3 mb-5">
                 {locale === 'fr' ? 'Glissez pour voir la transformation' : 'Drag to see the transformation'}
               </p>
+              {/* Featured testimonial */}
+              <div className="bg-gray-50 border border-gray-200 rounded-2xl p-5 relative">
+                <Quotes weight="duotone" size={32} color="rgba(220,38,38,0.12)" className="absolute top-4 right-4" />
+                <div className="flex gap-0.5 mb-3">
+                  {[...Array(5)].map((_, i) => <Star key={i} weight="fill" size={13} color="#DC2626" />)}
+                </div>
+                <p className="text-gray-700 text-sm leading-relaxed mb-4 pr-6">
+                  {locale === 'fr'
+                    ? '"Toutes les autres entreprises m\'ont estimé deux jours de travail. Avec lui, une journée — et un produit supérieur. Je recommande."'
+                    : '"All other companies estimated two days of work. With him, one day — and a superior product. I highly recommend."'}
+                </p>
+                <div className="flex items-center gap-2">
+                  <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center font-black text-primary text-xs">S</div>
+                  <div>
+                    <div className="font-bold text-dark text-xs">Sonia Boulianne</div>
+                    <div className="text-gray-400 text-xs">Google · {locale === 'fr' ? 'Il y a 1 semaine' : '1 week ago'}</div>
+                  </div>
+                </div>
+              </div>
             </motion.div>
           </div>
         </div>
@@ -578,7 +603,7 @@ export default function EpoxyGaragePage({ params }: { params: { locale: string }
           </div>
 
           {/* Rows */}
-          <div className="space-y-2">
+          <div className="space-y-2 mb-8">
             {c.rows.map((row, i) => (
               <motion.div key={i}
                 className="grid grid-cols-[1fr_1fr_1fr] items-center bg-white/4 border border-white/8 rounded-2xl overflow-hidden"
@@ -610,6 +635,12 @@ export default function EpoxyGaragePage({ params }: { params: { locale: string }
               </motion.div>
             ))}
           </div>
+          <p className="text-center">
+            <a href={`/${locale}/polyaspartique`}
+              className="text-white/40 text-sm hover:text-white/65 transition-colors underline underline-offset-4">
+              {locale === 'fr' ? 'Voir le système complet — 4 couches, specs ASTM, garantie →' : 'See the full system — 4 layers, ASTM specs, warranty →'}
+            </a>
+          </p>
         </div>
       </section>
 
@@ -750,8 +781,16 @@ export default function EpoxyGaragePage({ params }: { params: { locale: string }
               </motion.div>
             ))}
           </div>
+          {/* Google link */}
+          <div className="mt-6 text-center">
+            <a href="https://g.co/kgs/J8wbkU2" target="_blank" rel="noopener noreferrer"
+              className="text-gray-400 text-xs hover:text-gray-600 transition-colors underline underline-offset-4">
+              {locale === 'fr' ? 'Voir tous nos avis sur Google →' : 'See all our Google reviews →'}
+            </a>
+          </div>
+
           {/* Inline CTA after reviews */}
-          <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-3">
+          <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-3">
             <a href="#soumission"
               className="inline-flex items-center gap-2 bg-primary hover:bg-red-700 text-white font-black px-8 py-4 rounded-xl text-sm transition-all shadow-lg shadow-primary/20">
               {c.reviewsCtaForm}

@@ -34,33 +34,55 @@ export async function POST(req: Request) {
   const { name, email, phone, garageSize, superficie, city, address, cracks, message, locale, colorName, colorFile, photoUrls = [], source } = data
   const t = locale === 'en' ? copy.en : copy.fr
 
-  // GoHighLevel CRM — create contact then opportunity in "Nouveau Lead"
+  // GoHighLevel CRM — upsert contact (update if partial lead exists) then create opportunity
   const ghlHeaders = {
     Authorization: `Bearer ${process.env.GHL_API_KEY}`,
     'Content-Type': 'application/json',
     Version: '2021-07-28',
   }
   try {
-    const contactRes = await fetch('https://services.leadconnectorhq.com/contacts/', {
-      method: 'POST',
-      headers: ghlHeaders,
-      body: JSON.stringify({
-        locationId: process.env.GHL_LOCATION_ID,
-        firstName: name.split(' ')[0],
-        lastName: name.split(' ').slice(1).join(' ') || '',
-        email,
-        phone: `+1${phone.replace(/\D/g, '')}`,
-        city,
-        source: 'garagexpress.ca',
-        tags: ['lead-site', locale === 'en' ? 'en' : 'fr', ...(source ? [source] : [])],
-        customFields: [
-          { id: 'LfxOSUhHkF717C4S1H7d', value: garageSize },
-          { id: 'k262N1Qyf818poepQ17d', value: message || '' },
-        ],
-      }),
-    })
+    // Look for existing contact by email (may have been created as partial-lead)
+    let contactId: string | null = null
+    if (email) {
+      const searchRes = await fetch(
+        `https://services.leadconnectorhq.com/contacts/?locationId=${process.env.GHL_LOCATION_ID}&email=${encodeURIComponent(email)}`,
+        { headers: ghlHeaders }
+      )
+      const searchData = await searchRes.json()
+      const existing = searchData?.contacts?.[0]
+      if (existing?.id) contactId = existing.id
+    }
+
+    const contactPayload = {
+      locationId: process.env.GHL_LOCATION_ID,
+      firstName: name.split(' ')[0],
+      lastName: name.split(' ').slice(1).join(' ') || '',
+      email,
+      phone: `+1${phone.replace(/\D/g, '')}`,
+      city,
+      source: 'garagexpress.ca',
+      tags: ['lead-site', locale === 'en' ? 'en' : 'fr', ...(source ? [source] : [])],
+      customFields: [
+        { id: 'LfxOSUhHkF717C4S1H7d', value: garageSize },
+        { id: 'k262N1Qyf818poepQ17d', value: message || '' },
+      ],
+    }
+
+    // Update existing or create new
+    const contactRes = contactId
+      ? await fetch(`https://services.leadconnectorhq.com/contacts/${contactId}`, {
+          method: 'PUT',
+          headers: ghlHeaders,
+          body: JSON.stringify(contactPayload),
+        })
+      : await fetch('https://services.leadconnectorhq.com/contacts/', {
+          method: 'POST',
+          headers: ghlHeaders,
+          body: JSON.stringify(contactPayload),
+        })
+
     const contact = await contactRes.json()
-    const contactId = contact?.contact?.id || contact?.id
+    if (!contactId) contactId = contact?.contact?.id || contact?.id
     if (contactId) {
       await fetch('https://services.leadconnectorhq.com/opportunities/', {
         method: 'POST',
