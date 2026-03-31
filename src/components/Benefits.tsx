@@ -2,6 +2,7 @@
 import { useRef, useCallback } from 'react'
 import { motion } from 'framer-motion'
 import { useTranslations } from '@/hooks/useTranslations'
+import ResinBg from '@/components/ResinBg'
 import { Lightning, Shield, Drop, Thermometer, Sparkle, Clock } from '@phosphor-icons/react'
 
 function TiltCard({ children, highlight, delay }: { children: React.ReactNode; highlight: boolean; delay: number }) {
@@ -86,9 +87,7 @@ export default function Benefits() {
 
   return (
     <section className="py-24 bg-dark noise relative overflow-hidden">
-      {/* CSS-only ambient orbs — no JS */}
-      <div className="orb-1 absolute -top-32 -right-32 w-[30rem] h-[30rem] rounded-full bg-primary/8 blur-3xl pointer-events-none" />
-      <div className="orb-2 absolute -bottom-32 -left-32 w-96 h-96 rounded-full bg-primary/6 blur-3xl pointer-events-none" />
+      <ResinBg />
 
       <div className="relative z-10 max-w-7xl mx-auto px-4">
         <motion.div
