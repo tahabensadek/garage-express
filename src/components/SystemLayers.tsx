@@ -1,7 +1,6 @@
 'use client'
 import { motion } from 'framer-motion'
 import { useTranslations } from '@/hooks/useTranslations'
-import ResinBg from '@/components/ResinBg'
 
 const layers = [
   { key: '1', color: 'from-red-900/60 to-red-800/40', border: 'border-red-700/40', dot: 'bg-red-500', badge: 'bg-red-900/50 text-red-300 border-red-700/40' },
@@ -15,7 +14,7 @@ export default function SystemLayers() {
 
   return (
     <section className="py-24 bg-dark noise relative overflow-hidden">
-      <ResinBg />
+      <div className="absolute -top-40 right-0 w-[28rem] h-[28rem] rounded-full bg-primary/6 blur-3xl pointer-events-none" />
 
       <div className="relative z-10 max-w-6xl mx-auto px-4">
         <motion.div

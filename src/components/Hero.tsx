@@ -3,7 +3,6 @@ import { useEffect, useRef, useState } from 'react'
 import { motion, useScroll, useTransform, useSpring } from 'framer-motion'
 import { Phone, ArrowDown, Shield, Clock, Star, CaretRight } from '@phosphor-icons/react'
 import { useTranslations } from '@/hooks/useTranslations'
-import ResinBg from '@/components/ResinBg'
 
 function formatPhone(raw: string) {
   const digits = raw.replace(/\D/g, '')
@@ -106,7 +105,7 @@ export default function Hero() {
       </motion.div>
       <div className="absolute inset-0 bg-gradient-to-r from-dark/97 via-dark/85 to-dark/30" />
       <div className="absolute inset-0 bg-gradient-to-t from-dark via-transparent to-dark/40" />
-      <ResinBg />
+      <div className="absolute bottom-0 left-0 w-96 h-96 bg-primary/10 blur-3xl rounded-full" />
 
       <motion.div
         className="relative z-10 max-w-7xl mx-auto px-4 pt-24 pb-16 w-full"
