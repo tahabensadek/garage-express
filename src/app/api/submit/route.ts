@@ -84,6 +84,13 @@ export async function POST(req: Request) {
     const contact = await contactRes.json()
     if (!contactId) contactId = contact?.contact?.id || contact?.id
     if (contactId) {
+      // Remove partial-lead tag now that we have a full submission
+      await fetch(`https://services.leadconnectorhq.com/contacts/${contactId}/tags`, {
+        method: 'DELETE',
+        headers: ghlHeaders,
+        body: JSON.stringify({ tags: ['partial-lead'] }),
+      })
+
       await fetch('https://services.leadconnectorhq.com/opportunities/', {
         method: 'POST',
         headers: ghlHeaders,
