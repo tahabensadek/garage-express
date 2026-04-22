@@ -59,14 +59,6 @@ export default function About() {
               ))}
             </div>
 
-            {/* RBQ */}
-            <div className="mt-4 flex items-center gap-2">
-              <div className="bg-primary/8 border border-primary/15 rounded-lg px-3 py-2 flex items-center gap-2">
-                <Medal weight="duotone" size={14} color="#DC2626" className="flex-shrink-0" />
-                <span className="text-xs font-semibold text-dark">RBQ : 5762-3605-01</span>
-              </div>
-            </div>
-
             {/* Zone map */}
             <div className="mt-4 bg-dark text-white rounded-2xl p-5">
               <div className="text-xs font-bold uppercase tracking-widest text-white/40 mb-3">{get('about.zoneLabel')}</div>

@@ -60,8 +60,6 @@ export default function Footer() {
         <div className="border-t border-white/5 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="flex flex-col sm:flex-row items-center gap-3">
             <p className="text-white/25 text-xs">© {new Date().getFullYear()} Garage Express. {get('footer.copyright')}</p>
-            <span className="hidden sm:block text-white/10 text-xs">·</span>
-            <p className="text-white/25 text-xs">RBQ : 5762-3605-01</p>
           </div>
           <p className="text-white/25 text-xs">{get('footer.madewith')}</p>
         </div>
