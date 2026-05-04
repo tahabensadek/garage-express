@@ -321,7 +321,21 @@ export default function LeadForm() {
       if (!res.ok) throw new Error('Erreur envoi')
       setDone(true)
       if (typeof window !== 'undefined' && typeof (window as any).gtag === 'function') {
-        (window as any).gtag('event', 'conversion', { send_to: 'AW-17940446235/P5y4CPb31YIcEJv41epC' })
+        const nameParts = data.name.trim().split(' ')
+        ;(window as any).gtag('set', 'user_data', {
+          email: data.email.toLowerCase().trim(),
+          phone_number: `+1${data.phone.replace(/\D/g, '')}`,
+          address: {
+            first_name: nameParts[0]?.toLowerCase() ?? '',
+            last_name: nameParts.slice(1).join(' ').toLowerCase(),
+            country: 'CA',
+          },
+        })
+        ;(window as any).gtag('event', 'conversion', {
+          send_to: 'AW-17940446235/P5y4CPb31YIcEJv41epC',
+          value: 1.0,
+          currency: 'CAD',
+        })
       }
     } catch (err) {
       alert(get('leadForm.errorAlert'))
