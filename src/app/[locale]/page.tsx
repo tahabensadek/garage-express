@@ -1,24 +1,29 @@
+import dynamic from 'next/dynamic'
 import Navbar from '@/components/Navbar'
 import Hero from '@/components/Hero'
 import SocialProofBar from '@/components/SocialProofBar'
 import Problem from '@/components/Problem'
-import Gallery from '@/components/Gallery'
-import Benefits from '@/components/Benefits'
-import Stats from '@/components/Stats'
-import Pricing from '@/components/Pricing'
-import Process from '@/components/Process'
-import ColorSelector from '@/components/ColorSelector'
-import LeadForm from '@/components/LeadForm'
-import Testimonials from '@/components/Testimonials'
-import About from '@/components/About'
-import FAQ from '@/components/FAQ'
-import FinalCTA from '@/components/FinalCTA'
-import Footer from '@/components/Footer'
 import UrgencyBanner from '@/components/UrgencyBanner'
-import StickyMobileBar from '@/components/StickyMobileBar'
-import FloatingCTA from '@/components/FloatingCTA'
-import SystemLayers from '@/components/SystemLayers'
-import ReturnToService from '@/components/ReturnToService'
+
+// Below-fold — code-split, still SSR'd (bon pour SEO)
+const Gallery = dynamic(() => import('@/components/Gallery'))
+const Benefits = dynamic(() => import('@/components/Benefits'))
+const ReturnToService = dynamic(() => import('@/components/ReturnToService'))
+const SystemLayers = dynamic(() => import('@/components/SystemLayers'))
+const Stats = dynamic(() => import('@/components/Stats'))
+const Pricing = dynamic(() => import('@/components/Pricing'))
+const Process = dynamic(() => import('@/components/Process'))
+const Testimonials = dynamic(() => import('@/components/Testimonials'))
+const About = dynamic(() => import('@/components/About'))
+const FAQ = dynamic(() => import('@/components/FAQ'))
+const FinalCTA = dynamic(() => import('@/components/FinalCTA'))
+const Footer = dynamic(() => import('@/components/Footer'))
+
+// Composants lourds + interactifs — pas de SSR, chunk séparé
+const ColorSelector = dynamic(() => import('@/components/ColorSelector'), { ssr: false })
+const LeadForm = dynamic(() => import('@/components/LeadForm'), { ssr: false })
+const StickyMobileBar = dynamic(() => import('@/components/StickyMobileBar'), { ssr: false })
+const FloatingCTA = dynamic(() => import('@/components/FloatingCTA'), { ssr: false })
 
 function WaveDivider({ flip = false, from = '#ffffff', to = '#0C0C0C' }: { flip?: boolean; from?: string; to?: string }) {
   return (
