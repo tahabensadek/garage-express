@@ -1,13 +1,15 @@
 'use client'
 import { useState } from 'react'
+import dynamic from 'next/dynamic'
 import Image from 'next/image'
 import { motion, AnimatePresence } from 'framer-motion'
 import {
   Phone, Shield, Clock, Check, Star, CaretDown,
   Wrench, Thermometer, Drop, Lightning, Sparkle, Warning,
 } from '@phosphor-icons/react'
-import LeadForm from '@/components/LeadForm'
-import Footer from '@/components/Footer'
+
+const LeadForm = dynamic(() => import('@/components/LeadForm'), { ssr: false })
+const Footer = dynamic(() => import('@/components/Footer'))
 
 /* ── Bilingual copy ──────────────────────────────────────── */
 const copy = {

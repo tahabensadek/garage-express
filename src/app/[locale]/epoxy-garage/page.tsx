@@ -6,7 +6,8 @@ import {
   Phone, Check, X, Star, Shield, Clock, ArrowRight, CaretRight, Quotes,
   Lightning, Drop, Sparkle, Timer, Lock,
 } from '@phosphor-icons/react'
-import LeadForm from '@/components/LeadForm'
+import dynamic from 'next/dynamic'
+const LeadForm = dynamic(() => import('@/components/LeadForm'), { ssr: false })
 
 /* ── helpers ─────────────────────────────────────────────────── */
 function formatPhone(raw: string) {
