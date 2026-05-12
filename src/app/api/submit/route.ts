@@ -12,7 +12,7 @@ const copy = {
     clientGarage: (size: string) => `🏠 Garage : ${size}`,
     clientWaiting: `En attendant notre appel, vous pouvez nous rejoindre directement :`,
     clientCta: `📞 514-824-8618`,
-    clientSms: `Garage Express: Demande reçue ✓ Un technicien vous appelle dans les 24h. Questions? 514-824-8618`,
+    clientSms: (firstName: string) => `Bonjour ${firstName} ! Votre projet de plancher de garage est entre bonnes mains 💪 On vous appelle très bientôt pour confirmer les détails. — L'équipe Garage Express`,
   },
   en: {
     clientSubject: `Request received — We'll call you within 24h`,
@@ -23,7 +23,7 @@ const copy = {
     clientGarage: (size: string) => `🏠 Garage: ${size}`,
     clientWaiting: `While you wait for our call, you can reach us directly:`,
     clientCta: `📞 514-824-8618`,
-    clientSms: `Garage Express: Request received ✓ A technician will call you within 24h. Questions? 514-824-8618`,
+    clientSms: (firstName: string) => `Hi ${firstName}! Your garage floor project is in good hands 💪 We'll call you very soon to confirm the details. — The Garage Express Team`,
   },
 }
 
@@ -105,6 +105,15 @@ export async function POST(req: Request) {
         }),
       })
     }
+
+    // Send lead to CRM
+    if (process.env.CRM_URL && process.env.INGEST_SECRET) {
+      fetch(`${process.env.CRM_URL}/api/ingest`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'x-ingest-secret': process.env.INGEST_SECRET },
+        body: JSON.stringify({ name, email, phone, garageSize, city, address, colorName, cracks, superficie, message, locale, source }),
+      }).catch(e => console.error('CRM ingest failed:', e))
+    }
   } catch (e) {
     console.error('GHL failed:', e)
   }
@@ -180,11 +189,18 @@ export async function POST(req: Request) {
       body: `🔥 Nouveau lead Garage Express\n${name} — ${city} — ${garageSize}${colorName ? ` — 🎨 ${colorName}` : ''}\n📞 ${phone}`,
     }),
 
+    // SMS au 2e numéro
+    sms.messages.create({
+      from: process.env.TWILIO_FROM!,
+      to: '+14388831231',
+      body: `🔥 Nouveau lead Garage Express\n${name} — ${city} — ${garageSize}${colorName ? ` — 🎨 ${colorName}` : ''}\n📞 ${phone}`,
+    }),
+
     // SMS de confirmation au client (FR ou EN)
     sms.messages.create({
       from: process.env.TWILIO_FROM!,
       to: `+1${phone.replace(/\D/g, '')}`,
-      body: t.clientSms,
+      body: t.clientSms(name.split(' ')[0]),
     }),
   ])
 
